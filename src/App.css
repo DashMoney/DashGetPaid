@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+body, html {
+  overscroll-behavior-y: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#dash-bkgd{
+  position:absolute;
+  opacity:.3;
+  width:90%;
+  padding: 15% 5% 5% 5%;
+  margin: auto;
+  z-index: -1 ;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+#bodytext{
+  padding:1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#bodytextnotop{
+  padding:1rem;
+  padding-top: 0rem;
+}
+
+.navbar-nav{
+  margin:auto;
+}
+
+.Top{
+  border-bottom: .1rem solid grey; 
+}
+
+.bottomNav{
+  border-top: .1rem solid grey;
+ 
+}
+
+#spinner {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+#shoutOutSpinner {
+  display: flex;
+  justify-content: center;
+  margin-top:3rem;
+}
+
+#dash-money {
+  padding-top: 4px;
+  margin-left: 5px;
+    
+}
+
+p{
+  word-wrap: break-word;
+}
+
+.modal-backcolor-primary {
+  background-color:rgb(250, 250, 250);
+ }
+
+.modal-backcolor-dark{
+  background-color:rgb(20,20,20);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* https://stackoverflow.com/questions/28096346/how-to-change-background-opacity-when-bootstrap-modal-is-open */
+/* modal-backdrop-nochange.show{
+  
+} */
+
+.modal-backdrop-dark.show {
+  background-color: rgb(150,150, 150, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.footer{
+  margin-bottom: 6rem;
 }

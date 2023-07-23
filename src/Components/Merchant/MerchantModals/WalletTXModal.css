@@ -1,0 +1,38 @@
+.satBalImpactreceived{
+  color: green;
+}
+.satBalImpactsent{
+  color: red;
+}
+
+.txHistory tr td{
+  padding-top: .1rem;
+  padding-bottom: .1rem;
+  text-align: center;
+}
+.txHistory tr:hover{
+background-color: #0d6efd;
+
+}
+
+
+.txHistory tr:hover td{
+  color:white;
+  border-radius: 1rem;
+}
+
+.txHistory tr th{
+  border-radius: 1rem;
+  padding-top: .4rem;
+  padding-bottom: .4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  background-color: #0d6efd;
+  color: white;
+}
+
+.txHistory tr #rowWider{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}

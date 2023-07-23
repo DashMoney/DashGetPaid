@@ -1,0 +1,163 @@
+.paddingBadge {
+  margin-right: .5rem;
+  margin-left: .5rem;
+ }
+
+ .paddingReqBadge{
+  margin-left: .5rem;
+  padding-bottom: .1rem;
+ }
+
+ .paddingTop{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+ }
+
+ 
+ .indent{
+   margin-left: .5rem;
+ }
+
+ .indentMembers{
+  margin-left: 1rem;
+}
+
+#card{
+  margin: .3rem;
+
+}
+
+#cardtext{
+  
+}
+
+.cartTotal{
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  margin-right: 1rem;
+ }
+
+ .cardTitle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+
+ .cartItemTitle{
+  display: flex;
+  
+  align-items: center;
+ }
+
+ /* .requestbtn{
+  padding-top:.2rem;
+  padding-right:.4rem;
+  padding-left: .6rem;
+  padding-bottom: .1rem;
+  font-size: large;
+ } */
+
+ .textsmaller{
+  font-size: medium;
+  text-align: right;
+ }
+
+ .sendReqTrial{
+  display:flex;
+  align-items: center;
+ }
+ 
+ 
+ div {
+   word-wrap: break-word;
+ }
+ 
+ 
+ .positionButton {
+   display: flex;
+   margin-top: 3rem;
+ }
+ 
+ .id-line{
+  margin-top: 0.5rem;
+   display:flex;
+   flex-wrap: wrap;
+   word-wrap: break-word;
+   word-break: break-all;
+ }
+ 
+ p {
+   word-wrap: break-word;
+ }
+ 
+ .ButtonRight{
+  margin-right: 1rem;
+  padding-bottom: .8rem;
+  display: flex;
+  justify-content:flex-end ;
+  border-bottom: 0.1rem solid white;
+ }
+
+ .ButtonRightNoUnderline{
+  margin-top: 1rem;
+  margin-right: 1rem;
+  padding-bottom: .8rem;
+  display: flex;
+  justify-content:flex-end ;
+ }
+
+ .BalanceRight{
+  display: flex;
+  padding-right: 3rem;
+  justify-content:flex-end ;
+  padding-bottom: .5rem;
+  border-bottom: 0.1rem solid white;
+ }
+
+ .BalanceRightNoUnderline{
+  display: flex;
+  margin-right: 1rem;
+  justify-content:flex-end ;
+ }
+
+
+
+ .Underline{
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  margin-right: 1rem;
+  padding-top: 0.6rem;
+  border-top: 0.1rem solid white;
+ }
+
+ .cardTitleUnderlineAbove{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.6rem;
+  border-top: 0.1rem solid white;
+ }
+ 
+ .cardTitleUnderlineBelow{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.6rem;
+  border-bottom: 0.1rem solid white;
+ }
+ .JustUnderline{
+
+  border-bottom: 0.1rem solid white;
+ }
+
+ .PriceRight{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
+ }
+
+ .ButtonFontBigger{
+  font-size: larger;
+ }

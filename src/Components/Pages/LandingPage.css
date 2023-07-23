@@ -1,0 +1,28 @@
+.paragraph-shift {
+  margin-left: 1rem;
+}
+
+.heading-shift{
+  text-align: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.positionCaption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#dash-landing-page{
+  border: 5px solid #999;
+}
+
+#title-bar{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
