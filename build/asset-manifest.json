@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0e72f2cf.css",
+    "main.js": "/static/js/main.e6627b9c.js",
+    "static/media/dash_digital-cash_logo_2018_rgb_for_screens.png": "/static/media/dash_digital-cash_logo_2018_rgb_for_screens.d1b25065360225ffd5c0.png",
+    "index.html": "/index.html",
+    "static/media/blue-d.svg": "/static/media/blue-d.00992e272a986325ab15d09da44d9308.svg",
+    "static/media/white-d.svg": "/static/media/white-d.e2d921d30cb80ca9dd988888f529b967.svg",
+    "main.0e72f2cf.css.map": "/static/css/main.0e72f2cf.css.map",
+    "main.e6627b9c.js.map": "/static/js/main.e6627b9c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e72f2cf.css",
+    "static/js/main.e6627b9c.js"
+  ]
+}
