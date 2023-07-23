@@ -857,7 +857,8 @@ class App extends React.Component {
               if (d.length === 0) {
                 this.setState(
                   {
-                    recentOrders: "No Orders", 
+                    //recentOrders: "No Orders", 
+                    recentOrders: [], 
                    isLoadingRecentOrders: false,
                   }
                   //,() => this.getNamesForDGTOrders()

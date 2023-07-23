@@ -33,7 +33,9 @@ class WalletTXModal extends React.Component {
 
   handleTxOrderName = (tx) => {
 
-    if(tx.txId === undefined || this.props.DGPOrders === "No Orders"){
+    if(tx.txId === undefined ||
+       this.props.DGPOrders === "No Orders"
+       ){
       return '';
     }else{ //ELSE 1
 
