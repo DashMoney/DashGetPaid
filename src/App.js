@@ -730,8 +730,10 @@ class App extends React.Component {
 
     retrieveNameByRecord()
       .then((d) => {
+
         let nameRetrieved = d[0].toJSON();
-       // console.log("Name retrieved:\n", nameRetrieved);
+      
+        //console.log("Name retrieved:\n", nameRetrieved);
 
         //******************** */
         let lfObject = {

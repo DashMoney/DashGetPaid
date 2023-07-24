@@ -1,16 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.0e72f2cf.css",
-    "main.js": "/static/js/main.465a5764.js",
+    "main.js": "/static/js/main.6b7a89a6.js",
+    "static/media/IMG_1533.jpg": "/static/media/IMG_1533.86b1195a77844b22cf16.jpg",
+    "static/media/IMG_1532.jpg": "/static/media/IMG_1532.bb2b37ac45530d1f6e14.jpg",
+    "static/media/IMG_1543.jpg": "/static/media/IMG_1543.c500feb2fd4dfd6a3f2d.jpg",
+    "static/media/IMG_1544.jpg": "/static/media/IMG_1544.b28ba199f1a8c4ef3bb4.jpg",
+    "static/media/IMG_1545.jpg": "/static/media/IMG_1545.589be53d5ec457e9c074.jpg",
+    "static/media/IMG_1538.jpg": "/static/media/IMG_1538.6bfce672a692b11481bf.jpg",
+    "static/media/IMG_1546.jpg": "/static/media/IMG_1546.7649e469638c2088429b.jpg",
     "static/media/dash_digital-cash_logo_2018_rgb_for_screens.png": "/static/media/dash_digital-cash_logo_2018_rgb_for_screens.d1b25065360225ffd5c0.png",
     "index.html": "/index.html",
     "static/media/blue-d.svg": "/static/media/blue-d.00992e272a986325ab15d09da44d9308.svg",
     "static/media/white-d.svg": "/static/media/white-d.e2d921d30cb80ca9dd988888f529b967.svg",
     "main.0e72f2cf.css.map": "/static/css/main.0e72f2cf.css.map",
-    "main.465a5764.js.map": "/static/js/main.465a5764.js.map"
+    "main.6b7a89a6.js.map": "/static/js/main.6b7a89a6.js.map"
   },
   "entrypoints": [
     "static/css/main.0e72f2cf.css",
-    "static/js/main.465a5764.js"
+    "static/js/main.6b7a89a6.js"
   ]
 }
