@@ -61,7 +61,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPCustomerFindMerchant} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Customer - Preview</b>
             </Figure.Caption>
             </div>
@@ -90,7 +90,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPSlide2} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Customer Shopping - Preview</b>
             </Figure.Caption>
             </div>
@@ -111,7 +111,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPSlide3} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Customer Cart - Preview</b>
             </Figure.Caption>
             </div>
@@ -132,7 +132,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPSlide4} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Customer Order - Preview</b>
             </Figure.Caption>
             </div>
@@ -153,7 +153,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPSlide7} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Customer Purchase - Preview</b>
             </Figure.Caption>
             </div>
@@ -174,7 +174,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPSlide5} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Merchant Store - Preview</b>
             </Figure.Caption>
             </div>
@@ -195,7 +195,7 @@ class LandingPage extends React.Component {
            fluid  rounded id="dash-landing-page" src={DGPSlide6} alt="DGP Landing Page Preview" 
          />
          <p></p>
-         <Figure.Caption>
+         <Figure.Caption className="figureCaption">
            <b>Merchant Orders - Preview</b>
             </Figure.Caption>
             </div>

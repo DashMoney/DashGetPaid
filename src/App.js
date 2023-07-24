@@ -1286,7 +1286,7 @@ class App extends React.Component {
               const client = new Dash.Client(clientOpts);
           
               const getDocuments = async () => {
-                console.log("Called Get DGP Recent Orders");
+                console.log("Called Get Active Orders");
           
           
                 return client.platform.documents.get("DGPContract.dgporder", {
@@ -1430,7 +1430,7 @@ class App extends React.Component {
     );
 
     const getDocuments = async () => {
-      console.log("Called Get Recent Orders Stores");
+      console.log("Called Get Active Orders Stores");
 
       return client.platform.documents.get("DGPContract.dgpstore", {
         where: [["$ownerId", "in", arrayOfToIds]],
@@ -1496,7 +1496,7 @@ class App extends React.Component {
     );
 
     const getDocuments = async () => {
-      console.log("Querying Merchant's DGM Documents.");
+      console.log("Querying Active DGM Documents.");
       
       return client.platform.documents.get("DGMContract.dgmaddress", {
         where: [["$ownerId", "in", arrayOfToIds]],
