@@ -266,9 +266,18 @@ class PlaceOrderModal extends React.Component {
                   <b>Send Payment to {this.props.merchantStoreName}</b>
                 </Button>
               ) : (
-                <Button  disabled variant="primary">
-                <b>Send Payment to {this.props.merchantStoreName}</b>
+                <>
+                {this.verifySufficientFunds()?
+                <> <Button  disabled variant="primary">
+                <b>Wallet Loading..</b>
               </Button>
+              </>:<> 
+              <Button  disabled variant="primary">
+                <b>Insufficient Funds</b>
+              </Button>
+              </>
+              }
+              </>
               )}
              </div>  
 

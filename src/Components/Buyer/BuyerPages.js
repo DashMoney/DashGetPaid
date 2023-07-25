@@ -593,6 +593,9 @@ class BuyerPages extends React.Component {
         });
       })
       .finally(() => client.disconnect());
+
+// Added BELOW to go retrieve the wallet after purchase so the wallet balance will update. Trying to maximize the time for order document creation but also load wallet at the same time. ->
+      this.props.getWalletForNewOrder();
   };
 
   //************* FORM HANDLING ************* */

@@ -66,55 +66,55 @@ class YourOrders extends React.Component {
     if(timeDifference < 15000){
       return "Just now"
     }else if(timeDifference <44000){
-      return "A few moments ago"
+      return "Few moments ago"
     }else if(timeDifference <90000){
-      return "1 minute ago"
+      return "1 min ago"
     }else if(timeDifference <150000){
-      return "2 minutes ago"
+      return "2 min ago"
     }else if(timeDifference <210000){
-      return "3 minutes ago"
+      return "3 min ago"
     }else if(timeDifference <270000){
-      return "4 minutes ago"
+      return "4 min ago"
     }else if(timeDifference <330000){
-      return "5 minutes ago"
+      return "5 min ago"
     }else if(timeDifference <390000){
-      return "6 minutes ago"
+      return "6 min ago"
     }else if(timeDifference <450000){
-      return "7 minutes ago"
+      return "7 min ago"
     }else if(timeDifference <510000){
-      return "8 minutes ago"  
+      return "8 min ago"  
     }else if(timeDifference <570000){
-      return "9 minutes ago"  
+      return "9 min ago"  
     }else if(timeDifference <660000){
-      return "10 minutes ago"
+      return "10 min ago"
     }else if(timeDifference <840000){
-      return "12 minutes ago"
+      return "12 min ago"
     }else if(timeDifference <1020000){
-      return "15 minutes ago"
+      return "15 min ago"
     }else if(timeDifference <1140000){
-      return "18 minutes ago"
+      return "18 min ago"
     }else if(timeDifference <1380000){
-      return "20 minutes ago"
+      return "20 min ago"
     }else if(timeDifference <1650000){
-      return "25 minutes ago"
+      return "25 min ago"
     }else if(timeDifference <1950000){
-      return "30 minutes ago"
+      return "30 min ago"
     }else if(timeDifference <2250000){
-      return "35 minutes ago"
+      return "35 min ago"
     }else if(timeDifference <2550000){
-      return "40 minutes ago"
+      return "40 min ago"
     }else if(timeDifference <3000000){
-      return "45 minutes ago"
+      return "45 min ago"
     }else if(timeDifference <5400000){
-      return "1 hour ago"
+      return "1 hr ago"
     }else if(timeDifference <9000000){
-      return "2 hours ago"
+      return "2 hrs ago"
     }else if(timeDifference <12600000){
-      return "3 hours ago"
+      return "3 hrs ago"
     }else if(timeDifference <18000000){
-      return "5 hours ago"
+      return "5 hrs ago"
     }else if(timeDifference <43200000){
-      return "Many hours ago"
+      return "Many hrs ago"
     }else if(timeDifference <84600000){
       return "About a day ago"
     }
@@ -258,11 +258,18 @@ class YourOrders extends React.Component {
        // console.log('Order Items and Qty:', orderItemsAndQty);
 
         let orderItems = orderItemsAndQty.map((item, index)=>{
-          return <Row key={index}>
-          <Col xs={6} md={4}><h5>{item[0].name}</h5> </Col>
-          <Col xs={1} md={4}><h5>{item[1]}</h5> </Col>
-          <Col xs={5} md={4}><h5><b>{this.handleDenomDisplay(item[0].price, item[1])}</b></h5></Col>
-          </Row>
+
+          return <div className="cardTitle" key={index}>
+          <b>{item[0].name}</b> 
+          <b>{item[1]}</b> 
+          <b>{this.handleDenomDisplay(item[0].price, item[1])}</b>
+          </div>
+
+          // return <Row key={index}>
+          // <Col xs={6} md={4}><h5>{item[0].name}</h5> </Col>
+          // <Col xs={1} md={4}><h5>{item[1]}</h5> </Col>
+          // <Col xs={5} md={4}><h5><b>{this.handleDenomDisplay(item[0].price, item[1])}</b></h5></Col>
+          // </Row>
     
         });
 
@@ -272,11 +279,11 @@ class YourOrders extends React.Component {
               <Card.Body>
                 <Card.Title className="cardTitleUnderlineBelow">
       
-                  <h2
+                  <h5
                     // style={{ color: "#008de4" }}
                    ><b>{orderNameDoc.label}</b>
                     
-                    </h2>
+                    </h5>
                     
                       {/* {this.verifyPayment(orderItemsAndQty, order)} */}
                     
@@ -289,7 +296,7 @@ class YourOrders extends React.Component {
       
       
                   <span 
-                  // className="textsmaller"
+                   className="textsmaller"
                   >
                     {this.getRelativeTimeAgo(order.timeStamp, d)}
                   </span>
@@ -298,9 +305,9 @@ class YourOrders extends React.Component {
                 <Row>
                 <Col xs={1} md={1}> </Col>
             <Col xs={4} md={4}><h5>Item</h5> </Col>
-            <Col  xs={2} md={2}><h5>Qty</h5> </Col>
+            <Col  xs={3} md={3}><h5>Qty</h5> </Col>
             <Col xs={4} md={4}><h5>Subtotal</h5> </Col>
-            <Col xs={1} md={1}></Col>
+            
             </Row>
                 <Container>
                   {orderItems}

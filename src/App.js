@@ -624,7 +624,7 @@ class App extends React.Component {
       //console.log(account);
       //console.log(account.getTotalBalance());
       // console.log(account.getUnusedAddress().address);
-      //console.log(account.getTransactionHistory());
+      //console.log('TX History: ', account.getTransactionHistory());
 
       this.setState({
         //accountWallet: client, //Can I use this for the send TX?-> NO
@@ -670,7 +670,7 @@ class App extends React.Component {
       .finally(() => client.disconnect());
   };
 
-  getWalletForNewOrder = () => {
+  getWalletForNewOrder = () => { //For Merchant to Load New Orders. But also Buyer for wallet reload after purchase
     
     this.setState({
       isLoadingWallet: true,
@@ -1662,6 +1662,8 @@ class App extends React.Component {
 
               accountBalance={this.state.accountBalance}
               accountHistory={this.state.accountHistory}
+
+              getWalletForNewOrder={this.getWalletForNewOrder}
 
               DataContractDGP={this.state.DataContractDGP}
               DataContractDGM={this.state.DataContractDGM}
