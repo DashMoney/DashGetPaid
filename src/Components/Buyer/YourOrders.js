@@ -304,9 +304,9 @@ class YourOrders extends React.Component {
       
                 <Row>
                 <Col xs={1} md={1}> </Col>
-            <Col xs={4} md={4}><h5>Item</h5> </Col>
-            <Col  xs={3} md={3}><h5>Qty</h5> </Col>
-            <Col xs={4} md={4}><h5>Subtotal</h5> </Col>
+            <Col xs={4} md={4}><b>Item</b> </Col>
+            <Col  xs={3} md={3}><b>Qty</b> </Col>
+            <Col xs={4} md={4}><b>Subtotal</b> </Col>
             
             </Row>
                 <Container>
@@ -315,13 +315,13 @@ class YourOrders extends React.Component {
       
              <p></p>
                           <div className='Underline' >
-                            <h4><b>Total</b> ({this.handleTotalItems(orderItemsAndQty)})<b>:</b></h4>
+                            <h5><b>Total</b> ({this.handleTotalItems(orderItemsAndQty)})<b>:</b></h5>
                             
                             {this.handleTotal(orderItemsAndQty)}
                           </div> 
                   <p></p>
                 <div className='cardTitleUnderlineAbove' >
-                <h5>Order Messages</h5>
+                <h6>Order Messages</h6>
                 </div>
       
                 {order.comment !== undefined ? 

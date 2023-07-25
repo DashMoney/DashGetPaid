@@ -416,13 +416,13 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
 
        <p></p>
                     <div className='Underline' >
-                      <h4><b>Total</b> ({this.handleTotalItems(orderItemsAndQty)})<b>:</b></h4>
+                      <h5><b>Total</b> ({this.handleTotalItems(orderItemsAndQty)})<b>:</b></h5>
                       
                       {this.handleTotal(orderItemsAndQty)}
                     </div> 
             <p></p>
           <div className='cardTitleUnderlineAbove' >
-          <h5>Order Messages</h5>
+          <h6>Order Messages</h6>
           </div>
 
           {order.comment !== undefined ? 
