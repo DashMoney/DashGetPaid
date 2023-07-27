@@ -267,7 +267,7 @@ class PlaceOrderModal extends React.Component {
                 </Button>
               ) : (
                 <>
-                {this.verifySufficientFunds()?
+                {this.props.isLoadingWallet ?
                 <> <Button  disabled variant="primary">
                 <b>Wallet Loading..</b>
               </Button>

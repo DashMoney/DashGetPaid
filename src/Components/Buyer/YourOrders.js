@@ -10,7 +10,7 @@ import Row from 'react-bootstrap/Row';
 const Dash = require("dash");
 
 const {
-  Essentials: { Buffer },
+ // Essentials: { Buffer },
   PlatformProtocol: { Identifier },
 } = Dash;
 
