@@ -892,13 +892,28 @@ class App extends React.Component {
   }
 
   helperRecentOrders = (theDocArray) =>{
-    //REFACTOR JUST MOVE THE GETTING THE UNIQUE MERCHANT iDS OUT OF EACH AND JUST SEND AS THE PARAMETER -> getRecentOrdersItems needs the docs to get the cart to get the items -> okay
+    //REFACTOR JUST MOVE THE GETTING THE UNIQUE MERCHANT iDS OUT OF EACH AND JUST SEND AS THE PARAMETER -> getRecentOrdersItems needs the docs to get the cart to get the items -> refactor later -> 
     this.getRecentOrdersNames(theDocArray);
     this.getRecentOrdersStores(theDocArray);
     this.getRecentOrdersDGMAddresses(theDocArray);
     this.getRecentOrdersItems(theDocArray);
     this.getRecentOrdersMsgs(theDocArray);
   }
+
+  // callRecentOrdersRace = () => {
+  //   this.setState({
+  //     recentOrdersRetrievalStatus: this.state.recentOrdersRetrievalStatus + 1,
+  //   },()=>this.checkRecentOrdersRace())
+  // }
+
+  checkRecentOrdersRace = () => {
+    if(this.state.recentOrdersRetrievalStatus > 4){
+      this.setState({
+        isLoadingRecentOrders: false,
+      })
+    }
+  }
+
 
   getRecentOrdersNames = (docArray) => {
     const clientOpts = {
@@ -946,18 +961,23 @@ class App extends React.Component {
             nameDocArray = [n.toJSON(), ...nameDocArray];
           }
 
-        if(this.state.recentOrdersRetrievalStatus < 4){
-          this.setState({
-            recentOrdersNames: nameDocArray,
-            recentOrdersRetrievalStatus: 
-                this.state.recentOrdersRetrievalStatus + 1, 
-          });
-        } else {
+        // if(this.state.recentOrdersRetrievalStatus < 4){
+        //   this.setState({
+        //     recentOrdersNames: nameDocArray,
+        //     recentOrdersRetrievalStatus: 
+        //         this.state.recentOrdersRetrievalStatus + 1, 
+        //   });
+        // } else {
+        //   this.setState({
+        //     recentOrdersNames: nameDocArray, 
+        //     isLoadingRecentOrders: false,
+        //   });
+        // }
+
           this.setState({
             recentOrdersNames: nameDocArray, 
-            isLoadingRecentOrders: false,
-          });
-        }
+          recentOrdersRetrievalStatus: this.state.recentOrdersRetrievalStatus + 1,
+        },()=>this.checkRecentOrdersRace());
 
         })
         .catch((e) => {
@@ -1011,18 +1031,24 @@ class App extends React.Component {
             docArray = [...docArray, n.toJSON()];
           }
 
-          if(this.state.recentOrdersRetrievalStatus < 4){
-            this.setState({
-              recentOrdersStores: docArray,
-              recentOrdersRetrievalStatus: 
-                  this.state.recentOrdersRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-              recentOrdersStores: docArray, 
-              isLoadingRecentOrders: false,
-            });
-          }
+          // if(this.state.recentOrdersRetrievalStatus < 4){
+          //   this.setState({
+          //     recentOrdersStores: docArray,
+          //     recentOrdersRetrievalStatus: 
+          //         this.state.recentOrdersRetrievalStatus + 1, 
+          //   });
+          // } else {
+          //   this.setState({
+          //     recentOrdersStores: docArray, 
+          //     isLoadingRecentOrders: false,
+          //   });
+          // }
+
+
+          this.setState({
+          recentOrdersStores: docArray,
+          recentOrdersRetrievalStatus: this.state.recentOrdersRetrievalStatus + 1,
+        },()=>this.checkRecentOrdersRace());
          
       })
       .catch((e) => {
@@ -1076,18 +1102,25 @@ class App extends React.Component {
           docArray = [...docArray, n.toJSON()];
         }
 
-        if(this.state.recentOrdersRetrievalStatus < 4){
-          this.setState({
-            recentOrdersDGMAddresses: docArray,
-            recentOrdersRetrievalStatus: 
-                this.state.recentOrdersRetrievalStatus + 1, 
-          });
-        } else {
-          this.setState({
-            recentOrdersDGMAddresses: docArray, 
-            isLoadingRecentOrders: false,
-          });
-        }
+        // if(this.state.recentOrdersRetrievalStatus < 4){
+        //   this.setState({
+        //     recentOrdersDGMAddresses: docArray,
+        //     recentOrdersRetrievalStatus: 
+        //         this.state.recentOrdersRetrievalStatus + 1, 
+        //   });
+        // } else {
+        //   this.setState({
+        //     recentOrdersDGMAddresses: docArray, 
+        //     isLoadingRecentOrders: false,
+        //   });
+        // }
+
+        this.setState({
+        recentOrdersDGMAddresses: docArray,
+        recentOrdersRetrievalStatus: this.state.recentOrdersRetrievalStatus + 1,
+      },()=>this.checkRecentOrdersRace());
+
+        
         
       })
       .catch((e) => {
@@ -1155,18 +1188,24 @@ class App extends React.Component {
           docArray = [...docArray, n.toJSON()];
         }
 
-        if(this.state.recentOrdersRetrievalStatus < 4){
+        // if(this.state.recentOrdersRetrievalStatus < 4){
+        //   this.setState({
+        //     recentOrdersItems: docArray,
+        //     recentOrdersRetrievalStatus: 
+        //         this.state.recentOrdersRetrievalStatus + 1, 
+        //   });
+        // } else {
+        //   this.setState({
+        //     recentOrdersItems: docArray, 
+        //     isLoadingRecentOrders: false,
+        //   });
+        // }
+
+
           this.setState({
-            recentOrdersItems: docArray,
-            recentOrdersRetrievalStatus: 
-                this.state.recentOrdersRetrievalStatus + 1, 
-          });
-        } else {
-          this.setState({
-            recentOrdersItems: docArray, 
-            isLoadingRecentOrders: false,
-          });
-        }
+                recentOrdersItems: docArray,
+                recentOrdersRetrievalStatus: this.state.recentOrdersRetrievalStatus + 1,
+              },()=>this.checkRecentOrdersRace());
         
       })
       .catch((e) => {
@@ -1228,18 +1267,23 @@ class App extends React.Component {
               docArray = [...docArray, n.toJSON()];
             }
   
-            if(this.state.recentOrdersRetrievalStatus < 4){
-              this.setState({
-                recentOrdersMessages: docArray,
-                recentOrdersRetrievalStatus: 
-                    this.state.recentOrdersRetrievalStatus + 1, 
-              });
-            } else {
-              this.setState({
-                recentOrdersMessages: docArray, 
-                isLoadingRecentOrders: false,
-              });
-            }
+            // if(this.state.recentOrdersRetrievalStatus < 4){
+            //   this.setState({
+            //     recentOrdersMessages: docArray,
+            //     recentOrdersRetrievalStatus: 
+            //         this.state.recentOrdersRetrievalStatus + 1, 
+            //   });
+            // } else {
+            //   this.setState({
+            //     recentOrdersMessages: docArray, 
+            //     isLoadingRecentOrders: false,
+            //   });
+            // }
+
+            this.setState({
+              recentOrdersMessages: docArray,
+              recentOrdersRetrievalStatus: this.state.recentOrdersRetrievalStatus + 1,
+            },()=>this.checkRecentOrdersRace());
           
         })
         .catch((e) => {
@@ -1263,6 +1307,14 @@ class App extends React.Component {
 
       activeRetrievalStatus: 0,
   */
+
+  checkActiveOrdersRace = () => {
+        if(this.state.activeRetrievalStatus > 2){
+          this.setState({
+            isLoadingActive: false,
+          })
+        }
+      }
 
   getActiveOrders = () => {
     /**This is Active QUERY
@@ -1382,18 +1434,23 @@ class App extends React.Component {
             nameDocArray = [n.toJSON(), ...nameDocArray];
           }
 
-        if(this.state.activeRetrievalStatus < 2){
-          this.setState({
-            activeOrdersNames: nameDocArray,
-            activeRetrievalStatus: 
-                this.state.activeRetrievalStatus + 1, 
-          });
-        } else {
-          this.setState({
-            activeOrdersNames: nameDocArray, 
-            isLoadingActive: false,
-          });
-        }
+        // if(this.state.activeRetrievalStatus < 2){
+        //   this.setState({
+        //     activeOrdersNames: nameDocArray,
+        //     activeRetrievalStatus: 
+        //         this.state.activeRetrievalStatus + 1, 
+        //   });
+        // } else {
+        //   this.setState({
+        //     activeOrdersNames: nameDocArray, 
+        //     isLoadingActive: false,
+        //   });
+        // }
+
+        this.setState({
+          activeOrdersNames: nameDocArray, 
+          activeRetrievalStatus: this.state.activeRetrievalStatus + 1,
+        },()=>this.checkActiveOrdersRace());
 
         })
         .catch((e) => {
@@ -1447,18 +1504,23 @@ class App extends React.Component {
             docArray = [...docArray, n.toJSON()];
           }
 
-          if(this.state.activeRetrievalStatus < 2){
-            this.setState({
-              activeOrdersStores: docArray,
-              activeRetrievalStatus: 
-                  this.state.activeRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-              activeOrdersStores: docArray, 
-              isLoadingActive: false,
-            });
-          }
+          // if(this.state.activeRetrievalStatus < 2){
+          //   this.setState({
+          //     activeOrdersStores: docArray,
+          //     activeRetrievalStatus: 
+          //         this.state.activeRetrievalStatus + 1, 
+          //   });
+          // } else {
+          //   this.setState({
+          //     activeOrdersStores: docArray, 
+          //     isLoadingActive: false,
+          //   });
+          // }
+
+          this.setState({
+            activeOrdersStores: docArray, 
+            activeRetrievalStatus: this.state.activeRetrievalStatus + 1,
+          },()=>this.checkActiveOrdersRace());
          
       })
       .catch((e) => {
@@ -1512,18 +1574,23 @@ class App extends React.Component {
           docArray = [...docArray, n.toJSON()];
         }
 
-        if(this.state.activeRetrievalStatus < 2){
-          this.setState({
-            activeOrdersAddresses: docArray,
-            activeRetrievalStatus: 
-                this.state.activeRetrievalStatus + 1, 
-          });
-        } else {
-          this.setState({
-            activeOrdersAddresses: docArray, 
-            isLoadingActive: false,
-          });
-        }
+        // if(this.state.activeRetrievalStatus < 2){
+        //   this.setState({
+        //     activeOrdersAddresses: docArray,
+        //     activeRetrievalStatus: 
+        //         this.state.activeRetrievalStatus + 1, 
+        //   });
+        // } else {
+        //   this.setState({
+        //     activeOrdersAddresses: docArray, 
+        //     isLoadingActive: false,
+        //   });
+        // }
+
+        this.setState({
+          activeOrdersAddresses: docArray, 
+          activeRetrievalStatus: this.state.activeRetrievalStatus + 1,
+        },()=>this.checkActiveOrdersRace());
         
       })
       .catch((e) => {

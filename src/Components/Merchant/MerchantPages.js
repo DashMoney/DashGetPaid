@@ -39,7 +39,7 @@ class MerchantPages extends React.Component {
       LoadingStore: true,
       LoadingItems: true,
 
-      DGPStoreRetrievalStatus:0,
+      DGPStoreRetrievalStatus:0, //This is for My Store as Merchant -> it is never reset
       DGMAddress: [],
       DGPStore: [],
       DGPItems: [],
@@ -49,7 +49,7 @@ class MerchantPages extends React.Component {
       DGPOrders: [],
       DGPOrdersNames: [],
       DGPOrdersMsgs: [],
-      ordersRetrievalStatus: 0,
+      ordersRetrievalStatus: 0, // This if for orders placed to you -> it is reset
 
       messageOrderId: '',
       messageStoreOwnerName: '',
@@ -214,6 +214,15 @@ class MerchantPages extends React.Component {
     this.getDGMAddress();
   };
 
+  checkDGPStoreRace = () => {
+    if(this.state.DGPStoreRetrievalStatus > 1){
+      this.setState({
+             LoadingStore: false,
+             LoadingOrders: false,
+      });
+    }
+  }
+
   getDGPStoreMerchant = () => {
     //WHat if I just put all the clients in one and pass the client to the function??? ->
 
@@ -242,19 +251,10 @@ class MerchantPages extends React.Component {
         if (d.length === 0) {
           console.log("No Store");
 
-          if(this.state.DGPStoreRetrievalStatus < 1){
-            this.setState({
-              DGPStore: "No Store",
-              DGPStoreRetrievalStatus: 
-                  this.state.DGPStoreRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-              DGPStore: "No Store", 
-              LoadingStore: false,
-              LoadingOrders: false,
-            });
-          }
+          this.setState({
+          DGPStore: "No Store",
+          DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+        },()=>this.checkDGPStoreRace());
           
         } else {
           for (const n of d) {
@@ -262,19 +262,10 @@ class MerchantPages extends React.Component {
             docArray = [...docArray, n.toJSON()];
           }
 
-          if(this.state.DGPStoreRetrievalStatus < 1){
-            this.setState({
-              DGPStore: docArray,
-              DGPStoreRetrievalStatus: 
-                  this.state.DGPStoreRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-              DGPStore: docArray, 
-              LoadingStore: false,
-              LoadingOrders: false,
-            });
-          }
+          this.setState({
+            DGPStore: docArray,
+          DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+        },()=>this.checkDGPStoreRace());
   
         } //Ends the else
       })
@@ -314,20 +305,12 @@ class MerchantPages extends React.Component {
       .then((d) => {
         let docArray = [];
 
-        if (d.length === 0) {
-          if(this.state.DGPStoreRetrievalStatus < 1){
-            this.setState({
-              DGMAddress: "No Address",
-              DGPStoreRetrievalStatus: 
-                  this.state.DGPStoreRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-              DGMAddress: "No Address", 
-              LoadingStore: false,
-              LoadingOrders: false,
-            });
-          }
+         if (d.length === 0) {
+
+        this.setState({
+        DGMAddress: "No Address",
+        DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+      },()=>this.checkDGPStoreRace());
           
         } else {
 
@@ -336,19 +319,11 @@ class MerchantPages extends React.Component {
             docArray = [...docArray, n.toJSON()];
           }
 
-          if(this.state.DGPStoreRetrievalStatus < 1){
-            this.setState({
-               DGMAddress: docArray,
-              DGPStoreRetrievalStatus: 
-                  this.state.DGPStoreRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-               DGMAddress: docArray, 
-              LoadingStore: false,
-              LoadingOrders: false,
-            });
-          }
+          this.setState({
+            DGMAddress: docArray,
+            DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+          },()=>this.checkDGPStoreRace());
+
         } //Ends the else
       })
       .catch((e) => {
@@ -363,7 +338,7 @@ class MerchantPages extends React.Component {
   };
 
   getDGPItemsMerchant = () => {
-    //WHat if I just put all the clients in one and pass the client to the function??? ->
+    
     if (!this.state.LoadingItems) {
       this.setState({
         LoadingItems: true,
@@ -507,6 +482,13 @@ class MerchantPages extends React.Component {
   }
 
 //###  ####  #####  ####  ###  ##
+checkOrdersRace = () => {
+  if(this.state.ordersRetrievalStatus > 1){
+    this.setState({
+      LoadingOrders: false,
+    });
+  }
+}
 
   getNamesForMerchantOrders = (docArray) => {
     const clientOpts = {
@@ -547,7 +529,7 @@ class MerchantPages extends React.Component {
         .then((d) => {
           //WHAT IF THERE ARE NO NAMES?
           if (d.length === 0) {
-           // console.log("No DPNS domain documents retrieved.");
+            console.log("No DPNS domain documents retrieved.");
           }
 
           let nameDocArray = [];
@@ -558,18 +540,11 @@ class MerchantPages extends React.Component {
             nameDocArray = [n.toJSON(), ...nameDocArray];
           }
         //  console.log(`DPNS Name Docs: ${nameDocArray}`);
-        if(this.state.ordersRetrievalStatus < 1){
-          this.setState({
-            DGPOrdersNames: nameDocArray,
-            ordersRetrievalStatus: 
-                this.state.ordersRetrievalStatus + 1, 
-          });
-        } else {
-          this.setState({
-            DGPOrdersNames: nameDocArray, 
-            LoadingOrders: false,
-          });
-        }
+
+        this.setState({
+          DGPOrdersNames: nameDocArray,
+          ordersRetrievalStatus: this.state.ordersRetrievalStatus + 1,
+        },()=>this.checkOrdersRace());
           
 
         })
@@ -624,6 +599,10 @@ class MerchantPages extends React.Component {
 
         if(d.length === 0){
           //console.log('No Messages for orders');
+          this.setState({
+            ordersRetrievalStatus: this.state.ordersRetrievalStatus + 1,
+          },()=>this.checkOrdersRace());
+
         }else{
 
           for (const n of d) {
@@ -631,19 +610,12 @@ class MerchantPages extends React.Component {
             docArray = [...docArray, n.toJSON()];
           }
 
-          if(this.state.ordersRetrievalStatus < 1){
-            this.setState({
-              DGPOrdersMsgs: docArray,
-              ordersRetrievalStatus: 
-                  this.state.ordersRetrievalStatus + 1, 
-            });
-          } else {
-            this.setState({
-              DGPOrdersMsgs: docArray, 
-              LoadingOrders: false,
-            });
-          }
-        }//This closes the if statement
+        this.setState({
+          DGPOrdersMsgs: docArray,
+          ordersRetrievalStatus: this.state.ordersRetrievalStatus + 1,
+        },()=>this.checkOrdersRace());
+
+         }//This closes the if statement
       })
       .catch((e) => {
         
