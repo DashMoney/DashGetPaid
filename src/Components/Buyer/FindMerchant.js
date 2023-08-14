@@ -297,7 +297,8 @@ arrayOfToIds = [...setOfToIds];
               </>
             ) : (
               <>
-              {this.props.recentOrders.length === 0?
+              {this.props.recentOrders.length === 0 &&
+               !this.props.isLoadingRecentOrders?
               <>
               <p>Merchants, you have ordered from will appear here</p>
               </>

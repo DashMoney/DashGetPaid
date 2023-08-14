@@ -39,17 +39,23 @@ class MerchantPages extends React.Component {
       LoadingStore: true,
       LoadingItems: true,
 
-      DGPStoreRetrievalStatus:0, //This is for My Store as Merchant -> it is never reset
+       
       DGMAddress: [],
       DGPStore: [],
       DGPItems: [],
       selectedItem: {},
       selectedItemIndex: 0,
 
+      store1: false, //This is for My Store as Merchant -> it is never reset
+      store2: false,
+
+
       DGPOrders: [],
       DGPOrdersNames: [],
       DGPOrdersMsgs: [],
-      ordersRetrievalStatus: 0, // This if for orders placed to you -> it is reset
+
+      order1: false, // This if for orders placed to you -> it is reset
+      order2: false,
 
       messageOrderId: '',
       messageStoreOwnerName: '',
@@ -215,7 +221,7 @@ class MerchantPages extends React.Component {
   };
 
   checkDGPStoreRace = () => {
-    if(this.state.DGPStoreRetrievalStatus > 1){
+    if(this.state.store1 && this.state.store2){
       this.setState({
              LoadingStore: false,
              LoadingOrders: false,
@@ -253,7 +259,7 @@ class MerchantPages extends React.Component {
 
           this.setState({
           DGPStore: "No Store",
-          DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+          store1: true,
         },()=>this.checkDGPStoreRace());
           
         } else {
@@ -264,7 +270,7 @@ class MerchantPages extends React.Component {
 
           this.setState({
             DGPStore: docArray,
-          DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+          store1: true,
         },()=>this.checkDGPStoreRace());
   
         } //Ends the else
@@ -309,7 +315,7 @@ class MerchantPages extends React.Component {
 
         this.setState({
         DGMAddress: "No Address",
-        DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+        store2: true,
       },()=>this.checkDGPStoreRace());
           
         } else {
@@ -321,7 +327,7 @@ class MerchantPages extends React.Component {
 
           this.setState({
             DGMAddress: docArray,
-            DGPStoreRetrievalStatus: this.state.DGPStoreRetrievalStatus + 1,
+            store2: true,
           },()=>this.checkDGPStoreRace());
 
         } //Ends the else
@@ -483,7 +489,7 @@ class MerchantPages extends React.Component {
 
 //###  ####  #####  ####  ###  ##
 checkOrdersRace = () => {
-  if(this.state.ordersRetrievalStatus > 1){
+  if(this.state.order1 && this.state.order2){
     this.setState({
       LoadingOrders: false,
     });
@@ -543,7 +549,7 @@ checkOrdersRace = () => {
 
         this.setState({
           DGPOrdersNames: nameDocArray,
-          ordersRetrievalStatus: this.state.ordersRetrievalStatus + 1,
+          order1: true,
         },()=>this.checkOrdersRace());
           
 
@@ -600,7 +606,7 @@ checkOrdersRace = () => {
         if(d.length === 0){
           //console.log('No Messages for orders');
           this.setState({
-            ordersRetrievalStatus: this.state.ordersRetrievalStatus + 1,
+            order2: true,
           },()=>this.checkOrdersRace());
 
         }else{
@@ -612,7 +618,7 @@ checkOrdersRace = () => {
 
         this.setState({
           DGPOrdersMsgs: docArray,
-          ordersRetrievalStatus: this.state.ordersRetrievalStatus + 1,
+          order2: true,
         },()=>this.checkOrdersRace());
 
          }//This closes the if statement
@@ -1311,7 +1317,8 @@ handleLoadNewOrder = () => {
         DGPOrders: this.state.newOrders,
         newOrderAvail: false,  
         LoadingOrders: true,
-        ordersRetrievalStatus:0, 
+        order1:false, 
+        order2:false,
       }
       ,() => this.helperForMerchantOrders(this.state.newOrders)
     );
