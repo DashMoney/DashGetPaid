@@ -15,6 +15,7 @@ class FindMerchant extends React.Component {
     super(props);
     this.state = {
       numOfItemsToDisplay: 0,
+      selectedCategory: '',
     };
   }
   handleTotalItems = () => {
@@ -55,9 +56,66 @@ class FindMerchant extends React.Component {
 
   }
 
+  handleCategory = (category) =>{
+    this.setState({
+      selectedCategory: category,
+    })
+  }
+
+  handleCatBack = ()=> {
+    this.setState({
+      selectedCategory: '',
+    })
+  }
+
   render() {
 
-    let items = this.props.merchantItems.map(
+    //First sort out items that have categories and which do not
+    let categoryItems = [];
+    let nonCatItems = [];
+
+    this.props.merchantItems.forEach(item =>{
+      if(item.category === undefined || item.category === ''){
+        nonCatItems.push(item);
+      }else{
+        categoryItems.push(item);
+      }
+    })
+
+    // Next create a list of buttons based on the category names
+    let categoryNames = categoryItems.map(item =>{
+      return item.category
+    })
+
+    let setOfCatNames = [...new Set(categoryNames)];
+
+    categoryNames = [...setOfCatNames];
+
+    let categoryButtons = categoryNames.map((category, index) =>
+    <Button
+    key={index}
+    variant="primary"
+    onClick={() => {
+      this.handleCategory(category);
+    }}
+  >
+    <b>{category}</b>
+  </Button>
+    );
+
+    // display category above or below items? -> above I think, thought about below to indicate specials but its bad design.
+
+    let itemsToDisplay = [];
+
+    if(this.state.selectedCategory===''){
+      itemsToDisplay = nonCatItems;
+    }else{
+      itemsToDisplay = categoryItems.filter(item =>{
+        return item.category === this.state.selectedCategory;
+      })
+    }
+
+    let items = itemsToDisplay.map(
       (item, index) => {  
         //console.log(item);
         return (
@@ -211,7 +269,7 @@ arrayOfToIds = [...setOfToIds];
                     {this.props.viewStore?
                     <>
                     
-                    <h2 className="paddingTop">{this.props.merchantStoreName}</h2>
+                    <h2 className="paddingTop" style={{ color: "#008de4" }}>{this.props.merchantStoreName}</h2>
                     </>
                     :
                     <>
@@ -266,12 +324,31 @@ arrayOfToIds = [...setOfToIds];
             ) : (
               <>
               <div id="cardtext" className="footer">
-            {items.length === 0?
+            {this.props.merchantItems.length === 0?
               <>
               <p>This store has no items for purchase.</p>
               </>  
               :
-              <>{items}</>
+              <div id="cardtext">
+            {this.state.selectedCategory === ''?
+            <div className="d-grid gap-2" id="button-edge">
+              {categoryButtons}
+            </div>
+            :
+            <div className="categoryTitle">
+            <Button
+            variant="primary"
+            onClick={() => {
+              this.handleCatBack();
+            }}
+            ><b>Back</b></Button>
+            
+            <h3 className="spaceLeft"><b>{this.state.selectedCategory}</b></h3>
+            
+            </div>}
+            
+          {items}
+        </div>
               }
 
               </div>

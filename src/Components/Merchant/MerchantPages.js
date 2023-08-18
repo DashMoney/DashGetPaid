@@ -46,7 +46,7 @@ class MerchantPages extends React.Component {
       selectedItem: {},
       selectedItemIndex: 0,
 
-      store1: false, //This is for My Store as Merchant -> it is never reset
+      store1: false, //This is for Your Store as Merchant -> it is never reset
       store2: false,
 
 
@@ -72,9 +72,9 @@ class MerchantPages extends React.Component {
   }
 
   handleTab = (eventKey) => {
-    if (eventKey === "My Store")
+    if (eventKey === "Your Store")
       this.setState({
-        whichTab: "My Store",
+        whichTab: "Your Store",
       });
     else {
       this.setState({
@@ -685,6 +685,7 @@ checkOrdersRace = () => {
 
       const storeDocProperties = {
         description: storeObject.description,
+        public: storeObject.public,
         open: storeObject.open,
       };
 
@@ -752,6 +753,7 @@ checkOrdersRace = () => {
           $ownerId: returnedDoc.ownerId,
           $id: returnedDoc.transitions[0].$id,
           description: storeObject.description,
+          public: storeObject.public,
           open: storeObject.open,
         }
 
@@ -776,6 +778,7 @@ checkOrdersRace = () => {
             $ownerId: returnedDoc.ownerId,
             $id: returnedDoc.transitions[0].$id,
             description: storeObject.description,
+            public: storeObject.public,
             open: storeObject.open,
           }
         }
@@ -791,6 +794,7 @@ checkOrdersRace = () => {
            $ownerId: returnedDoc.ownerId,
            $id: returnedDoc.transitions[1].$id,
            description: storeObject.description,
+           public: storeObject.public,
            open: storeObject.open,
          }
        }
@@ -881,6 +885,9 @@ checkOrdersRace = () => {
         document.set("description", storeObject.description);
       }
 
+      if (this.state.DGPStore[0].public !== storeObject.public) {
+        document.set("public", storeObject.public);
+      }
       //CAN I ONLY UPDATE ONE DOCUMENT AT A TIME??
 
       if (this.state.DGPStore[0].open !== storeObject.open) {
@@ -921,6 +928,7 @@ checkOrdersRace = () => {
           $ownerId: returnedDoc.ownerId,
           $id: returnedDoc.transitions[0].$id,
           description: storeObject.description,
+          public: storeObject.public,
           open: storeObject.open,
         }
 
@@ -1051,6 +1059,7 @@ checkOrdersRace = () => {
         name: itemObject.name,
         price: itemObject.price,
         description: itemObject.description,
+        category: itemObject.category,
         avail: itemObject.avail,
       };
       //console.log('Item to Create: ', itemProperties);
@@ -1087,6 +1096,7 @@ checkOrdersRace = () => {
           $id: returnedDoc.transitions[0].$id,
           name: itemObject.name,
         price: itemObject.price,
+        category: itemObject.category,
         description: itemObject.description,
         avail: itemObject.avail,
         }
@@ -1174,6 +1184,13 @@ checkOrdersRace = () => {
       }
 
       if (
+        this.state.DGPItems[this.state.selectedItemIndex].category !==
+        itemObject.category
+      ) {
+        document.set("category", itemObject.category);
+      }
+
+      if (
         this.state.DGPItems[this.state.selectedItemIndex].price !==
         itemObject.price
       ) {
@@ -1218,6 +1235,7 @@ checkOrdersRace = () => {
           $id: returnedDoc.transitions[0].$id,
           name: itemObject.name,
         price: itemObject.price,
+        category: itemObject.category,
         description: itemObject.description,
         avail: itemObject.avail,
         }
@@ -1333,7 +1351,10 @@ handleLoadNewOrder = () => {
 
     //setInterval() //This will auto update orders BELOW
     
-   setInterval(()=>this.checkForNewOrders(), 12000);
+   //setInterval(()=>this.checkForNewOrders(), 20000);
+
+   //DISCONNECTED ^^^ THE SETINTERVAL IN MERCHANT PAGES WHILE I WORK ON THE EDIT OF STORES AND ITEMS
+
   };
 
   render() {
@@ -1359,8 +1380,8 @@ handleLoadNewOrder = () => {
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="My Store">
-                  <b>My Store/Menu</b>
+                <Nav.Link eventKey="Your Store">
+                  <b>Your Store/Menu</b>
                 </Nav.Link>
               </Nav.Item>
             </Nav>
@@ -1430,7 +1451,7 @@ handleLoadNewOrder = () => {
               <></>
             )}
 
-            {this.state.LoadingStore && this.state.whichTab === "My Store" ? (
+            {this.state.LoadingStore && this.state.whichTab === "Your Store" ? (
               <>
                 <p></p>
                 <div id="spinner">
@@ -1445,7 +1466,7 @@ handleLoadNewOrder = () => {
 
             <div id="bodytext" className="footer">
               {!this.props.isLoadingStore &&
-              this.state.whichTab === "My Store" ? (
+              this.state.whichTab === "Your Store" ? (
                 <MyStore
                   identityInfo={this.props.identityInfo}
                   uniqueName={this.props.uniqueName}

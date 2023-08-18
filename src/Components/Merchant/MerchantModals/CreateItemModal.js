@@ -2,8 +2,6 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Spinner from "react-bootstrap/Spinner";
-import Badge from "react-bootstrap/Badge";
 import CloseButton from "react-bootstrap/CloseButton";
 
 //Item needs
@@ -21,6 +19,10 @@ import CloseButton from "react-bootstrap/CloseButton";
           type: 'string',
           minLength: 1,
           maxLength: 250,
+        },category: { 
+          type: 'string',
+          minLength: 0,
+          maxLength: 32,
         },
         avail:{
           type: 'boolean'
@@ -35,10 +37,14 @@ class CreateItemModal extends React.Component {
       nameInput: '',
       priceInput: 0,
       descriptionInput: "",
+      categoryInput:'',
       itemAvail: true,
 
       validName: false,
       tooLongNameError: false,
+
+      validCategory: true,
+      tooLongCategoryError: false,
 
       validPrice: false,
       
@@ -102,6 +108,10 @@ class CreateItemModal extends React.Component {
       this.itemNameValidate(event.target.value);
     }
 
+    if (event.target.id === "formItemCategory") {
+      this.itemCategoryValidate(event.target.value);
+    }
+
     if (event.target.id === "formItemPrice") {
       this.itemPriceValidate(event.target.value);
     }
@@ -138,8 +148,38 @@ class CreateItemModal extends React.Component {
       });
   }
 }
+};
+
+itemCategoryValidate = (category) => {
+    
+  let regex = /^.{0,32}$/;
+  let valid = regex.test(category);
+
+  if (valid) {
+  this.setState({
+    categoryInput: category,
+    tooLongCategoryError: false,
+    validCategory: true,
+  });
+  
+} else {
+
+  if (category.length > 32) {
+    this.setState({
+      categoryInput: category,
+      tooLongCategoryError: true,
+      validCategory:false,
+    });
+  } else {
+    this.setState({
+      categoryInput: category,
+      validCategory: false,
+    });
+}
+}
+};
      
-  };
+
 
   itemPriceValidate = (numberInput) => {
     //console.log(this.props.accountBalance);
@@ -205,6 +245,7 @@ class CreateItemModal extends React.Component {
           name: this.state.nameInput,
           price:  Number((this.state.priceInput * 100000000).toFixed(0)),
           description: this.state.descriptionInput,
+          category: this.state.categoryInput,
           avail: this.state.itemAvail
           };
 
@@ -266,7 +307,7 @@ class CreateItemModal extends React.Component {
                   <Form.Control.Feedback type="valid">
               Item name is acceptable!
             </Form.Control.Feedback>
-
+            </Form.Group>
 {/* ITEM PRICE FORM BELOW */}
 
             <Form.Group className="mb-3" controlId="formItemPrice">
@@ -290,7 +331,7 @@ class CreateItemModal extends React.Component {
                 </Form.Group>
                   
                   {/* ITEM DESCRIPTION FORM BELOW */}
-                </Form.Group>
+                
               <Form.Group className="mb-3" controlId="formItemDescription"
               >
                 <Form.Label><b>Item Description</b></Form.Label>
@@ -331,8 +372,32 @@ class CreateItemModal extends React.Component {
           <b>Available</b> means people can add the item to their carts and place orders for the item.
           </p>
       </Form.Group>
+
+      {/* ITEM CATEGORY FORM BELOW */}
+      <Form.Group className="mb-3" controlId="formItemCategory">
+                  
+                  <Form.Label><b>Item Category</b></Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Optional"
+                    required
+              isInvalid={this.state.tooLongCategoryError}
+              isValid={this.state.validCategory}
+                  />
+                  <p></p>
+                  <Form.Control.Feedback type="invalid">
+              Category is too long.
+            </Form.Control.Feedback>
+                  <Form.Control.Feedback type="valid">
+              Category is acceptable!
+            </Form.Control.Feedback>
+            <p>
+          <b>Categories</b> let you group items together to help customers search instead of having to view a long list of items.
+          </p>
+            </Form.Group>
           
               {this.state.validName &&
+              this.state.validCategory &&
               this.state.validPrice &&
               this.state.validDescription? (
                 <Button variant="primary" type="submit">

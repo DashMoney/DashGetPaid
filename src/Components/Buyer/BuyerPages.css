@@ -44,6 +44,16 @@
   align-items: center;
  }
 
+ .categoryTitle{
+  display: flex;
+  
+  align-items: center;
+ }
+
+ .spaceLeft{
+  margin-left: 2rem;
+ }
+
  .cartItemTitle{
   display: flex;
   

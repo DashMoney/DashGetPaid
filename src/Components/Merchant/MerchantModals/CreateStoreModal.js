@@ -2,8 +2,8 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Spinner from "react-bootstrap/Spinner";
-import Badge from "react-bootstrap/Badge";
+//import Spinner from "react-bootstrap/Spinner";
+//import Badge from "react-bootstrap/Badge";
 import CloseButton from "react-bootstrap/CloseButton";
 
 //Store needs
@@ -24,9 +24,11 @@ class CreateStoreModal extends React.Component {
     this.state = {
       descriptionInput: "",
       storeStatus: true,
-      tooLongError: false,
-      validityAvail: false,
-      validityCheck: false,
+      publicStatus:true,
+
+      validDescription:false,
+      tooLongDescriptionError: false,
+
     };
   }
 
@@ -46,28 +48,50 @@ class CreateStoreModal extends React.Component {
     }
   }
 
-
-  formValidate = (messageText) => {
-
-    let regex = /^.[\S\s]{0,250}$/; 
-
-    let valid = regex.test(messageText);
-
-    if (valid) { //Put tag error here
+  handlePublic = () => {
+    if(this.state.publicStatus){
       this.setState({
-        messageInput: messageText,
-        tooLongError: false,
+        publicStatus: false,
       });
-      return true;
     } else {
-      if (messageText.length > 250) {
+      this.setState({
+        publicStatus: true,
+      });
+    }
+  }
+
+  storeDescriptionValidate = (description) => {
+    
+    let regex = /^.[\S\s]{1,250}$/; 
+
+    let valid = regex.test(description);
+
+    if (valid) { 
+      this.setState({
+        descriptionInput: description,
+        validDescription: true,
+        tooLongDescriptionError: false,
+      });
+
+    } else {
+
+      if (description.length > 250) {
         this.setState({
-          tooLongError: true,
+          descriptionInput: description,
+        validDescription: false,
+        tooLongDescriptionError: true,
+        });
+      }else {
+        this.setState({
+          descriptionInput: description,
+        validDescription: false,
         });
       }
-      return false;
+      
     }
+     
   };
+
 
   onChange = (event) => {
     event.preventDefault();
@@ -76,39 +100,24 @@ class CreateStoreModal extends React.Component {
     //console.log(event.target.value);
     //this is the message body!!!
 
-      if (this.formValidate(event.target.value) === true) {
-
-        this.setState({
-          validityCheck: true,
-        });
-      } else {
-        this.setState({
-          validityCheck: false,
-        });
-      }
+    this.storeDescriptionValidate(event.target.value);
 
     }
 
   handleSubmitClick = (event) => {
     event.preventDefault();
-    console.log(event.target.ControlTextarea1.value);
-
-    if (this.formValidate(event.target.ControlTextarea1.value)) {
-
+    //console.log(event.target.ControlTextarea1.value);
     
         let newStore = {
-          description: `${event.target.ControlTextarea1.value}`,
+          description: this.state.descriptionInput,
+          public: this.state.publicStatus,
           open: this.state.storeStatus
           };
 
-        
       this.props.createDGPStore(newStore);
       this.props.hideModal();
 
-    } else {
-
-      console.log('Invalid Store Creation');
-        }
+    
   };
 
   render() {
@@ -156,10 +165,10 @@ class CreateStoreModal extends React.Component {
                   rows={2}
                   placeholder="Put description here.."
                   required
-                  isInvalid={this.state.tooLongError}
+                  isInvalid={this.state.tooLongDescriptionError}
                 />
 
-                {this.state.tooLongError ? (
+                {this.state.tooLongDescriptionError ? (
                 <Form.Control.Feedback className="floatLeft" type="invalid">
                 Sorry, this is too long! Please use less than 250 characters.
               </Form.Control.Feedback>
@@ -185,13 +194,30 @@ class CreateStoreModal extends React.Component {
           <b>Open</b> means people can view your items and make payments to you. <b>Closed</b> means they can see your store when searching, but they can not view items or make purchases.
           </p>
       </Form.Group>
+
+      <Form.Group className="mb-3" id="formGridCheckbox">
+<Form.Label><b>Start Store: Public or Private</b></Form.Label>
+<Form.Check 
+        type="switch"
+        id="custom-switch"
+        label={this.state.publicStatus?'Public':'Private'}
+        onChange={() => this.handlePublic()}
+      />
+      <p></p>
+      <p>
+        You will be able to easily change between public or private once your store is created.
+        </p><p>
+          <b>Public</b> means your store can appear in <b>Active Stores</b>. <b>Private</b> means your store will not.
+          </p>
+      </Form.Group>
+
       {this.props.DGMAddress === 'No Address' && this.props.isLoadingWallet ?
       <Button variant="primary">
       Loading..
      </Button>
      :
      <>
-     {this.state.validityCheck && !this.props.LoadingStore ? (
+     {this.state.validDescription && !this.props.LoadingStore ? (
                 <Button variant="primary" type="submit">
                   <b>Create Store/Menu</b>
                 </Button>

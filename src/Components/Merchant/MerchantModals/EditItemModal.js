@@ -19,6 +19,10 @@ import CloseButton from "react-bootstrap/CloseButton";
           type: 'string',
           minLength: 1,
           maxLength: 250,
+        },category: { 
+          type: 'string',
+          minLength: 0,
+          maxLength: 32,
         },
         avail:{
           type: 'boolean'
@@ -33,19 +37,20 @@ class EditItemModal extends React.Component {
       nameInput: this.props.selectedItem.name,
       priceInput: this.props.selectedItem.price,
       descriptionInput: this.props.selectedItem.description,
-
+      categoryInput:this.props.selectedItem.category,
       itemAvail: this.props.selectedItem.avail,
 
       validName: true,
       tooLongNameError: false,
+
+      validCategory: true,
+      tooLongCategoryError: false,
 
       validPrice: true,
       
       validDescription:true,
       tooLongDescriptionError: false,
 
-      validityAvail: false,
-      validityCheck: false,
     };
   }
 
@@ -103,6 +108,12 @@ class EditItemModal extends React.Component {
       this.itemNameValidate(event.target.value);
     }
 
+    if (event.target.id === "formItemCategory") {
+      event.preventDefault();
+    event.stopPropagation();
+      this.itemCategoryValidate(event.target.value);
+    }
+
     if (event.target.id === "formItemPrice") {
       event.preventDefault();
     event.stopPropagation();
@@ -147,8 +158,36 @@ class EditItemModal extends React.Component {
         validName: false,
       });
   }
-}
-     
+}     
+  };
+
+  itemCategoryValidate = (category) => {
+    
+    let regex = /^.{0,32}$/;
+    let valid = regex.test(category);
+  
+    if (valid) {
+    this.setState({
+      categoryInput: category,
+      tooLongCategoryError: false,
+      validCategory: true,
+    });
+    
+  } else {
+  
+    if (category.length > 32) {
+      this.setState({
+        categoryInput: category,
+        tooLongCategoryError: true,
+        validCategory:false,
+      });
+    } else {
+      this.setState({
+        categoryInput: category,
+        validCategory: false,
+      });
+  }
+  }
   };
 
   itemPriceValidate = (numberInput) => {
@@ -221,6 +260,7 @@ if(this.state.priceInput === this.props.selectedItem.price){
           name: this.state.nameInput,
           price:  correctFormPrice,
           description: this.state.descriptionInput,
+          category: this.state.categoryInput,
           avail: this.state.itemAvail
           };
           
@@ -348,8 +388,32 @@ if(this.state.priceInput === this.props.selectedItem.price){
           <b>Available</b> means people can add the item to their carts and place orders for the item.
           </p>
       </Form.Group>
+
+       {/* ITEM CATEGORY FORM BELOW */}
+       <Form.Group className="mb-3" controlId="formItemCategory">
+                  
+                  <Form.Label><b>Item Category</b></Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder={this.props.selectedItem.category !== ''? this.props.selectedItem.category: 'Optional'}
+                    required
+              isInvalid={this.state.tooLongCategoryError}
+              isValid={this.state.validCategory}
+                  />
+                  <p></p>
+                  <Form.Control.Feedback type="invalid">
+              Category is too long.
+            </Form.Control.Feedback>
+                  <Form.Control.Feedback type="valid">
+              Category is acceptable!
+            </Form.Control.Feedback>
+            <p>
+          <b>Categories</b> let you group items together to help customers search instead of having to view a long list of items.
+          </p>
+            </Form.Group>
           
               {this.state.validName &&
+              this.state.validCategory &&
               this.state.validPrice &&
               this.state.validDescription? (
                 <Button variant="primary" type="submit">

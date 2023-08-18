@@ -21,11 +21,12 @@ class EditStoreModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      descriptionInput: "",
+      descriptionInput: this.props.DGPStore[0].description,
       storeStatus: this.props.DGPStore[0].open,
-      tooLongError: false,
-      validityAvail: false,
-      validityCheck: false,
+      publicStatus:this.props.DGPStore[0].public,
+
+      validDescription:true,
+      tooLongDescriptionError: false,
     };
   }
 
@@ -45,28 +46,73 @@ class EditStoreModal extends React.Component {
     }
   }
 
+  handlePublic = () => {
+    if(this.state.publicStatus){
+      this.setState({
+        publicStatus: false,
+      });
+    } else {
+      this.setState({
+        publicStatus: true,
+      });
+    }
+  }
 
-  formValidate = (messageText) => {
-
+  storeDescriptionValidate = (description) => {
+    
     let regex = /^.[\S\s]{0,250}$/; 
 
-    let valid = regex.test(messageText);
+    let valid = regex.test(description);
 
-    if (valid) { //Put tag error here
+    if (valid) { 
       this.setState({
-        messageInput: messageText,
-        tooLongError: false,
+        descriptionInput: description,
+        validDescription: true,
+        tooLongDescriptionError: false,
       });
-      return true;
+
     } else {
-      if (messageText.length > 250) {
+
+      if (description.length > 250) {
         this.setState({
-          tooLongError: true,
+          descriptionInput: description,
+        validDescription: false,
+        tooLongDescriptionError: true,
+        });
+      }else {
+        this.setState({
+          descriptionInput: description,
+        validDescription: false,
         });
       }
-      return false;
+      
     }
+     
   };
+
+
+
+  // formValidate = (messageText) => {
+
+  //   let regex = /^.[\S\s]{0,250}$/; 
+
+  //   let valid = regex.test(messageText);
+
+  //   if (valid) { //Put tag error here
+  //     this.setState({
+  //       descriptionInput: messageText,
+  //       tooLongDescriptionError: false,
+  //     });
+  //     return true;
+  //   } else {
+  //     if (messageText.length > 250) {
+  //       this.setState({
+  //         tooLongDescriptionError: true,
+  //       });
+  //     }
+  //     return false;
+  //   }
+  // };
 
   onChange = (event) => {
     event.preventDefault();
@@ -75,39 +121,25 @@ class EditStoreModal extends React.Component {
     //console.log(event.target.value);
     //this is the message body!!!
 
-      if (this.formValidate(event.target.value) === true) {
-
-        this.setState({
-          validityCheck: true,
-        });
-      } else {
-        this.setState({
-          validityCheck: false,
-        });
-      }
+    this.storeDescriptionValidate(event.target.value)
 
     }
 
   handleSubmitClick = (event) => {
     event.preventDefault();
-    console.log(event.target.ControlTextarea1.value);
+    //console.log(event.target.ControlTextarea1.value);
 
-    if (this.formValidate(event.target.ControlTextarea1.value)) {
-
-    
-        let newStore = {
-          description: `${event.target.ControlTextarea1.value}`,
+   
+        let editStore = {
+          description: this.state.descriptionInput,
+          public:this.state.publicStatus,
           open: this.state.storeStatus
           };
 
         
-      this.props.editDGPStore(newStore);
+      this.props.editDGPStore(editStore);
       this.props.hideModal();
 
-    } else {
-
-      console.log('Invalid Store Creation');
-        }
   };
 
   render() {
@@ -155,10 +187,10 @@ class EditStoreModal extends React.Component {
                   rows={2}
                   placeholder={this.props.DGPStore[0].description}
                   required
-                  isInvalid={this.state.tooLongError}
+                  isInvalid={this.state.tooLongDescriptionError}
                 />
 
-                {this.state.tooLongError ? (
+                {this.state.tooLongDescriptionError ? (
                 <Form.Control.Feedback className="floatLeft" type="invalid">
                 Sorry, this is too long! Please use less than 250 characters.
               </Form.Control.Feedback>
@@ -182,8 +214,22 @@ class EditStoreModal extends React.Component {
           <b>Open</b> means people can view your items and make payments to you. <b>Closed</b> means they can see your store when searching, but they can not view items or make purchases.
           </p>
       </Form.Group>
+
+      <Form.Group className="mb-3" id="formGridCheckbox">
+<Form.Label><b>Store: Public or Private</b></Form.Label>
+<Form.Check 
+        type="switch"
+        id="custom-switch"
+        label={this.state.publicStatus?'Public':'Private'}
+        onChange={() => this.handlePublic()}
+      />
+      <p></p>
+      <p>
+      <b>Public</b> means your store can appear in <b>Active Stores</b>. <b>Private</b> means your store will not.
+          </p>
+      </Form.Group>
           
-              {this.state.validityCheck ? (
+              {this.state.validDescription ? (
                 <Button variant="primary" type="submit">
                   Edit Store/Menu
                 </Button>

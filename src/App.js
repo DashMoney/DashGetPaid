@@ -110,7 +110,7 @@ class App extends React.Component {
       skipSynchronizationBeforeHeight: 853000,
       mostRecentBlockHeight: 853000,
 
-      DataContractDGP: 'GK6Mqm8wcTPVZNg9VUqWR2mUREZHm5ns7cAxdN45ZnWh',
+      DataContractDGP: 'Doo5zhdZerBqxrCvtmzPp6ipFAqQrS1kjpGcGyyt4AL1',//'GK6Mqm8wcTPVZNg9VUqWR2mUREZHm5ns7cAxdN45ZnWh',
       DataContractDGM: 'DvFwMMxLRfPLp5bGK8D4CqaHME21iF7R9HnBnvf7Mk8g',
       DataContractDPNS: 'GWRSAVFMjXx8HpQFaNJMqBV7MBgMK4br5UESsB4S31Ec',
 

@@ -536,8 +536,9 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
 
 {this.props.DGPStore !== "No Store" && !this.props.LoadingStore  && !this.props.LoadingOrders ? (
           <>
-          <div id='card' >
-          <h2>{this.props.uniqueName} Orders</h2>
+          <p></p>
+          <div id='card'>
+          <h2>{this.props.uniqueName}'s Orders</h2>
           </div>
           </>
 ):
@@ -575,7 +576,10 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
             )}
 
             {!this.props.LoadingOrders && !this.props.LoadingStore && this.props.DGPStore !== "No Store" && this.props.DGMAddress !== 'No Address' && this.props.DGPOrders === 'No Orders' ?
-            <p>This is where orders from your customers will appear.</p>:
+            <>
+            <p></p>
+            <p>This is where orders from your customers will appear.</p>
+            </>:
             <></>}
 
 

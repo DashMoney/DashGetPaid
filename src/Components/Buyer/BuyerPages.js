@@ -1060,7 +1060,7 @@ class BuyerPages extends React.Component {
             selectedItem={this.state.selectedItem}
             addToCart={this.addToCart}
             hideModal={this.hideModal}
-            mode={this.state.mode}
+            mode={this.props.mode}
           />
         ) : (
           <></>
@@ -1074,7 +1074,7 @@ class BuyerPages extends React.Component {
             cartItems={this.state.cartItems}
             editCart={this.editCart}
             hideModal={this.hideModal}
-            mode={this.state.mode}
+            mode={this.props.mode}
           />
         ) : (
           <></>
@@ -1090,7 +1090,7 @@ class BuyerPages extends React.Component {
             cartItems={this.state.cartItems}
             placeOrder={this.placeOrder}
             hideModal={this.hideModal}
-            mode={this.state.mode}
+            mode={this.props.mode}
           />
         ) : (
           <></>

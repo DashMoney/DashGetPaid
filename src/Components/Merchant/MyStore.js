@@ -6,9 +6,74 @@ import Spinner from "react-bootstrap/Spinner";
 import MyStoreItem from "./MyStoreItem";
 
 class MyStore extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedCategory: '',
+      
+    };
+  }
+
+  handleCategory = (category) =>{
+    this.setState({
+      selectedCategory: category,
+    })
+  }
+
+  handleCatBack = ()=> {
+    this.setState({
+      selectedCategory: '',
+    })
+  }
+
   render() {
 
-    let items = this.props.DGPItems.map(
+    //First sort out items that have categories and which do not
+    let categoryItems = [];
+    let nonCatItems = [];
+
+    this.props.DGPItems.forEach(item =>{
+      if(item.category === undefined || item.category === ''){
+        nonCatItems.push(item);
+      }else{
+        categoryItems.push(item);
+      }
+    })
+
+    // Next create a list of buttons based on the category names
+    let categoryNames = categoryItems.map(item =>{
+      return item.category
+    })
+
+    let setOfCatNames = [...new Set(categoryNames)];
+
+    categoryNames = [...setOfCatNames];
+
+    let categoryButtons = categoryNames.map((category, index) =>
+    <Button
+    key={index}
+    variant="primary"
+    onClick={() => {
+      this.handleCategory(category);
+    }}
+  >
+    <b>{category}</b>
+  </Button>
+    );
+
+    // display category above or below items? -> above I think, thought about below to indicate specials but its bad design.
+
+    let itemsToDisplay = [];
+
+    if(this.state.selectedCategory===''){
+      itemsToDisplay = nonCatItems;
+    }else{
+      itemsToDisplay = categoryItems.filter(item =>{
+        return item.category === this.state.selectedCategory;
+      })
+    }
+
+    let items = itemsToDisplay.map(
       (item, index) => {  
         //console.log(item);
         return (
@@ -103,6 +168,7 @@ class MyStore extends React.Component {
           <div id="bodytext">
           <div className="cardTitle">
           <h2>{this.props.uniqueName}</h2>
+          <span>{this.props.DGPStore[0].public?<b>Public</b>:<b>Private</b>}</span>
           <Button variant="primary"
           onClick={() => this.props.showModal("StoreStatusModal")}
               >
@@ -156,7 +222,23 @@ class MyStore extends React.Component {
         <></>}
 <p></p>
         <div id="cardtext">
-
+            {this.state.selectedCategory === ''?
+            <div className="d-grid gap-2" id="button-edge">
+              {categoryButtons}
+            </div>
+            :
+            <div className="categoryTitle">
+            <Button
+            variant="primary"
+            onClick={() => {
+              this.handleCatBack();
+            }}
+            ><b>Back</b></Button>
+            
+            <h3 className="spaceLeft"><b>{this.state.selectedCategory}</b></h3>
+            
+            </div>}
+            
           {items}
         </div>
 

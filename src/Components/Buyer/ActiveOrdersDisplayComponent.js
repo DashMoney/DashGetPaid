@@ -46,7 +46,7 @@ class ActiveOrdersDisplayComponent extends React.Component {
 
     return (
       <>
-      {orderDGMDoc === undefined ?
+      {orderDGMDoc === undefined || !orderStoreDoc.public ?
       <></>
       :
       <Card id="card" key={this.props.index} bg={cardBkg} text={cardText}
