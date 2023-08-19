@@ -1,13 +1,27 @@
 import React from "react";
 import Carousel from 'react-bootstrap/Carousel';
-import Badge from "react-bootstrap/Badge";
-import DGPCustomerFindMerchant from "../../Images/IMG_1543.jpg";
-import DGPSlide2 from "../../Images/IMG_1544.jpg";
-import DGPSlide3 from "../../Images/IMG_1545.jpg";
-import DGPSlide4 from "../../Images/IMG_1546.jpg";
-import DGPSlide7 from "../../Images/IMG_1538.jpg";
-import DGPSlide5 from "../../Images/IMG_1532.jpg";
-import DGPSlide6 from "../../Images/IMG_1533.jpg";
+
+
+import DGPDark1 from "../../Images/IMG_1555.jpg";
+import DGPDark2 from "../../Images/IMG_1557.jpg";
+import DGPDark3 from "../../Images/IMG_1559.jpg";
+import DGPDark4 from "../../Images/IMG_1561.jpg";
+import DGPDark5 from "../../Images/IMG_1563.jpg";
+import DGPDark6 from "../../Images/IMG_1565.jpg";
+import DGPDark7 from "../../Images/IMG_1569.jpg";
+import DGPDark8 from "../../Images/IMG_1570.jpg";
+import DGPDark9 from "../../Images/IMG_1572.jpg";
+
+import DGPLight1 from "../../Images/IMG_1556.jpg";
+import DGPLight2 from "../../Images/IMG_1558.jpg";
+import DGPLight3 from "../../Images/IMG_1560.jpg";
+import DGPLight4 from "../../Images/IMG_1562.jpg";
+import DGPLight5 from "../../Images/IMG_1564.jpg";
+import DGPLight6 from "../../Images/IMG_1566.jpg";
+import DGPLight7 from "../../Images/IMG_1568.jpg";
+import DGPLight8 from "../../Images/IMG_1571.jpg";
+import DGPLight9 from "../../Images/IMG_1573.jpg";
+
 import Image from "react-bootstrap/Image";
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -50,7 +64,10 @@ class LandingPage extends React.Component {
           </ul> */}
         </div>
 
-        <Carousel>
+        
+
+      {this.props.mode === 'dark'?  
+      <Carousel>
       <Carousel.Item>
       <Container>
          <Row>
@@ -58,7 +75,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPCustomerFindMerchant} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark1} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -87,7 +104,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPSlide2} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark2} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -108,7 +125,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPSlide3} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark3} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -129,7 +146,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPSlide4} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark4} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -150,7 +167,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPSlide7} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark5} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -171,7 +188,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPSlide5} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark6} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -192,7 +209,7 @@ class LandingPage extends React.Component {
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
          <Image
-           fluid  rounded id="dash-landing-page" src={DGPSlide6} alt="DGP Landing Page Preview" 
+           fluid  rounded id="dash-landing-page" src={DGPDark7} alt="DGP Landing Page Preview" 
          />
          <p></p>
          <Figure.Caption className="figureCaption">
@@ -206,53 +223,254 @@ class LandingPage extends React.Component {
         
       </Carousel.Item>
 
-
-      {/* <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=282c34"
-          alt="Second slide"
-        />
-
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
       <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=20232a"
-          alt="Third slide"
-        />
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item> */}
-    </Carousel>
-        
-
-         {/* <Container>
+      <Container>
          <Row>
            <Col xs={2} md={4}></Col>
            <Col xs={8} md={4} className="positionCaption">
            <div className="positionCaption">
-          <Image
-           fluid  rounded id="dash-landing-page" src={DSOmodified} alt="DSO Landing Page Preview" 
-         /> 
+         <Image
+           fluid  rounded id="dash-landing-page" src={DGPDark8} alt="DGP Landing Page Preview" 
+         />
          <p></p>
-         <Figure.Caption>
-           <b>DashGetPaid - Preview</b>
+         <Figure.Caption className="figureCaption">
+           <b>Merchant Orders - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
            <Col xs={2} md={4}></Col>
          </Row>
-       </Container> */}
+       </Container>
+        
+      </Carousel.Item>
+
+      <Carousel.Item>
+      <Container>
+         <Row>
+           <Col xs={2} md={4}></Col>
+           <Col xs={8} md={4} className="positionCaption">
+           <div className="positionCaption">
+         <Image
+           fluid  rounded id="dash-landing-page" src={DGPDark9} alt="DGP Landing Page Preview" 
+         />
+         <p></p>
+         <Figure.Caption className="figureCaption">
+           <b>Merchant Orders - Preview</b>
+            </Figure.Caption>
+            </div>
+       </Col>
+           <Col xs={2} md={4}></Col>
+         </Row>
+       </Container>
+        
+      </Carousel.Item>
+      </Carousel>
+
+  :
+
+
+<Carousel>
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight1} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Customer - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  {/* <img
+    className="d-block w-100"
+    src={DGPCustomerFindMerchant}
+    alt="First slide"
+  /> */}
+  <Carousel.Caption>
+    {/* <h3>First slide label</h3> */}
+    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+  </Carousel.Caption>
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight2} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Customer Shopping - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight3} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Customer Cart - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight4} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Customer Order - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight5} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Customer Purchase - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight6} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Merchant Store - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight7} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Merchant Orders - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight8} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Merchant Orders - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+<Carousel.Item>
+<Container>
+   <Row>
+     <Col xs={2} md={4}></Col>
+     <Col xs={8} md={4} className="positionCaption">
+     <div className="positionCaption">
+   <Image
+     fluid  rounded id="dash-landing-page" src={DGPLight9} alt="DGP Landing Page Preview" 
+   />
+   <p></p>
+   <Figure.Caption className="figureCaption">
+     <b>Merchant Orders - Preview</b>
+      </Figure.Caption>
+      </div>
+ </Col>
+     <Col xs={2} md={4}></Col>
+   </Row>
+ </Container>
+  
+</Carousel.Item>
+
+</Carousel>
+  }
+
+      
    <p></p>
 
 {/* <div id="bodytext">

@@ -107,6 +107,8 @@ class App extends React.Component {
       platformLogin: false,
       LocalForageKeys: [],
 
+      EndSetInterval: '',
+
       skipSynchronizationBeforeHeight: 853000,
       mostRecentBlockHeight: 853000,
 
@@ -2049,7 +2051,7 @@ class App extends React.Component {
 
         {!this.state.isLoggedIn ? (
           <>
-            <LandingPage />
+            <LandingPage mode={this.state.mode}/>
             <LoginBottomNav mode={this.state.mode} showModal={this.showModal} />
             <Footer />
           </>
