@@ -108,7 +108,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Customer Shopping - Preview</b>
+           <b>Store Selection - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -129,7 +129,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Customer Cart - Preview</b>
+           <b>Store Categories - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -150,7 +150,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Customer Order - Preview</b>
+           <b>Selected Category - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -171,7 +171,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Customer Purchase - Preview</b>
+           <b>Cart Item - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -192,7 +192,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Merchant Store - Preview</b>
+           <b>Cart Items - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -213,7 +213,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Merchant Orders - Preview</b>
+           <b>Placing Order - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -234,7 +234,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Merchant Orders - Preview</b>
+           <b>Order Success - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -255,7 +255,7 @@ class LandingPage extends React.Component {
          />
          <p></p>
          <Figure.Caption className="figureCaption">
-           <b>Merchant Orders - Preview</b>
+           <b>Customer Orders - Preview</b>
             </Figure.Caption>
             </div>
        </Col>
@@ -310,7 +310,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Customer Shopping - Preview</b>
+     <b>Store Selection - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -331,7 +331,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Customer Cart - Preview</b>
+     <b>Store Categories - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -352,7 +352,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Customer Order - Preview</b>
+     <b>Selected Category - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -373,7 +373,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Customer Purchase - Preview</b>
+     <b>Cart Item - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -394,7 +394,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Merchant Store - Preview</b>
+     <b>Cart Items - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -415,7 +415,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Merchant Orders - Preview</b>
+     <b>Placing Order - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -436,7 +436,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Merchant Orders - Preview</b>
+     <b>Order Success - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
@@ -457,7 +457,7 @@ class LandingPage extends React.Component {
    />
    <p></p>
    <Figure.Caption className="figureCaption">
-     <b>Merchant Orders - Preview</b>
+     <b>Customer Orders - Preview</b>
       </Figure.Caption>
       </div>
  </Col>
