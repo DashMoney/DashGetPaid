@@ -109,11 +109,11 @@ class App extends React.Component {
 
       EndSetInterval: '',
 
-      skipSynchronizationBeforeHeight: 853000,
-      mostRecentBlockHeight: 853000,
+      skipSynchronizationBeforeHeight: 910000,
+      mostRecentBlockHeight: 910000,
 
-      DataContractDGP: 'Doo5zhdZerBqxrCvtmzPp6ipFAqQrS1kjpGcGyyt4AL1',//'GK6Mqm8wcTPVZNg9VUqWR2mUREZHm5ns7cAxdN45ZnWh',
-      DataContractDGM: 'DvFwMMxLRfPLp5bGK8D4CqaHME21iF7R9HnBnvf7Mk8g',
+      DataContractDGP: 'ABqd1gjueDBK5GtSw2hFQjyf49mSLasf5dg3gjCw7Ga8',
+      DataContractDGM: 'G2JM3r2AW1JB9oHapQVDqE2siRyATMLAxXi2KGiKXxBB',
       DataContractDPNS: 'GWRSAVFMjXx8HpQFaNJMqBV7MBgMK4br5UESsB4S31Ec',
 
       expandedTopNav: false,
@@ -222,7 +222,6 @@ class App extends React.Component {
       }
 
       const msgProperties = {
-        timeStamp: 2546075019551 - Date.now(),
         msg: orderMsgComment,
         orderId: this.state.messageOrderId,
       };
@@ -246,7 +245,8 @@ class App extends React.Component {
         create: [dgpDocument], // Document(s) to create
       };
 
-      return platform.documents.broadcast(documentBatch, identity);
+      await platform.documents.broadcast(documentBatch, identity);
+      return dgpDocument;
     };
 
     submitMsgDoc()
@@ -256,8 +256,7 @@ class App extends React.Component {
 
         let orderMsg = {
           $ownerId: this.state.identity,
-          $id: returnedDoc.transitions[0].$id,
-          timeStamp: 2546075019551 - Date.now(),
+          $id: returnedDoc.$id,
         msg: orderMsgComment,
         orderId: this.state.messageOrderId,
         }
@@ -359,8 +358,8 @@ class App extends React.Component {
       platformLogin: false,
       LocalForageKeys: [],
 
-      skipSynchronizationBeforeHeight: 853000,
-      mostRecentBlockHeight: 853000,
+      skipSynchronizationBeforeHeight: 910000,
+      mostRecentBlockHeight: 910000,
 
       expandedTopNav: false,
     },()=> this.componentDidMount());
@@ -906,10 +905,9 @@ class App extends React.Component {
           const getDocuments = async () => {
             console.log("Called Get Initial Orders");
       
-      
             return client.platform.documents.get("DGPContract.dgporder", {
               where: [["$ownerId", "==", theIdentity]],
-              orderBy: [['timeStamp', 'asc']],
+              orderBy: [["$createdAt", 'desc']],
             });
           };
       
@@ -925,9 +923,16 @@ class App extends React.Component {
                   }
                 );
               } else {
-                for (const n of d) {
-                  //console.log("Merchant Orders:\n", n.toJSON());
-                  docArray = [...docArray, n.toJSON()];
+
+                //TEST -> cart dgpItem does it return correctly
+                for(const n of d) {
+
+                  let returnedDoc = n.toJSON()
+                   console.log("Order:\n", returnedDoc);
+                   returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
+                   returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                   console.log("newOrder:\n", returnedDoc);
+                  docArray = [...docArray, returnedDoc];
                 }
                 this.setState(
                   {
@@ -1230,6 +1235,8 @@ class App extends React.Component {
 
   getInitialRecentOrdersMsgs = (docArray) => { //THERE IS AN ERROR WHERE IF I DONT RETURN ANYTHING IT THROWS AN INVALID QUERY MISSING ORDERBY BUT ITS JUST THAT IT DOESN'T HAVE ANYTHING TO RETURN!! -> REPORT AFTER V0.25 IF STILL THERE -> Well it doesn't like timeStamp -> see below.
 
+  //TEST -> Change to createdAT and see what happens -> 
+
       const clientOpts = {
         network: this.state.whichNetwork,
         apps: {
@@ -1250,10 +1257,6 @@ class App extends React.Component {
       let setOfOrderIds = [...new Set(arrayOfOrderIds)];
   
       arrayOfOrderIds = [...setOfOrderIds];
-  
-      // arrayOfOrderIds = arrayOfOrderIds.map((item) =>
-      //   Identifier.from(item)
-      // );
 
        //console.log("Array of order ids", arrayOfOrderIds);
   
@@ -1269,13 +1272,16 @@ class App extends React.Component {
       getDocuments()
         .then((d) => {
           let docArray = [];
-
-//THERE ISN'T NECESSARY MESSAGE TO GRAB SO COULD BE ZERO SO STILL NEED TO END LOADING ->
           
-            for (const n of d) {
-             // console.log("Msg:\n", n.toJSON());
-              docArray = [...docArray, n.toJSON()];
-            }
+for(const n of d) {
+
+  let returnedDoc = n.toJSON()
+   //console.log("Msg:\n", returnedDoc);
+   returnedDoc.orderId = Identifier.from(returnedDoc.orderId, 'base64').toJSON();
+   
+   //console.log("newMsg:\n", returnedDoc);
+  docArray = [...docArray, returnedDoc];
+}
 
             this.setState({
               initialRecentOrdersMessages: docArray,
@@ -1328,13 +1334,15 @@ class App extends React.Component {
       
             return client.platform.documents.get("DGPContract.dgporder", {
               where: [["$ownerId", "==", theIdentity]],
-              orderBy: [['timeStamp', 'asc']],
+              orderBy: [['$createdAt', 'desc']],
             });
           };
       
           getDocuments()
             .then((d) => {
+
               let docArray = [];
+
               if (d.length === 0) {
                 this.setState(
                   {
@@ -1345,10 +1353,17 @@ class App extends React.Component {
                   //,() => this.getNamesForDGTOrders()
                 );
               } else {
-                for (const n of d) {
-                  //console.log("Merchant Orders:\n", n.toJSON());
-                  docArray = [...docArray, n.toJSON()];
+
+                for(const n of d) {
+
+                  let returnedDoc = n.toJSON()
+                   //console.log("Order:\n", returnedDoc);
+                   returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
+                   returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                   //console.log("newOrder:\n", returnedDoc);
+                  docArray = [...docArray, returnedDoc];
                 }
+
                 this.setState(
                   {
                     recentOrders: docArray,
@@ -1644,6 +1659,8 @@ class App extends React.Component {
 
   getRecentOrdersMsgs = (docArray) => { //THERE IS AN ERROR WHERE IF I DONT RETURN ANYTHING IT THROWS AN INVALID QUERY MISSING ORDERBY BUT ITS JUST THAT IT DOESN'T HAVE ANYTHING TO RETURN!! -> REPORT AFTER V0.25 IF STILL THERE -> Well it doesn't like timeStamp -> see below.
 
+    //TEST -> Change to createdAT and see what happens -> 
+
       const clientOpts = {
         network: this.state.whichNetwork,
         apps: {
@@ -1664,10 +1681,6 @@ class App extends React.Component {
       let setOfOrderIds = [...new Set(arrayOfOrderIds)];
   
       arrayOfOrderIds = [...setOfOrderIds];
-  
-      // arrayOfOrderIds = arrayOfOrderIds.map((item) =>
-      //   Identifier.from(item)
-      // );
 
        //console.log("Array of order ids", arrayOfOrderIds);
   
@@ -1677,18 +1690,22 @@ class App extends React.Component {
         return client.platform.documents.get("DGPContract.dgpmsg", {
           where: [["orderId", "in", arrayOfOrderIds]],
           orderBy: [["orderId", 'asc']], 
+          //TEST ^^^ Why is the orderId and not createdAt? Bc its to get msgs not orders oh
         });
       };
   
       getDocuments()
         .then((d) => {
           let docArray = [];
-//THERE ISN'T NECESSARY MESSAGE TO GRAB SO COULD BE ZERO SO STILL NEED TO END LOADING ->
-          
-            for (const n of d) {
-             // console.log("Msg:\n", n.toJSON());
-              docArray = [...docArray, n.toJSON()];
-            }
+          for(const n of d) {
+
+            let returnedDoc = n.toJSON()
+             //console.log("Msg:\n", returnedDoc);
+             returnedDoc.orderId = Identifier.from(returnedDoc.orderId, 'base64').toJSON();
+             
+             //console.log("newMsg:\n", returnedDoc);
+            docArray = [...docArray, returnedDoc];
+          }
 
             this.setState({
               recentOrdersMessages: docArray,
@@ -1729,8 +1746,8 @@ class App extends React.Component {
 
   getActiveOrders = () => {
     /**This is Active QUERY
-                name: 'timeStamp',
-                properties: [{ timeStamp: 'asc' }],
+                name: 'createdAt',
+                properties: [{$createdAt: 'asc' }],
                 unique: false,
               }
              */
@@ -1753,8 +1770,8 @@ class App extends React.Component {
           
           
                 return client.platform.documents.get("DGPContract.dgporder", {
-                  where: [["timeStamp", ">=", 2546075019551 - Date.now()]],
-                  orderBy: [['timeStamp', 'asc']],
+                  where: [["$createdAt", "<=", Date.now()]],
+                  orderBy: [["$createdAt", 'desc']],
                 });
               };
           
@@ -1770,10 +1787,17 @@ class App extends React.Component {
                       //,() => this.getNamesForDGTOrders()
                     );
                   } else {
-                    for (const n of d) {
-                      //console.log("Merchant Orders:\n", n.toJSON());
-                      docArray = [...docArray, n.toJSON()];
-                    }
+
+                    for(const n of d) {
+
+                  let returnedDoc = n.toJSON()
+                   //console.log("Order:\n", returnedDoc);
+                   returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
+                   returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                  // console.log("newOrder:\n", returnedDoc);
+                  docArray = [...docArray, returnedDoc];
+                }
+
                     this.setState(
                       {
                         activeOrders: docArray,

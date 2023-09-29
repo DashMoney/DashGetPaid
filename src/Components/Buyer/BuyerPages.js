@@ -137,7 +137,7 @@ class BuyerPages extends React.Component {
             {
               cartItems: newCartItems,
             }
-            //,()=>console.log(this.state.cartItems)
+            ,()=>console.log(this.state.cartItems)
           );
         }
       });
@@ -147,7 +147,7 @@ class BuyerPages extends React.Component {
           [this.state.selectedItem, theQuantity],
           ...this.state.cartItems,
         ],
-      });
+      },()=>console.log(this.state.cartItems));
     }
   };
 
@@ -486,7 +486,6 @@ class BuyerPages extends React.Component {
 
     const submitNoteDocument = async () => {
       const { platform } = client;
-      // const identity = await platform.identities.get(this.state.identity); // Your identity ID
 
       let identity = "";
       if (this.props.identityRaw !== "") {
@@ -495,20 +494,18 @@ class BuyerPages extends React.Component {
         identity = await platform.identities.get(this.props.identity);
       } // Your identity ID
 
-    
-
+  
       let cartItemsForDocCreation = this.state.cartItems.map((tuple) => {
         return [Buffer.from(Identifier.from(tuple[0].$id)), tuple[1]];
-        //THIS ^^^^^^^^^^^ CREATES A BASE 64 AFTER QUERY BUT FUNCTIONAL
+        
       });
 
-      //console.log("cart item for doc creation", cartItemsForDocCreation);
+      console.log("cart items for doc creation", cartItemsForDocCreation);
 
       let docProperties;
 
       if (theOrderComment === "") {
         docProperties = {
-          timeStamp: 2546075019551 - Date.now(),
           cart: cartItemsForDocCreation,
           toId: this.state.identityIdMerchant,
           txId: theTXid,
@@ -516,19 +513,21 @@ class BuyerPages extends React.Component {
       } else {
         docProperties = {
           comment: theOrderComment,
-          timeStamp: 2546075019551 - Date.now(),
           cart: cartItemsForDocCreation,
           toId: this.state.identityIdMerchant,
           txId: theTXid,
         };
       }
+      //console.log("docProperties", docProperties);
 
       // Create the note document
       const dgpDocument = await platform.documents.create(
-        "DGPContract.dgporder", /// I changed .note TO .dgmaddress***
+        "DGPContract.dgporder", 
         identity,
         docProperties
       );
+
+       console.log("dgpDocument JSON", dgpDocument.toJSON());
 
       //############################################################
       //This below disconnects the document sending..***
@@ -542,22 +541,25 @@ class BuyerPages extends React.Component {
         create: [dgpDocument], // Document(s) to create
       };
 
-      return platform.documents.broadcast(documentBatch, identity);
+console.log(documentBatch);
+
+      await platform.documents.broadcast(documentBatch, identity);
+      return dgpDocument;
+
     };
 
     submitNoteDocument()
       .then((d) => {
         let returnedDoc = d.toJSON();
-       // console.log("Document:\n", returnedDoc);
+        console.log("Document:\n", returnedDoc);
 
         let order = {
           $ownerId: this.props.identity,
-          $id: returnedDoc.transitions[0].$id,
-          cart: returnedDoc.transitions[0].cart,
-          comment: returnedDoc.transitions[0].comment,
-          timeStamp: returnedDoc.transitions[0].timeStamp,
-          toId: returnedDoc.transitions[0].toId,
-          txId: returnedDoc.transitions[0].txId,
+          $id: returnedDoc.$id,
+          cart: returnedDoc.cart, //Identifier.from(returnedDoc.cart[0], 'base64').toJSON()
+          comment: returnedDoc.comment,
+          toId: returnedDoc.toId,
+          txId: returnedDoc.txId,
           };
 
         let name ={

@@ -190,8 +190,8 @@ itemCategoryValidate = (category) => {
 
     let valid = regex.test(numberInput);
 
-//MAX SPENDABLE IS 1000 DASH
-    if (valid && numberInput > 0 && numberInput <= 1000) {
+//MAX SPENDABLE IS 10000 DASH
+    if (valid && numberInput > 0 && numberInput <= 10000) {
       this.setState({
         priceInput: numberInput,
         validPrice: true,

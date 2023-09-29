@@ -49,7 +49,7 @@ class MyStoreItem extends React.Component {
             {this.handleAvail()}
 
             {/* <span className="textsmaller text-muted">
-              {this.getRelativeTimeAgo(this.props.tuple[1].timeStamp, this.props.date)}
+              {this.getRelativeTimeAgo(this.props.tuple[1].$createdAt, this.props.date)}
             </span> */}
           </Card.Title>
 

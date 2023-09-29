@@ -33,21 +33,11 @@ class Orders extends React.Component {
 
   getRelativeTimeAgo(messageTime, timeNow){
 
-    //timeStamp: 2546075019551 - Date.now(),
-
-    //How do I make he adjustments....
-    //So the messageTime is the time Stamp
-    // So messageTime = 2546075019551 - Time of message
-    //So I want Time of message
-    //There4 TOM = 2546075019551 - timeStamp -> okay
-
-    let timeOfMessage = 2546075019551 - messageTime;
-
-    let timeDifference = timeNow - timeOfMessage;
+    let timeDifference = timeNow - messageTime;
   
     if(timeDifference >= 84600000){
       let longFormDate = new Date();
-       longFormDate.setTime(timeOfMessage);
+       longFormDate.setTime(messageTime);
       return longFormDate.toLocaleDateString();
     }
     
@@ -311,7 +301,7 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
                 <span 
                    className="textsmaller"
                   >
-                    {this.getRelativeTimeAgo(msg.timeStamp, d)}
+                    {this.getRelativeTimeAgo(msg.$createdAt, d)}
                   </span>
                   </Card.Title>
                   <Card.Text>
@@ -363,8 +353,8 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
 /**
  * indices: [      
         {
-          name: 'orderIdandtimeStamp',
-          properties: [{ orderId: 'asc' }, { timeStamp: 'asc' }],
+          name: 'orderIdandcreatedAt',
+          properties: [{ orderId: 'asc' }, { $createdAt: 'asc' }],
           unique: false,
         }
 
@@ -399,7 +389,7 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
             <span 
              className="textsmaller"
             >
-              {this.getRelativeTimeAgo(order.timeStamp, d)}
+              {this.getRelativeTimeAgo(order.$createdAt, d)}
             </span>
           </Card.Title>
 
@@ -436,7 +426,7 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
           <span 
              className="textsmaller"
             >
-              {this.getRelativeTimeAgo(order.timeStamp, d)}
+              {this.getRelativeTimeAgo(order.$createdAt, d)}
             </span>
             </Card.Title>
             <Card.Text>
@@ -490,7 +480,7 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
                   <p> </p> */}
                   
                   <div className="paddingBadge">
-                <b>Dash Balance</b>
+                <b>Wallet Balance</b>
                   
                     <h4>
                       Loading..

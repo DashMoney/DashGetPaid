@@ -1,6 +1,5 @@
 import React from "react";
-import Carousel from 'react-bootstrap/Carousel';
-
+import Carousel from "react-bootstrap/Carousel";
 
 import DGPDark1 from "../../Images/IMG_1555.jpg";
 import DGPDark2 from "../../Images/IMG_1557.jpg";
@@ -23,27 +22,26 @@ import DGPLight8 from "../../Images/IMG_1571.jpg";
 import DGPLight9 from "../../Images/IMG_1573.jpg";
 
 import Image from "react-bootstrap/Image";
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Figure from 'react-bootstrap/Figure';
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Figure from "react-bootstrap/Figure";
 
 import "./LandingPage.css";
 
 class LandingPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      response : {},
+      response: {},
       copiedMnemonic: false,
       //I dont think I need this
-    }
+    };
   }
   render() {
     return (
       <>
-      
-      <h4 id="title-bar">
+        <h4 id="title-bar">
           <b>DashGetPaid is a Dash Platform Marketplace</b>
         </h4>
         {/* <h3>
@@ -51,8 +49,10 @@ class LandingPage extends React.Component {
         </h3> */}
         <div className="heading-shift">
           <p>
-            <b>Any Dash user can be a merchant and anyone can purchase directly from them with Dash!
-            </b> 
+            <b>
+              Any Dash user can be a merchant and anyone can purchase directly
+              from them with Dash!
+            </b>
           </p>
           {/* To showcase a simple message board Dapp and an actual implementation of Dash Platform's Data Contracts and Documents with a social aspect. */}
           {/* <ul>
@@ -64,416 +64,465 @@ class LandingPage extends React.Component {
           </ul> */}
         </div>
 
-        
-
-      {this.props.mode === 'dark'?  
-      <Carousel>
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark1} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Customer - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        {/* <img
+        {this.props.mode === "dark" ? (
+          <Carousel>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark1}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Customer - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+              {/* <img
           className="d-block w-100"
           src={DGPCustomerFindMerchant}
           alt="First slide"
         /> */}
-        <Carousel.Caption>
-          {/* <h3>First slide label</h3> */}
-          {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-        </Carousel.Caption>
-      </Carousel.Item>
+              <Carousel.Caption>
+                {/* <h3>First slide label</h3> */}
+                {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+              </Carousel.Caption>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark2} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Store Selection - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark2}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Store Selection - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark3} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Store Categories - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark3}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Store Categories - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark4} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Selected Category - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark4}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Selected Category - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark5} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Cart Item - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark5}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Cart Item - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark6} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Cart Items - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark6}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Cart Items - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark7} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Placing Order - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark7}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Placing Order - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark8} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Order Success - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark8}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Order Success - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-      <Carousel.Item>
-      <Container>
-         <Row>
-           <Col xs={2} md={4}></Col>
-           <Col xs={8} md={4} className="positionCaption">
-           <div className="positionCaption">
-         <Image
-           fluid  rounded id="dash-landing-page" src={DGPDark9} alt="DGP Landing Page Preview" 
-         />
-         <p></p>
-         <Figure.Caption className="figureCaption">
-           <b>Customer Orders - Preview</b>
-            </Figure.Caption>
-            </div>
-       </Col>
-           <Col xs={2} md={4}></Col>
-         </Row>
-       </Container>
-        
-      </Carousel.Item>
-      </Carousel>
-
-  :
-
-
-<Carousel>
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight1} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Customer - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  {/* <img
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPDark9}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Customer Orders - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
+          </Carousel>
+        ) : (
+          <Carousel>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight1}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Customer - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+              {/* <img
     className="d-block w-100"
     src={DGPCustomerFindMerchant}
     alt="First slide"
   /> */}
-  <Carousel.Caption>
-    {/* <h3>First slide label</h3> */}
-    {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-  </Carousel.Caption>
-</Carousel.Item>
+              <Carousel.Caption>
+                {/* <h3>First slide label</h3> */}
+                {/* <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+              </Carousel.Caption>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight2} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Store Selection - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight2}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Store Selection - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight3} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Store Categories - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight3}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Store Categories - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight4} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Selected Category - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight4}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Selected Category - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight5} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Cart Item - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight5}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Cart Item - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight6} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Cart Items - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight6}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Cart Items - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight7} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Placing Order - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight7}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Placing Order - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight8} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Order Success - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight8}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Order Success - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
 
-<Carousel.Item>
-<Container>
-   <Row>
-     <Col xs={2} md={4}></Col>
-     <Col xs={8} md={4} className="positionCaption">
-     <div className="positionCaption">
-   <Image
-     fluid  rounded id="dash-landing-page" src={DGPLight9} alt="DGP Landing Page Preview" 
-   />
-   <p></p>
-   <Figure.Caption className="figureCaption">
-     <b>Customer Orders - Preview</b>
-      </Figure.Caption>
-      </div>
- </Col>
-     <Col xs={2} md={4}></Col>
-   </Row>
- </Container>
-  
-</Carousel.Item>
+            <Carousel.Item>
+              <Container>
+                <Row>
+                  <Col xs={2} md={4}></Col>
+                  <Col xs={8} md={4} className="positionCaption">
+                    <div className="positionCaption">
+                      <Image
+                        fluid
+                        rounded
+                        id="dash-landing-page"
+                        src={DGPLight9}
+                        alt="DGP Landing Page Preview"
+                      />
+                      <p></p>
+                      <Figure.Caption className="figureCaption">
+                        <b>Customer Orders - Preview</b>
+                      </Figure.Caption>
+                    </div>
+                  </Col>
+                  <Col xs={2} md={4}></Col>
+                </Row>
+              </Container>
+            </Carousel.Item>
+          </Carousel>
+        )}
 
-</Carousel>
-  }
+        <p></p>
 
-      
-   <p></p>
-
-{/* <div id="bodytext">
+        {/* <div id="bodytext">
 
         <h3>
           How to Use

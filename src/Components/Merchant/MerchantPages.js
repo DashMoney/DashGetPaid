@@ -140,7 +140,6 @@ class MerchantPages extends React.Component {
       }
 
       const msgProperties = {
-        timeStamp: 2546075019551 - Date.now(),
         msg: orderMsgComment,
         orderId: this.state.messageOrderId,
       };
@@ -164,18 +163,20 @@ class MerchantPages extends React.Component {
         create: [dgpDocument], // Document(s) to create
       };
 
-      return platform.documents.broadcast(documentBatch, identity);
+      await platform.documents.broadcast(documentBatch, identity);
+      return dgpDocument;
     };
 
     submitMsgDoc()
       .then((d) => {
+
         let returnedDoc = d.toJSON();
         console.log("Buyer Order Message:\n", returnedDoc);
 
         let orderMsg = {
           $ownerId: this.props.identity,
-          $id: returnedDoc.transitions[0].$id,
-          timeStamp: 2546075019551 - Date.now(),
+          $id: returnedDoc.$id,
+          
         msg: orderMsgComment,
         orderId: this.state.messageOrderId,
         }
@@ -431,15 +432,15 @@ class MerchantPages extends React.Component {
 
       /**
        *  //This is MERCHANT QUERY
-          name: 'toIdandtimeStamp',
-          properties: [{ toId: 'asc' }, { timeStamp: 'asc' }],
+          name: 'toIdandcreatedAt',
+          properties: [{ toId: 'asc' }, {$createdAt: 'asc' }],
           unique: false,
         }
        */
 
       return client.platform.documents.get("DGPContract.dgporder", {
         where: [["toId", "==", this.props.identity]],
-        orderBy: [['timeStamp', 'asc']],
+        orderBy: [['$createdAt', 'desc']],
       });
     };
 
@@ -595,7 +596,7 @@ checkOrdersRace = () => {
 
       return client.platform.documents.get("DGPContract.dgpmsg", {
         where: [["orderId", "in", arrayOfOrderIds]],
-        orderBy: [["orderId", 'asc']], //IDK why it works with this and not timeStamp -> unless I added the timeStamp after the registering -> hmmmm -> idk it doesn't matter at least for awhile ->
+        orderBy: [["orderId", 'asc']], //IDK why it works with this and not $createdAt -> unless I added the $createdAt after the registering -> hmmmm -> idk it doesn't matter at least for awhile ->
       });
     };
 
@@ -611,9 +612,14 @@ checkOrdersRace = () => {
 
         }else{
 
-          for (const n of d) {
-           // console.log("Msg:\n", n.toJSON());
-            docArray = [...docArray, n.toJSON()];
+          for(const n of d) {
+
+            let returnedDoc = n.toJSON()
+             //console.log("Msg:\n", returnedDoc);
+             returnedDoc.orderId = Identifier.from(returnedDoc.orderId, 'base64').toJSON();
+             
+             //console.log("newMsg:\n", returnedDoc);
+            docArray = [...docArray, returnedDoc];
           }
 
         this.setState({
@@ -668,7 +674,13 @@ checkOrdersRace = () => {
     const client = new Dash.Client(clientOpts);
 
 
-    let docsToCreate = []; // MOVE OUT SO CAN USE IN RETURN LOGIC
+   //let docsToCreate = []; // MOVE OUT SO CAN USE IN RETURN LOGIC
+
+    let DGPStoreDoc = [];
+
+    let DGMAddrDoc = [];
+
+
 
     const submitStoreDocs = async () => {
       const { platform } = client;
@@ -695,7 +707,7 @@ checkOrdersRace = () => {
         storeDocProperties
       );
 
-      docsToCreate.push(dgpDocument);
+      DGPStoreDoc.push(dgpDocument);
 
       if (this.state.DGMAddress === "No Address") {
         const docProperties = {
@@ -708,7 +720,7 @@ checkOrdersRace = () => {
           docProperties
         );
 
-        docsToCreate.push(dgmDocument);
+        DGMAddrDoc.push(dgmDocument);
       }
 
       //############################################################
@@ -720,12 +732,29 @@ checkOrdersRace = () => {
       //############################################################
 
       //CAN I SUBMIT DOCS TO 2 DIFFERENT DATA CONTRACTS? -> TEST ->
+let addrBatch;
 
-      const documentBatch = {
-        create: docsToCreate,
+      const storeBatch = {
+        create: DGPStoreDoc, // Document(s) to create
       };
 
-      return platform.documents.broadcast(documentBatch, identity);
+      if(DGMAddrDoc.length !== 0){
+       addrBatch = {
+        create: DGMAddrDoc, // Document(s) to create
+      };
+    }
+
+      await platform.documents.broadcast(storeBatch, identity)
+
+      if(DGMAddrDoc.length !== 0){
+      await platform.documents.broadcast(addrBatch, identity)
+      }
+      
+      if(DGMAddrDoc.length !== 0){
+        return [...DGPStoreDoc, ...DGMAddrDoc ];
+      }else{
+        return  DGPStoreDoc;
+      }
     };
 
     submitStoreDocs()
@@ -734,24 +763,23 @@ checkOrdersRace = () => {
         //handle if nothing returned?? ->
         //INTERESTING -> IF ONLY ONE ITEM THEN IT DOESN'T RETURN AN ARRAY!! -> NO IT IS NEVER ANY ARRAY -> THE DOCUMENT SIMPLY HAS TRANSITIONS AND THAT THIS THE ARRAY!!!!! <-
 
-        let returnedDoc = d.toJSON();
-        console.log("Store Documents JSON:\n", returnedDoc);
+        // let returnedDoc = d.toJSON();
+        // console.log("Store Documents JSON:\n", returnedDoc);
 
-
-//  ALSO I NEED TO SEE IF THE ORDER MATTERS -> it does
-          //If i need to i can sort by 
-              // returnedDoc.transitions[0].$dataContractId
-              //OR
-              // returnedDoc.transitions[0].$type === 'dgmaddress'
+        let docArray = [];
+          for (const n of d) {
+            console.log("Submitted Doc:\n", n.toJSON());
+            docArray = [...docArray, n.toJSON()];
+          }
 
         let store;
         let address;
               
 //Single Document will be the Store
-        if(docsToCreate.length === 1 ){
+        if(docArray.length === 1 ){
          store = {
-          $ownerId: returnedDoc.ownerId,
-          $id: returnedDoc.transitions[0].$id,
+          $ownerId: docArray[0].$ownerId,
+          $id: docArray[0].$id,
           description: storeObject.description,
           public: storeObject.public,
           open: storeObject.open,
@@ -764,40 +792,40 @@ checkOrdersRace = () => {
         });       
        } else {
 
-        //Have to handle transitions that may come back in any order.
+        //Have to handle that may come back in any order.
         //Still may do some assuming
 
-        if(returnedDoc.transitions[0].$type === 'dgmaddress'){
+        
            address ={
-            $ownerId: returnedDoc.ownerId,
-            $id: returnedDoc.transitions[0].$id,
+            $ownerId: docArray[0].$ownerId,
+            $id: docArray[0].$id,
             address: this.props.accountAddress,
           }
-        } else { 
+       
           store = {
-            $ownerId: returnedDoc.ownerId,
-            $id: returnedDoc.transitions[0].$id,
+            $ownerId: docArray[1].$ownerId,
+            $id: docArray[1].$id,
             description: storeObject.description,
             public: storeObject.public,
             open: storeObject.open,
           }
-        }
+        
 
-        if(returnedDoc.transitions[1].$type === 'dgmaddress'){
-          address ={
-           $ownerId: returnedDoc.ownerId,
-           $id: returnedDoc.transitions[1].$id,
-           address: this.props.accountAddress,
-         }
-       } else { 
-         store = {
-           $ownerId: returnedDoc.ownerId,
-           $id: returnedDoc.transitions[1].$id,
-           description: storeObject.description,
-           public: storeObject.public,
-           open: storeObject.open,
-         }
-       }
+      //   if(returnedDoc.transitions[1].$type === 'dgmaddress'){
+      //     address ={
+      //      $ownerId: returnedDoc.ownerId,
+      //      $id: returnedDoc.transitions[1].$id,
+      //      address: this.props.accountAddress,
+      //    }
+      //  } else { 
+      //    store = {
+      //      $ownerId: returnedDoc.ownerId,
+      //      $id: returnedDoc.transitions[1].$id,
+      //      description: storeObject.description,
+      //      public: storeObject.public,
+      //      open: storeObject.open,
+      //    }
+      //  }
 
           this.setState({
             DGMAddress: [address],
@@ -894,7 +922,8 @@ checkOrdersRace = () => {
         document.set("open", storeObject.open);
       }
 
-      return platform.documents.broadcast({ replace: [document] }, identity);
+      await platform.documents.broadcast({ replace: [document] }, identity);
+      return document;
 
       //############################################################
       //This below disconnects the document sending..***
@@ -904,16 +933,7 @@ checkOrdersRace = () => {
       //This is to disconnect the Document Creation***
       //############################################################
 
-      //Below is old <- ***!!***
-
-      // const documentBatch = {
-      //   create: [docsToCreate]
-
-      //WHAT ELSE DOES BELOW  NEED <-
-      //   replace: [dgpDocument], // Document(s) to update
-      // };
-
-      // return platform.documents.broadcast(documentBatch, identity);
+     
     };
 
     editStoreDocs()
@@ -925,8 +945,8 @@ checkOrdersRace = () => {
         //NEED TO MAKE CUSTOM DOCS LIKE INSTEAD OF JUST PLUGGING IN THE RETURNED DOC BECAUSE THE RETURNED DOC IS A DOC WITH TRANSITIONS -> AWESOME LOOK ABOVE I JUST NEED TO GET THE $ID CORRECT BECAUSE THE EDIT PULLS THE ACTUAL DOC AND JUST NEED TO BE ABLE TO GET IT!! ->
 
         let store = {
-          $ownerId: returnedDoc.ownerId,
-          $id: returnedDoc.transitions[0].$id,
+          $ownerId: returnedDoc.$ownerId,
+          $id: returnedDoc.$id,
           description: storeObject.description,
           public: storeObject.public,
           open: storeObject.open,
@@ -1083,7 +1103,11 @@ checkOrdersRace = () => {
         create: [dgpDocument], // Document(s) to create
       };
 
-      return platform.documents.broadcast(documentBatch, identity);
+
+//console.log(documentBatch);
+
+      await platform.documents.broadcast(documentBatch, identity);
+      return dgpDocument;
     };
 
     submitItemDoc()
@@ -1092,8 +1116,8 @@ checkOrdersRace = () => {
         console.log("Document:\n", returnedDoc);
 
         let item = {
-          $ownerId: returnedDoc.ownerId,
-          $id: returnedDoc.transitions[0].$id,
+          $ownerId: returnedDoc.$ownerId,
+          $id: returnedDoc.$id,
           name: itemObject.name,
         price: itemObject.price,
         category: itemObject.category,
@@ -1211,7 +1235,8 @@ checkOrdersRace = () => {
         document.set("avail", itemObject.avail);
       }
 
-      return platform.documents.broadcast({ replace: [document] }, identity);
+      await platform.documents.broadcast({ replace: [document] }, identity);
+      return document;
 
       //############################################################
       //This below disconnects the document editing..***
@@ -1231,8 +1256,8 @@ checkOrdersRace = () => {
         //I don't think I want the returned doc. bc they are the real doc and I will just post the supplied docs above. -> TEST
 
         let item = {
-          $ownerId: returnedDoc.ownerId,
-          $id: returnedDoc.transitions[0].$id,
+          $ownerId: returnedDoc.$ownerId,
+          $id: returnedDoc.$id,
           name: itemObject.name,
         price: itemObject.price,
         category: itemObject.category,
@@ -1286,7 +1311,7 @@ checkForNewOrders = () =>{
 
     return client.platform.documents.get("DGPContract.dgporder", {
       where: [["toId", "==", this.props.identity]],
-      orderBy: [['timeStamp', 'asc']],
+      orderBy: [['$createdAt', 'desc']],
     });
   };
 
@@ -1671,6 +1696,7 @@ handleLoadNewOrder = () => {
         ) : (
           <></>
         )}
+        
 {this.state.isModalShowing &&
         this.state.presentModal === "WalletTXModal" ? (
           <WalletTXModal
