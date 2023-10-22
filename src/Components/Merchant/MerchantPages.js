@@ -23,7 +23,7 @@ import "./MerchantPages.css";
 const Dash = require("dash");
 
 const {
-  Essentials: { Buffer },
+  //Essentials: { Buffer },
   PlatformProtocol: { Identifier },
 } = Dash;
 
@@ -458,9 +458,15 @@ class MerchantPages extends React.Component {
             
           );
         } else {
-          for (const n of d) {
-            //console.log("Merchant Orders:\n", n.toJSON());
-            docArray = [...docArray, n.toJSON()];
+          
+          for(const n of d) {
+
+            let returnedDoc = n.toJSON()
+             //console.log("Msg:\n", returnedDoc);
+             returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
+             returnedDoc.cart = JSON.parse(returnedDoc.cart);
+             //console.log("newMsg:\n", returnedDoc);
+            docArray = [...docArray, returnedDoc];
           }
           this.setState(
             {
@@ -519,9 +525,9 @@ checkOrdersRace = () => {
 
       let arrayOfOwnerIds = [...setOfOwnerIds];
 
-      arrayOfOwnerIds = arrayOfOwnerIds.map((item) =>
-        Buffer.from(Identifier.from(item))
-      );
+      // arrayOfOwnerIds = arrayOfOwnerIds.map((item) => //Old way
+      //   Buffer.from(Identifier.from(item))
+      // );
 
     //  console.log("Called Get Names for DGP Orders");
 
@@ -617,7 +623,6 @@ checkOrdersRace = () => {
             let returnedDoc = n.toJSON()
              //console.log("Msg:\n", returnedDoc);
              returnedDoc.orderId = Identifier.from(returnedDoc.orderId, 'base64').toJSON();
-             
              //console.log("newMsg:\n", returnedDoc);
             docArray = [...docArray, returnedDoc];
           }
@@ -699,6 +704,12 @@ checkOrdersRace = () => {
         description: storeObject.description,
         public: storeObject.public,
         open: storeObject.open,
+
+        //NEW PROPERTIES - STILL NEED TO BE IMPLEMENTED
+        payLater: false,
+        acceptCredits: false,
+        acceptDash: true,
+
       };
 
       const dgpDocument = await platform.documents.create(
@@ -1258,6 +1269,8 @@ let addrBatch;
         let item = {
           $ownerId: returnedDoc.$ownerId,
           $id: returnedDoc.$id,
+          $createdAt: returnedDoc.$createdAt,
+          
           name: itemObject.name,
         price: itemObject.price,
         category: itemObject.category,
@@ -1412,7 +1425,7 @@ handleLoadNewOrder = () => {
             </Nav>
 
             {this.props.identityInfo === "" ||
-            this.props.identityInfo.balance >= 1000000000 ? (
+            this.props.identityInfo.balance >= 500000000 ? (
               <></>
             ) : (
               <div className="id-line" 

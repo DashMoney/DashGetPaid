@@ -2,6 +2,11 @@
   margin-left: 1rem;
 }
 
+.loginButton{
+  padding:1rem;
+  padding-top: 0rem;
+}
+
 .heading-shift{
   text-align: center;
   margin-left: 1rem;

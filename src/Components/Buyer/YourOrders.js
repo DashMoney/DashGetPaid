@@ -240,7 +240,9 @@ class YourOrders extends React.Component {
 
             //console.log('TEST: ', Identifier.from(tuple[0], 'base64').toJSON());
 
-            return item.$id === Identifier.from(tuple[0], 'base64').toJSON(); //Identifier.from()
+            return item.$id === tuple[0]; //TEST
+            
+            //Identifier.from(tuple[0], 'base64').toJSON(); //Identifier.from()
            })
           return [itemDoc, tuple[1]]
         });
@@ -358,7 +360,7 @@ class YourOrders extends React.Component {
     return (
       <> 
        {this.props.identityInfo === "" ||
-        this.props.identityInfo.balance >= 1000000000 ? (
+        this.props.identityInfo.balance >= 500000000 ? (
           <div className="id-line">
             <h5>
               <Badge className="paddingBadge" bg="primary">

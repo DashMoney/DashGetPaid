@@ -9,10 +9,10 @@ import Badge from "react-bootstrap/Badge";
 
 const Dash = require("dash");
 
-const {
-  Essentials: { Buffer },
-  PlatformProtocol: { Identifier },
-} = Dash;
+// const {
+//   Essentials: { Buffer },
+//   PlatformProtocol: { Identifier },
+// } = Dash;
 
 class Orders extends React.Component {
 
@@ -316,9 +316,9 @@ if((walletTxTime.valueOf() - theOrder.$createdAt) > 350000 ){
         let orderItemsAndQty = order.cart.map(tuple => {
            let itemDoc = this.props.DGPItems.find(item => {
 
-            //console.log('TEST: ', Identifier.from(tuple[0], 'base64').toJSON());
-
-            return item.$id === Identifier.from(tuple[0], 'base64').toJSON(); //Identifier.from()
+            
+            return item.$id === tuple[0];
+            
            })
           return [itemDoc, tuple[1]]
         });

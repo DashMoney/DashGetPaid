@@ -8,11 +8,15 @@ import Spinner from "react-bootstrap/Spinner";
 
 //import Alert from "react-bootstrap/Alert";
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import DashBkgd from "./Images/dash_digital-cash_logo_2018_rgb_for_screens.png";
 
 import TopNav from "./Components/TopNav/TopNav";
 //import BottomNav from "./Components/BottomNav/BottomNav";
-import LoginBottomNav from "./Components/BottomLoginNav/LoginBottomNav";
+
 
 import LandingPage from "./Components/Pages/LandingPage";
 import BuyerPages from "./Components/Buyer/BuyerPages";
@@ -112,8 +116,8 @@ class App extends React.Component {
       skipSynchronizationBeforeHeight: 910000,
       mostRecentBlockHeight: 910000,
 
-      DataContractDGP: 'ABqd1gjueDBK5GtSw2hFQjyf49mSLasf5dg3gjCw7Ga8',
-      DataContractDGM: 'G2JM3r2AW1JB9oHapQVDqE2siRyATMLAxXi2KGiKXxBB',
+      DataContractDGP: 'DjGsmQpudtHVrXw2sdcBUEipCzMMxsDtkx1ySCWinhKx', //'8EXMNbgy8fx8or7CGRCN1rDqKpPNt6Rn4nHCyNekVEx1', //byteArray to string
+      DataContractDGM: '4xYD4cASeif5e1auCerLhXR8jvDAwshWUdspk3WiBwhE',
       DataContractDPNS: 'GWRSAVFMjXx8HpQFaNJMqBV7MBgMK4br5UESsB4S31Ec',
 
       expandedTopNav: false,
@@ -924,14 +928,18 @@ class App extends React.Component {
                 );
               } else {
 
-                //TEST -> cart dgpItem does it return correctly
+                
                 for(const n of d) {
 
                   let returnedDoc = n.toJSON()
                    console.log("Order:\n", returnedDoc);
+
                    returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
-                   returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+
+                  returnedDoc.cart = JSON.parse(returnedDoc.cart);
+
                    console.log("newOrder:\n", returnedDoc);
+
                   docArray = [...docArray, returnedDoc];
                 }
                 this.setState(
@@ -1183,9 +1191,10 @@ class App extends React.Component {
 
     arrayOfItemIds = [...setOfItemIds];
 
-    arrayOfItemIds = arrayOfItemIds.map((item) =>{
-      return Identifier.from(item, 'base64').toJSON()
-  });
+  //   arrayOfItemIds = arrayOfItemIds.map((item) =>{ //UNNECESSARY NOW ->REMOVE
+  //     return Identifier.from(item, 'base64').toJSON()
+  // });
+
  // console.log("Array of item ids", arrayOfItemIds);
 
     const clientOpts = {
@@ -1359,7 +1368,8 @@ for(const n of d) {
                   let returnedDoc = n.toJSON()
                    //console.log("Order:\n", returnedDoc);
                    returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
-                   returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                  //  returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                   returnedDoc.cart = JSON.parse(returnedDoc.cart);
                    //console.log("newOrder:\n", returnedDoc);
                   docArray = [...docArray, returnedDoc];
                 }
@@ -1607,9 +1617,9 @@ for(const n of d) {
 
     arrayOfItemIds = [...setOfItemIds];
 
-    arrayOfItemIds = arrayOfItemIds.map((item) =>{
-      return Identifier.from(item, 'base64').toJSON()
-  });
+  //   arrayOfItemIds = arrayOfItemIds.map((item) =>{ //UNNECESSARY => REMOVE
+  //     return Identifier.from(item, 'base64').toJSON()
+  // });
  // console.log("Array of item ids", arrayOfItemIds);
 
     const clientOpts = {
@@ -1793,7 +1803,8 @@ for(const n of d) {
                   let returnedDoc = n.toJSON()
                    //console.log("Order:\n", returnedDoc);
                    returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
-                   returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                  //  returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+                   returnedDoc.cart = JSON.parse(returnedDoc.cart);
                   // console.log("newOrder:\n", returnedDoc);
                   docArray = [...docArray, returnedDoc];
                 }
@@ -2072,11 +2083,14 @@ for(const n of d) {
         />
         <Image fluid="true" id="dash-bkgd" src={DashBkgd} alt="Dash Logo" />
 
+        <Container className="g-0">
+  <Row className="justify-content-md-center">
+    <Col md={11} lg={10} xl={9} xxl={9}>
+
 
         {!this.state.isLoggedIn ? (
           <>
-            <LandingPage mode={this.state.mode}/>
-            <LoginBottomNav mode={this.state.mode} showModal={this.showModal} />
+            <LandingPage mode={this.state.mode} showModal={this.showModal}/>
             <Footer />
           </>
         ) : (
@@ -2192,6 +2206,10 @@ for(const n of d) {
             )} */}
           </>
         )}
+
+</Col>
+        </Row>
+        </Container>
 
 {this.state.isModalShowing &&
         this.state.presentModal === "ConnectWalletModal" ? (

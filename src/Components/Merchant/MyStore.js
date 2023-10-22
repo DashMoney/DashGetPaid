@@ -91,7 +91,7 @@ class MyStore extends React.Component {
     return (
       <>
         {this.props.identityInfo === "" ||
-        this.props.identityInfo.balance >= 450000000 ? (
+        this.props.identityInfo.balance >= 500000000 ? (
           <div className="id-line">
             <h5>
               <Badge className="paddingBadge" bg="primary">

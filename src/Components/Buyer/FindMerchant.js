@@ -14,7 +14,6 @@ class FindMerchant extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      numOfItemsToDisplay: 0,
       selectedCategory: '',
     };
   }

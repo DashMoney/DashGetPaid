@@ -1,6 +1,8 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
+import Button from "react-bootstrap/Button";
+
 import DGPDark1 from "../../Images/IMG_1555.jpg";
 import DGPDark2 from "../../Images/IMG_1557.jpg";
 import DGPDark3 from "../../Images/IMG_1559.jpg";
@@ -41,28 +43,47 @@ class LandingPage extends React.Component {
   render() {
     return (
       <>
-        <h4 id="title-bar">
+        {/* <h4 id="title-bar">
           <b>DashGetPaid is a Dash Platform Marketplace</b>
+        </h4> */}
+
+        <h4 id="title-bar">
+          <b>A Dash marketplace where any user can be a merchant!</b>
         </h4>
+
         {/* <h3>
           <Badge bg="primary">Purpose of DashShoutOut</Badge>
         </h3> */}
-        <div className="heading-shift">
+        
+        {/* <div className="heading-shift">
           <p>
             <b>
               Any Dash user can be a merchant and anyone can purchase directly
               from them with Dash!
             </b>
           </p>
-          {/* To showcase a simple message board Dapp and an actual implementation of Dash Platform's Data Contracts and Documents with a social aspect. */}
-          {/* <ul>
+           To showcase a simple message board Dapp and an actual implementation of Dash Platform's Data Contracts and Documents with a social aspect.
+           <ul>
             <li>
               <p>
                  To assist in "Closing the Loop" and building the network effect for the Dash ecosystem, the user network should utilize the Dash Platform. That is what DashShoutOut hopes to achieve and may it be one of many to do so.
               </p>
             </li>
-          </ul> */}
-        </div>
+          </ul> 
+        </div> */}
+
+        <div className="loginButton">
+        <div className="d-grid gap-2">
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => this.props.showModal("ConnectWalletModal")}
+              >
+                <b>Connect Wallet</b>
+              </Button>
+            </div>
+            </div>
+            <p></p>
 
         {this.props.mode === "dark" ? (
           <Carousel>

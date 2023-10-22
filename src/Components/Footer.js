@@ -20,19 +20,23 @@ class Footer extends React.Component {
             <b>DashGetTogether.com</b>
             </a> for a group messenger dapp!
           </li> */}
+</ul>
+          <ul>
           <li>DashMoney Github Repo - <a rel="noopener noreferrer" target="_blank" href="https://github.com/DashMoney">
             <b>https://github.com/DashMoney</b>
             </a></li>
         {/* <li>DashShoutOut Github Repo - <a rel="noopener noreferrer" target="_blank" href="https://www.dashcentral.org/p/DashMoney-Dapp-Development-June-2023">
             <b>Pending Dash Treasury Proposal - LIVE</b>
             </a></li> */}
+            </ul>
+          <ul>
           <li>
             <a rel="noopener noreferrer" target="_blank" href="https://dashplatform.readme.io/">
-            Dash Platform Developer Documentation
+            <b>Dash Platform Developer Documentation</b>
             </a>
           </li>
           <li><a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/watch?v=VoQxHhzWhT0">
-          DashMoney - Closing Loops (Video)
+          <b>DashMoney - Closing Loops (Video)</b>
             </a></li>
         </ul>
       </div>

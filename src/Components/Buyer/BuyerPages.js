@@ -216,7 +216,7 @@ class BuyerPages extends React.Component {
           });
         } else {
           let nameDoc = d.toJSON();
-          //console.log("Name retrieved:\n", nameDoc.$ownerId);
+          console.log("NameDoc retrieved:\n", nameDoc);
 
           this.setState(
             {
@@ -401,6 +401,7 @@ class BuyerPages extends React.Component {
   //************* PLACE ORDER HANDLING ************* */
 
   placeOrder = (orderComment) => {
+
     this.setState({
       LoadingOrder: true,
     });
@@ -459,7 +460,7 @@ class BuyerPages extends React.Component {
           sendFailure: true,
         });
       })
-      .finally(() => client.disconnect()); 
+      //.finally(() => client.disconnect()); //TEST -> messed up DGM may be causing problem here as well
   };
 
   submitDGPOrderDoc = (theTXid, theOrderComment) => {
@@ -494,13 +495,22 @@ class BuyerPages extends React.Component {
         identity = await platform.identities.get(this.props.identity);
       } // Your identity ID
 
-  
+  // ### ###  ### ###  ### ###   ###   ####
+
+      // let cartItemsForDocCreation = this.state.cartItems.map((tuple) => {
+      //   return [Buffer.from(Identifier.from(tuple[0].$id)), tuple[1]];
+      // }); // ^^ OLD WAY
+
       let cartItemsForDocCreation = this.state.cartItems.map((tuple) => {
-        return [Buffer.from(Identifier.from(tuple[0].$id)), tuple[1]];
-        
+        return [tuple[0].$id, tuple[1]];
       });
+      //The cart has the itemDoc!!!!! => Fixed it ^^^
+      
+       cartItemsForDocCreation = JSON.stringify(cartItemsForDocCreation);
 
       console.log("cart items for doc creation", cartItemsForDocCreation);
+
+   // ### ###  ### ###  ### ###   ###   ####
 
       let docProperties;
 
@@ -541,7 +551,7 @@ class BuyerPages extends React.Component {
         create: [dgpDocument], // Document(s) to create
       };
 
-console.log(documentBatch);
+//console.log(documentBatch);
 
       await platform.documents.broadcast(documentBatch, identity);
       return dgpDocument;
@@ -554,13 +564,18 @@ console.log(documentBatch);
         console.log("Document:\n", returnedDoc);
 
         let order = {
-          $ownerId: this.props.identity,
+          $ownerId: returnedDoc.$ownerId,
           $id: returnedDoc.$id,
-          cart: returnedDoc.cart, //Identifier.from(returnedDoc.cart[0], 'base64').toJSON()
+
+          cart: JSON.parse(returnedDoc.cart), 
+          //Identifier.from(returnedDoc.cart[0], 'base64').toJSON() //OLD WAY
+
           comment: returnedDoc.comment,
-          toId: returnedDoc.toId,
+          toId: this.state.identityIdMerchant, //jUST USE INSTEAD OF RETURN BECAUSE BASE64
           txId: returnedDoc.txId,
           };
+
+          console.log("Order:\n", order);
 
         let name ={
           $ownerId: this.state.identityIdMerchant,
@@ -684,7 +699,7 @@ console.log(documentBatch);
             </Nav>
 
             {this.props.identityInfo === "" ||
-            this.props.identityInfo.balance >= 1000000000 ? (
+            this.props.identityInfo.balance >= 500000000 ? (
               <></>
             ) : (
               <div className="id-line"
