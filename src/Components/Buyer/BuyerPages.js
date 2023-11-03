@@ -786,7 +786,8 @@ class BuyerPages extends React.Component {
                               : this.state.merchantStoreName
                           }
                           required
-                          isInvalid={!this.state.merchantNameFormat}
+                          // isInvalid={!this.state.merchantNameFormat} 
+                          // TEST ^^ remove red fail when click in recent or active => 
                           isValid={this.state.merchantNameFormat}
                         />
                         </div>

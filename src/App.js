@@ -8,15 +8,14 @@ import Spinner from "react-bootstrap/Spinner";
 
 //import Alert from "react-bootstrap/Alert";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import DashBkgd from "./Images/dash_digital-cash_logo_2018_rgb_for_screens.png";
 
 import TopNav from "./Components/TopNav/TopNav";
 //import BottomNav from "./Components/BottomNav/BottomNav";
-
 
 import LandingPage from "./Components/Pages/LandingPage";
 import BuyerPages from "./Components/Buyer/BuyerPages";
@@ -43,14 +42,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoggedIn: false,
-      isLoggedInAs: 'buyer',
+      isLoggedInAs: "buyer",
 
       isLoading: false,
       isLoadingRefresh: false, //For Platform data reloading (unused currently)
       isLoadingWallet: false,
 
       mode: "dark",
-      denom: 'Dash',
+      denom: "Dash",
       presentModal: "",
       isModalShowing: false,
       whichNetwork: "testnet",
@@ -58,15 +57,15 @@ class App extends React.Component {
       mnemonic: "",
       identity: "",
       identityInfo: "",
-      identityRaw: '',
+      identityRaw: "",
       uniqueName: "",
-   
-      initialRecentOrders: [],  
+
+      initialRecentOrders: [],
       initialRecentOrdersStores: [],
-      initialRecentOrdersNames:[], 
-      initialRecentOrdersDGMAddresses:[],
-      initialRecentOrdersItems:[],
-      initialRecentOrdersMessages:[],
+      initialRecentOrdersNames: [],
+      initialRecentOrdersDGMAddresses: [],
+      initialRecentOrdersItems: [],
+      initialRecentOrdersMessages: [],
 
       initial1: false,
       initial2: false,
@@ -76,12 +75,12 @@ class App extends React.Component {
 
       isLoadingRecentOrders: true,
 
-      recentOrders: [],  
+      recentOrders: [],
       recentOrdersStores: [],
-      recentOrdersNames:[], 
-      recentOrdersDGMAddresses:[],
-      recentOrdersItems:[],
-      recentOrdersMessages:[],
+      recentOrdersNames: [],
+      recentOrdersDGMAddresses: [],
+      recentOrdersItems: [],
+      recentOrdersMessages: [],
 
       recent1: false,
       recent2: false,
@@ -90,10 +89,10 @@ class App extends React.Component {
       recent5: false,
 
       isLoadingActive: false,
-      activeOrders: [], 
+      activeOrders: [],
       activeOrdersStores: [],
       activeOrdersNames: [],
-      activeOrdersAddresses:[],
+      activeOrdersAddresses: [],
 
       active1: false,
       active2: false,
@@ -103,22 +102,22 @@ class App extends React.Component {
       accountAddress: "",
       accountHistory: "",
 
-      messageOrderId: '',
-      messageStoreOwnerName: '',
+      messageOrderId: "",
+      messageStoreOwnerName: "",
 
-      walletId: '',
+      walletId: "",
       mostRecentLogin: false,
       platformLogin: false,
       LocalForageKeys: [],
 
-      EndSetInterval: '',
+      EndSetInterval: "",
 
-      skipSynchronizationBeforeHeight: 910000,
-      mostRecentBlockHeight: 910000,
+      skipSynchronizationBeforeHeight: 905000,
+      mostRecentBlockHeight: 905000,
 
-      DataContractDGP: 'DjGsmQpudtHVrXw2sdcBUEipCzMMxsDtkx1ySCWinhKx', //'8EXMNbgy8fx8or7CGRCN1rDqKpPNt6Rn4nHCyNekVEx1', //byteArray to string
-      DataContractDGM: '4xYD4cASeif5e1auCerLhXR8jvDAwshWUdspk3WiBwhE',
-      DataContractDPNS: 'GWRSAVFMjXx8HpQFaNJMqBV7MBgMK4br5UESsB4S31Ec',
+      DataContractDGP: "G64qPciumaNrwCz9puWq8tnFbUr4QHNVFHD7qbBCAszd",
+      DataContractDGM: "DSy9hbngRsCfrERpwNHhDzfhgPxfngu6cEKvGnkjVLpN",
+      DataContractDPNS: "GWRSAVFMjXx8HpQFaNJMqBV7MBgMK4br5UESsB4S31Ec",
 
       expandedTopNav: false,
     };
@@ -167,7 +166,8 @@ class App extends React.Component {
     }
   };
 
-  handleDenom = () => { //This is not implemented yet..
+  handleDenom = () => {
+    //This is not implemented yet..
     if (this.state.mode === "Dash")
       this.setState({
         mode: "mDash",
@@ -179,18 +179,17 @@ class App extends React.Component {
     }
   };
 
-  handleOrderMessageModalShow = (theOrderId, ownerName) =>{
-    
-    this.setState({
-      messageOrderId: theOrderId,
-      messageStoreOwnerName: ownerName,
-    }
-    ,()=>this.showModal('OrderMessageModal')
-    )
-  }
+  handleOrderMessageModalShow = (theOrderId, ownerName) => {
+    this.setState(
+      {
+        messageOrderId: theOrderId,
+        messageStoreOwnerName: ownerName,
+      },
+      () => this.showModal("OrderMessageModal")
+    );
+  };
 
   handleOrderMessageSubmit = (orderMsgComment) => {
-    
     console.log("Called Buyer Order Message: ", orderMsgComment);
 
     this.setState({
@@ -261,9 +260,9 @@ class App extends React.Component {
         let orderMsg = {
           $ownerId: this.state.identity,
           $id: returnedDoc.$id,
-        msg: orderMsgComment,
-        orderId: this.state.messageOrderId,
-        }
+          msg: orderMsgComment,
+          orderId: this.state.messageOrderId,
+        };
 
         this.setState({
           recentOrdersMessages: [orderMsg, ...this.state.recentOrdersMessages],
@@ -273,100 +272,111 @@ class App extends React.Component {
       .catch((e) => {
         console.error("Something went wrong with Buyer Order Message:\n", e);
         this.setState({
-          ordersMessageError: true,//I should like make that a thing ->
+          ordersMessageError: true, //I should like make that a thing ->
           isLoadingRecentOrders: false,
         });
       })
       .finally(() => client.disconnect());
-  }
+  };
 
-  handleAddingNewOrder = (theOrder, theName, theStore, theItems, theAddress) =>{
+  handleAddingNewOrder = (
+    theOrder,
+    theName,
+    theStore,
+    theItems,
+    theAddress
+  ) => {
     this.setState({
-      recentOrders: [theOrder, ...this.state.recentOrders],  
+      recentOrders: [theOrder, ...this.state.recentOrders],
       recentOrdersStores: [theStore, ...this.state.recentOrdersStores],
-      recentOrdersNames:[theName, ...this.state.recentOrdersNames], 
-      recentOrdersDGMAddresses:[theAddress, ...this.state.recentOrdersDGMAddresses],
-      recentOrdersItems:[...theItems, ...this.state.recentOrdersItems],
+      recentOrdersNames: [theName, ...this.state.recentOrdersNames],
+      recentOrdersDGMAddresses: [
+        theAddress,
+        ...this.state.recentOrdersDGMAddresses,
+      ],
+      recentOrdersItems: [...theItems, ...this.state.recentOrdersItems],
     });
-  
-  }  
+  };
 
   handleLogout = () => {
-    this.setState({
-      isLoggedIn: false,
-      isLoggedInAs: 'buyer',
+    this.setState(
+      {
+        isLoggedIn: false,
+        isLoggedInAs: "buyer",
 
-      isLoading: false,
-      isLoadingRefresh: false, //For Platform data reloading (unused currently)
-      isLoadingWallet: false,
+        isLoading: false,
+        isLoadingRefresh: false, //For Platform data reloading (unused currently)
+        isLoadingWallet: false,
 
-      mode: "dark",
-      denom: 'Dash',
-      presentModal: "",
-      isModalShowing: false,
-      whichNetwork: "testnet",
+        mode: "dark",
+        denom: "Dash",
+        presentModal: "",
+        isModalShowing: false,
+        whichNetwork: "testnet",
 
-      mnemonic: "",
-      identity: "",
-      identityInfo: "",
-      identityRaw: '',
-      uniqueName: "",
-   
-      initialRecentOrders: [],  
-      initialRecentOrdersStores: [],
-      initialRecentOrdersNames:[], 
-      initialRecentOrdersDGMAddresses:[],
-      initialRecentOrdersItems:[],
-      initialRecentOrdersMessages:[],
+        mnemonic: "",
+        identity: "",
+        identityInfo: "",
+        identityRaw: "",
+        uniqueName: "",
 
-      initial1: false,
-      initial2: false,
-      initial3: false,
-      initial4: false,
-      initial5: false,
+        initialRecentOrders: [],
+        initialRecentOrdersStores: [],
+        initialRecentOrdersNames: [],
+        initialRecentOrdersDGMAddresses: [],
+        initialRecentOrdersItems: [],
+        initialRecentOrdersMessages: [],
 
-      isLoadingRecentOrders: true,
+        initial1: false,
+        initial2: false,
+        initial3: false,
+        initial4: false,
+        initial5: false,
 
-      recentOrders: [],  
-      recentOrdersStores: [],
-      recentOrdersNames:[], 
-      recentOrdersDGMAddresses:[],
-      recentOrdersItems:[],
-      recentOrdersMessages:[],
+        isLoadingRecentOrders: true,
 
-      recent1: false,
-      recent2: false,
-      recent3: false,
-      recent4: false,
-      recent5: false,
+        recentOrders: [],
+        recentOrdersStores: [],
+        recentOrdersNames: [],
+        recentOrdersDGMAddresses: [],
+        recentOrdersItems: [],
+        recentOrdersMessages: [],
 
-      isLoadingActive: false,
-      activeOrders: [], 
-      activeOrdersStores: [],
-      activeOrdersNames: [],
-      activeOrdersAddresses:[],
+        recent1: false,
+        recent2: false,
+        recent3: false,
+        recent4: false,
+        recent5: false,
 
-      active1: false,
-      active2: false,
-      active3: false,
+        isLoadingActive: false,
+        activeOrders: [],
+        activeOrdersStores: [],
+        activeOrdersNames: [],
+        activeOrdersAddresses: [],
 
-      accountBalance: "",
-      accountAddress: "",
-      accountHistory: "",
+        active1: false,
+        active2: false,
+        active3: false,
 
-      messageOrderId: '',
-      messageStoreOwnerName: '',
+        accountBalance: "",
+        accountAddress: "",
+        accountHistory: "",
 
-      walletId: '',
-      mostRecentLogin: false,
-      platformLogin: false,
-      LocalForageKeys: [],
+        messageOrderId: "",
+        messageStoreOwnerName: "",
 
-      skipSynchronizationBeforeHeight: 910000,
-      mostRecentBlockHeight: 910000,
+        walletId: "",
+        mostRecentLogin: false,
+        platformLogin: false,
+        LocalForageKeys: [],
 
-      expandedTopNav: false,
-    },()=> this.componentDidMount());
+        skipSynchronizationBeforeHeight: 910000,
+        mostRecentBlockHeight: 910000,
+
+        expandedTopNav: false,
+      },
+      () => this.componentDidMount()
+    );
   };
 
   componentDidMount() {
@@ -391,7 +401,7 @@ class App extends React.Component {
         console.log(err);
       });
 
-//***Next Bit Gets MostRecentBlockHeight */
+    //***Next Bit Gets MostRecentBlockHeight */
     const clientOpts = {
       network: this.state.whichNetwork,
     };
@@ -416,51 +426,52 @@ class App extends React.Component {
       })
       .finally(() => client.disconnect());
 
-//Next Part Gets keys for platform login check
+    //Next Part Gets keys for platform login check
     LocalForage.keys()
       .then((keys) => {
         this.setState({
           LocalForageKeys: keys,
         });
-        console.log('Local Forage keys:\n', keys);
+        console.log("Local Forage keys:\n", keys);
       })
       .catch(function (err) {
         console.log(err);
       });
 
-      this.getActiveOrders();
-
+    this.getActiveOrders();
   }
 
-  handleInitialQuerySeq = (theIdentity) => { 
-
+  handleInitialQuerySeq = (theIdentity) => {
     this.getInitialRecentOrders(theIdentity);
-    
   };
 
-  handleWalletConnection = (theMnemonic, loginAs) => { 
-
+  handleWalletConnection = (theMnemonic, loginAs) => {
     if (this.state.LocalForageKeys.length === 0) {
-      this.setState({
-        isLoggedIn: true,
-        isLoggedInAs: loginAs,
-        isLoading: true,
-        isLoadingWallet: true,
-        mnemonic: theMnemonic,
-      },()=>this.getIdentitywithMnem(theMnemonic));
-    }else{
-      this.setState({
-        isLoggedIn: true,
-        isLoggedInAs: loginAs,
-        isLoading: true,
-        isLoadingWallet: true,
-        mnemonic: theMnemonic,
-      },()=>this.checkPlatformOnlyLogin(theMnemonic));
+      this.setState(
+        {
+          isLoggedIn: true,
+          isLoggedInAs: loginAs,
+          isLoading: true,
+          isLoadingWallet: true,
+          mnemonic: theMnemonic,
+        },
+        () => this.getIdentitywithMnem(theMnemonic)
+      );
+    } else {
+      this.setState(
+        {
+          isLoggedIn: true,
+          isLoggedInAs: loginAs,
+          isLoading: true,
+          isLoadingWallet: true,
+          mnemonic: theMnemonic,
+        },
+        () => this.checkPlatformOnlyLogin(theMnemonic)
+      );
     }
   };
 
   checkPlatformOnlyLogin = (theMnemonic) => {
-
     console.log("Called Check Platform Login");
 
     const clientOpts = {
@@ -486,90 +497,93 @@ class App extends React.Component {
 
     getWalletId()
       .then((mostRecentMatch) => {
+        console.log(`Most Recent Matches -> ${mostRecentMatch}`);
 
-        console.log(`Most Recent Matches -> ${mostRecentMatch}`); 
-        
-        if(!mostRecentMatch){
+        if (!mostRecentMatch) {
+          let isKeyAvail = this.state.LocalForageKeys.includes(walletIdToTry);
+          // console.log(`LocalForage Test -> ${isKeyAvail}`);
 
-        let isKeyAvail = this.state.LocalForageKeys.includes(walletIdToTry);
-       // console.log(`LocalForage Test -> ${isKeyAvail}`);
+          if (isKeyAvail) {
+            console.log("This here is a login skip!!");
 
-        if (isKeyAvail) {
-          console.log("This here is a login skip!!");
+            LocalForage.getItem(walletIdToTry)
+              .then((val) => {
+                //  console.log("Value Retrieved", val);
 
-          LocalForage.getItem(walletIdToTry)
-            .then((val) => {
-            //  console.log("Value Retrieved", val);
+                if (
+                  val !== null ||
+                  typeof val.identity !== "string" ||
+                  val.identity === "" ||
+                  val.name === "" ||
+                  typeof val.name !== "string"
+                ) {
+                  this.setState(
+                    {
+                      platformLogin: true,
+                      identity: val.identity,
+                      uniqueName: val.name,
+                      walletId: walletIdToTry,
+                      recentOrders: [],
+                      isLoading: false,
+                      isLoadingRecentOrders: true,
+                      //maintain Loading bc continuing to other functions
+                    },
+                    () => this.handleStartQuerySeq(val.identity, theMnemonic)
+                  );
 
-              if (
-                val !== null ||
-                typeof val.identity !== "string" ||
-                val.identity === "" ||
-                val.name === "" ||
-                typeof val.name !== "string"
-              ) {
-                
-                this.setState({
-                  platformLogin: true,
-                  identity: val.identity,
-                  uniqueName: val.name,
-                  walletId: walletIdToTry,
-                  recentOrders: [],
-                  isLoading: false,
-                  isLoadingRecentOrders: true,
-                  //maintain Loading bc continuing to other functions
-                },()=>this.handleStartQuerySeq(val.identity, theMnemonic));
-        
-        let lfObject = {
-          walletId: walletIdToTry,
-          identity: val.identity,
-          name: val.name,
-        };
-        LocalForage.setItem("mostRecentWalletId", lfObject)
-          .then((d) => {
-            //return LocalForage.getItem(walletId);
-           // console.log("Return from LF setitem:", d);
-          })
-          .catch((err) => {
-            console.error(
-              "Something went wrong setting to localForage:\n",
-              err
+                  let lfObject = {
+                    walletId: walletIdToTry,
+                    identity: val.identity,
+                    name: val.name,
+                  };
+                  LocalForage.setItem("mostRecentWalletId", lfObject)
+                    .then((d) => {
+                      //return LocalForage.getItem(walletId);
+                      // console.log("Return from LF setitem:", d);
+                    })
+                    .catch((err) => {
+                      console.error(
+                        "Something went wrong setting to localForage:\n",
+                        err
+                      );
+                    });
+                } else {
+                  //  console.log("platform login failed");
+                  //this.getIdentitywithMnem(theMnemonic);
+                  //() => this.getNamefromIdentity(val)); // send to get it
+                }
+              })
+              .catch((err) => {
+                console.error(
+                  "Something went wrong getting from localForage:\n",
+                  err
+                );
+              });
+          } else {
+            this.setState(
+              {
+                //This is for if no platform login at all. resets
+                identityInfo: "",
+                identityRaw: "",
+                uniqueName: "",
+                recentOrders: [],
+                isLoading: true,
+                isLoadingRecentOrders: true,
+              },
+              () => this.getIdentitywithMnem(theMnemonic)
             );
-          });
-        
-              } else {
-              //  console.log("platform login failed");
-                //this.getIdentitywithMnem(theMnemonic);
-                //() => this.getNamefromIdentity(val)); // send to get it
-              }
-            })
-            .catch((err) => {
-              console.error(
-                "Something went wrong getting from localForage:\n",
-                err
-              );
-            });
-        } else {
-          this.setState({
-            //This is for if no platform login at all. resets
-            identityInfo: "",
-            identityRaw: '',
-            uniqueName: "",
-            recentOrders: [],
-            isLoading: true,
-            isLoadingRecentOrders: true,
-          },()=>this.getIdentitywithMnem(theMnemonic));
-          
+          }
+        } //Closes mostRecentMatch
+        else {
+          this.setState(
+            {
+              mostRecentLogin: true,
+              platformLogin: true,
+              isLoading: false,
+            },
+            () => this.handleMostRecentLogin(theMnemonic)
+          );
         }
-      }//Closes mostRecentMatch
-      else{
-          this.setState({
-
-            mostRecentLogin:true,
-            platformLogin: true,
-            isLoading: false,
-          },()=>this.handleMostRecentLogin(theMnemonic));
-      } 
       })
       .catch((e) => console.error("Something went wrong:\n", e))
       .finally(() => client.disconnect());
@@ -579,40 +593,38 @@ class App extends React.Component {
 
   handleMostRecentLogin = (theMnemonic) => {
     //check if loading is done and push to display state
-    if (this.state.initial1 &&
-         this.state.initial2 &&
-          this.state.initial3 && 
-           this.state.initial4 &&
-            this.state.initial5) {
+    if (
+      this.state.initial1 &&
+      this.state.initial2 &&
+      this.state.initial3 &&
+      this.state.initial4 &&
+      this.state.initial5
+    ) {
+      this.setState({
+        recentOrders: this.state.initialRecentOrders,
+        recentOrdersStores: this.state.initialRecentOrdersStores,
+        recentOrdersNames: this.state.initialRecentOrdersNames,
+        recentOrdersDGMAddresses: this.state.initialRecentOrdersDGMAddresses,
+        recentOrdersItems: this.state.initialRecentOrdersItems,
+        recentOrdersMessages: this.state.initialRecentOrdersMessages,
 
-        this.setState({
-          recentOrders: this.state.initialRecentOrders,  
-          recentOrdersStores: this.state.initialRecentOrdersStores,
-          recentOrdersNames:this.state.initialRecentOrdersNames, 
-          recentOrdersDGMAddresses:this.state.initialRecentOrdersDGMAddresses,
-          recentOrdersItems:this.state.initialRecentOrdersItems,
-          recentOrdersMessages:this.state.initialRecentOrdersMessages,
-
-          isLoadingRecentOrders: false,
-      });      
+        isLoadingRecentOrders: false,
+      });
     }
-    
+
     this.getIdentityInfo(this.state.identity);
     this.getWalletwithMnem(theMnemonic);
-  } 
+  };
 
-  handleStartQuerySeq = (theIdentity, theMnemonic) => { 
-
+  handleStartQuerySeq = (theIdentity, theMnemonic) => {
     this.getRecentOrders(theIdentity);
 
     this.getIdentityInfo(theIdentity);
 
     this.getWalletwithMnem(theMnemonic);
-
   };
 
   getIdentitywithMnem = (theMnemonic) => {
-
     const client = new Dash.Client({
       network: this.state.whichNetwork,
       wallet: {
@@ -622,26 +634,26 @@ class App extends React.Component {
         },
       },
     });
-  
+
     let walletIdToTry;
-  
+
     const retrieveIdentityIds = async () => {
       const account = await client.getWalletAccount();
-  
+
       //console.log(account);
       // this.setState({
       //   accountAddress: account.getUnusedAddress().address, //This can be used if you havent created the DGMDocument <-
       // });
-  
+
       walletIdToTry = account.walletId;
-     // console.log(walletIdToTry);
-  
+      // console.log(walletIdToTry);
+
       return account.identities.getIdentityIds();
     };
-  
+
     retrieveIdentityIds()
       .then((d) => {
-       // console.log("Mnemonic identities:\n", d);
+        // console.log("Mnemonic identities:\n", d);
         //This if - handles if there is an identity or not
         if (d.length === 0) {
           this.setState({
@@ -671,7 +683,7 @@ class App extends React.Component {
   };
 
   callEverythingBcHaveIdentityNow = (theIdentity, theMnemonic) => {
-    if(!this.state.platformLogin){
+    if (!this.state.platformLogin) {
       this.getNamefromIdentity(theIdentity);
       this.getIdentityInfo(theIdentity);
     }
@@ -680,14 +692,14 @@ class App extends React.Component {
   };
 
   getWalletwithMnem = (theMnemonic) => {
-
     const client = new Dash.Client({
       network: this.state.whichNetwork,
       wallet: {
         mnemonic: theMnemonic,
         adapter: LocalForage.createInstance,
         unsafeOptions: {
-          skipSynchronizationBeforeHeight: this.state.skipSynchronizationBeforeHeight,
+          skipSynchronizationBeforeHeight:
+            this.state.skipSynchronizationBeforeHeight,
         },
       },
     });
@@ -705,7 +717,6 @@ class App extends React.Component {
         accountAddress: account.getUnusedAddress().address, //This can be used if you havent created the DGMDocument <-
         accountHistory: account.getTransactionHistory(),
       });
-
 
       return true;
     };
@@ -743,8 +754,9 @@ class App extends React.Component {
       .finally(() => client.disconnect());
   };
 
-  getWalletForNewOrder = () => { //For Merchant to Load New Orders. But also Buyer for wallet reload after purchase
-    
+  getWalletForNewOrder = () => {
+    //For Merchant to Load New Orders. But also Buyer for wallet reload after purchase
+
     this.setState({
       isLoadingWallet: true,
     });
@@ -755,7 +767,8 @@ class App extends React.Component {
         mnemonic: this.state.mnemonic,
         adapter: LocalForage.createInstance,
         unsafeOptions: {
-          skipSynchronizationBeforeHeight: this.state.skipSynchronizationBeforeHeight,
+          skipSynchronizationBeforeHeight:
+            this.state.skipSynchronizationBeforeHeight,
         },
       },
     });
@@ -803,9 +816,8 @@ class App extends React.Component {
 
     retrieveNameByRecord()
       .then((d) => {
-
         let nameRetrieved = d[0].toJSON();
-      
+
         //console.log("Name retrieved:\n", nameRetrieved);
 
         //******************** */
@@ -817,7 +829,7 @@ class App extends React.Component {
         LocalForage.setItem(this.state.walletId, lfObject)
           .then((d) => {
             //return LocalForage.getItem(walletId);
-         //   console.log("Return from LF setitem:", d);
+            //   console.log("Return from LF setitem:", d);
           })
           .catch((err) => {
             console.error(
@@ -835,7 +847,7 @@ class App extends React.Component {
         LocalForage.setItem("mostRecentWalletId", lfObject)
           .then((d) => {
             //return LocalForage.getItem(walletId);
-          //  console.log("Return from LF setitem:", d);
+            //  console.log("Return from LF setitem:", d);
           })
           .catch((err) => {
             console.error(
@@ -851,7 +863,7 @@ class App extends React.Component {
       })
       .catch((e) => {
         console.error("Something went wrong:\n", e);
-       // console.log("There is no dashUniqueIdentityId to retrieve");
+        // console.log("There is no dashUniqueIdentityId to retrieve");
         this.setState({
           isLoading: false,
           uniqueName: "Name Error",
@@ -871,7 +883,7 @@ class App extends React.Component {
 
     retrieveIdentity()
       .then((d) => {
-       // console.log("Identity retrieved:\n", d.toJSON());
+        // console.log("Identity retrieved:\n", d.toJSON());
 
         this.setState({
           identityInfo: d.toJSON(),
@@ -889,111 +901,102 @@ class App extends React.Component {
       .finally(() => client.disconnect());
   };
 
-  //###################### 
+  //######################
 
-  getInitialRecentOrders = (theIdentity) => { 
+  getInitialRecentOrders = (theIdentity) => {
+    if (this.state.isLoggedInAs === "buyer") {
+      const clientOpts = {
+        network: this.state.whichNetwork,
+        apps: {
+          DGPContract: {
+            contractId: this.state.DataContractDGP,
+          },
+        },
+      };
+      const client = new Dash.Client(clientOpts);
 
-        if(this.state.isLoggedInAs === 'buyer'){
+      const getDocuments = async () => {
+        console.log("Called Get Initial Orders");
 
+        return client.platform.documents.get("DGPContract.dgporder", {
+          where: [["$ownerId", "==", theIdentity]],
+          orderBy: [["$createdAt", "desc"]],
+        });
+      };
 
-          const clientOpts = {
-            network: this.state.whichNetwork,
-            apps: {
-              DGPContract: {
-                contractId: this.state.DataContractDGP,
-              },
-            },
-          };
-          const client = new Dash.Client(clientOpts);
-      
-          const getDocuments = async () => {
-            console.log("Called Get Initial Orders");
-      
-            return client.platform.documents.get("DGPContract.dgporder", {
-              where: [["$ownerId", "==", theIdentity]],
-              orderBy: [["$createdAt", 'desc']],
+      getDocuments()
+        .then((d) => {
+          let docArray = [];
+          if (d.length === 0) {
+            this.setState({
+              //recentOrders: "No Orders",
+              initialRecentOrders: [],
+              isLoadingRecentOrders: false,
             });
-          };
-      
-          getDocuments()
-            .then((d) => {
-              let docArray = [];
-              if (d.length === 0) {
-                this.setState(
-                  {
-                    //recentOrders: "No Orders", 
-                    initialRecentOrders: [], 
-                  isLoadingRecentOrders: false,
-                  }
-                );
-              } else {
+          } else {
+            for (const n of d) {
+              let returnedDoc = n.toJSON();
+              console.log("Order:\n", returnedDoc);
 
-                
-                for(const n of d) {
+              returnedDoc.toId = Identifier.from(
+                returnedDoc.toId,
+                "base64"
+              ).toJSON();
 
-                  let returnedDoc = n.toJSON()
-                   console.log("Order:\n", returnedDoc);
+              returnedDoc.cart = JSON.parse(returnedDoc.cart);
 
-                   returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
+              console.log("newOrder:\n", returnedDoc);
 
-                  returnedDoc.cart = JSON.parse(returnedDoc.cart);
+              docArray = [...docArray, returnedDoc];
+            }
+            this.setState(
+              {
+                initialRecentOrders: docArray,
+              },
+              () => this.helperInitialRecentOrders(docArray)
+            );
+          } //Ends the else
+        })
+        .catch((e) => {
+          console.error("Something went wrong in initialRecentOrders:\n", e);
+          this.setState({
+            initialRecentOrdersError: true, //I dont think this is in state ->
+          });
+        })
+        .finally(() => client.disconnect());
+    } //This closes 'buyer' if statement
+  };
 
-                   console.log("newOrder:\n", returnedDoc);
-
-                  docArray = [...docArray, returnedDoc];
-                }
-                this.setState(
-                  {
-                    initialRecentOrders: docArray,
-                  }
-                  ,() => this.helperInitialRecentOrders(docArray)
-                );
-              } //Ends the else
-            })
-            .catch((e) => {
-              console.error("Something went wrong in initialRecentOrders:\n", e);
-              this.setState({
-                initialRecentOrdersError: true, //I dont think this is in state ->
-              });
-            })
-            .finally(() => client.disconnect());
-
-          }//This closes 'buyer' if statement
-      
-  }
-
-  helperInitialRecentOrders = (theDocArray) =>{
-    
+  helperInitialRecentOrders = (theDocArray) => {
     this.getInitialRecentOrdersNames(theDocArray);
     this.getInitialRecentOrdersStores(theDocArray);
     this.getInitialRecentOrdersDGMAddresses(theDocArray);
     this.getInitialRecentOrdersItems(theDocArray);
     this.getInitialRecentOrdersMsgs(theDocArray);
-  }
-
+  };
 
   checkInitialRecentOrdersRace = () => {
+    if (
+      this.state.initial1 &&
+      this.state.initial2 &&
+      this.state.initial3 &&
+      this.state.initial4 &&
+      this.state.initial5
+    ) {
+      if (this.state.mostRecentLogin) {
+        this.setState({
+          recentOrders: this.state.initialRecentOrders,
+          recentOrdersStores: this.state.initialRecentOrdersStores,
+          recentOrdersNames: this.state.initialRecentOrdersNames,
+          recentOrdersDGMAddresses: this.state.initialRecentOrdersDGMAddresses,
+          recentOrdersItems: this.state.initialRecentOrdersItems,
+          recentOrdersMessages: this.state.initialRecentOrdersMessages,
 
-    if (this.state.initial1 &&
-         this.state.initial2 &&
-          this.state.initial3 && 
-            this.state.initial4 &&
-             this.state.initial5) {
-      if(this.state.mostRecentLogin){
-      this.setState({
-        recentOrders: this.state.initialRecentOrders,  
-        recentOrdersStores: this.state.initialRecentOrdersStores,
-        recentOrdersNames:this.state.initialRecentOrdersNames, 
-        recentOrdersDGMAddresses:this.state.initialRecentOrdersDGMAddresses,
-        recentOrdersItems:this.state.initialRecentOrdersItems,
-        recentOrdersMessages:this.state.initialRecentOrdersMessages,
-
-        isLoadingRecentOrders: false,
-      });      
+          isLoadingRecentOrders: false,
+        });
+      }
     }
-    }
-  }
-
+  };
 
   getInitialRecentOrdersNames = (docArray) => {
     const clientOpts = {
@@ -1018,42 +1021,43 @@ class App extends React.Component {
       Buffer.from(Identifier.from(item))
     );
 
-     console.log("Called Get Initial Recent Order Names");
+    console.log("Called Get Initial Recent Order Names");
 
-      const getNameDocuments = async () => {
-        return client.platform.documents.get("DataContractDPNS.domain", {
-          where: [["records.dashUniqueIdentityId", "in", arrayOfToIds]],
-          orderBy: [["records.dashUniqueIdentityId", "asc"]],
-        });
-      };
+    const getNameDocuments = async () => {
+      return client.platform.documents.get("DataContractDPNS.domain", {
+        where: [["records.dashUniqueIdentityId", "in", arrayOfToIds]],
+        orderBy: [["records.dashUniqueIdentityId", "asc"]],
+      });
+    };
 
-      getNameDocuments()
-        .then((d) => {
-          
-          if (d.length === 0) {
-           // console.log("No DPNS domain documents retrieved.");
-          }
+    getNameDocuments()
+      .then((d) => {
+        if (d.length === 0) {
+          // console.log("No DPNS domain documents retrieved.");
+        }
 
-          let nameDocArray = [];
-          for (const n of d) {
-            //console.log("NameDoc:\n", n.toJSON());
+        let nameDocArray = [];
+        for (const n of d) {
+          //console.log("NameDoc:\n", n.toJSON());
 
-            nameDocArray = [n.toJSON(), ...nameDocArray];
-          }
+          nameDocArray = [n.toJSON(), ...nameDocArray];
+        }
 
-          this.setState({
-            initialRecentOrdersNames: nameDocArray, 
+        this.setState(
+          {
+            initialRecentOrdersNames: nameDocArray,
             initial1: true,
-        },()=>this.checkInitialRecentOrdersRace());
-
-        })
-        .catch((e) => {
-          console.error("Something went wrong getting recent order names:\n", e);
-          this.setState({
-            initialRecentOrdersNamesError: true, //<- add to state? -> 
-          });
-        })
-        .finally(() => client.disconnect());
+          },
+          () => this.checkInitialRecentOrdersRace()
+        );
+      })
+      .catch((e) => {
+        console.error("Something went wrong getting recent order names:\n", e);
+        this.setState({
+          initialRecentOrdersNamesError: true, //<- add to state? ->
+        });
+      })
+      .finally(() => client.disconnect());
   };
 
   getInitialRecentOrdersStores = (docArray) => {
@@ -1066,7 +1070,7 @@ class App extends React.Component {
       },
     };
     const client = new Dash.Client(clientOpts);
-// This Below is to get unique set of merchant ids
+    // This Below is to get unique set of merchant ids
     let arrayOfToIds = docArray.map((doc) => {
       return doc.toId;
     });
@@ -1084,7 +1088,7 @@ class App extends React.Component {
 
       return client.platform.documents.get("DGPContract.dgpstore", {
         where: [["$ownerId", "in", arrayOfToIds]],
-        orderBy: [["$ownerId", 'asc']],
+        orderBy: [["$ownerId", "asc"]],
       });
     };
 
@@ -1092,16 +1096,18 @@ class App extends React.Component {
       .then((d) => {
         let docArray = [];
 
-          for (const n of d) {
-            //console.log("Store:\n", n.toJSON());
-            docArray = [...docArray, n.toJSON()];
-          }
+        for (const n of d) {
+          //console.log("Store:\n", n.toJSON());
+          docArray = [...docArray, n.toJSON()];
+        }
 
-          this.setState({
-          initialRecentOrdersStores: docArray,
-          initial2: true,
-        },()=>this.checkInitialRecentOrdersRace());
-         
+        this.setState(
+          {
+            initialRecentOrdersStores: docArray,
+            initial2: true,
+          },
+          () => this.checkInitialRecentOrdersRace()
+        );
       })
       .catch((e) => {
         console.error("Something went wrong:\n", e);
@@ -1109,8 +1115,8 @@ class App extends React.Component {
           initialRecentOrdersStoresError: true,
         });
       })
-      .finally(() => client.disconnect()); 
-  }
+      .finally(() => client.disconnect());
+  };
 
   getInitialRecentOrdersDGMAddresses = (docArray) => {
     const clientOpts = {
@@ -1138,10 +1144,10 @@ class App extends React.Component {
 
     const getDocuments = async () => {
       console.log("Querying Initial Merchant's Documents.");
-      
+
       return client.platform.documents.get("DGMContract.dgmaddress", {
         where: [["$ownerId", "in", arrayOfToIds]],
-        orderBy: [["$ownerId", 'asc']],
+        orderBy: [["$ownerId", "asc"]],
       });
     };
 
@@ -1149,29 +1155,31 @@ class App extends React.Component {
       .then((d) => {
         let docArray = [];
         for (const n of d) {
-         // console.log("DGM Address:\n", n.toJSON());
+          // console.log("DGM Address:\n", n.toJSON());
           docArray = [...docArray, n.toJSON()];
         }
 
-        this.setState({
-        initialRecentOrdersDGMAddresses: docArray,
-        initial3: true,
-      },()=>this.checkInitialRecentOrdersRace());
-
-        
-        
+        this.setState(
+          {
+            initialRecentOrdersDGMAddresses: docArray,
+            initial3: true,
+          },
+          () => this.checkInitialRecentOrdersRace()
+        );
       })
       .catch((e) => {
-        console.error("Something went wrong getting Initial Recent Orders DGM Addresses:\n", e);
+        console.error(
+          "Something went wrong getting Initial Recent Orders DGM Addresses:\n",
+          e
+        );
         this.setState({
           initialRecentOrdersDGMAddressesError: true, // ADD alert to handle ->
         });
       })
       .finally(() => client.disconnect());
-  }
+  };
 
   getInitialRecentOrdersItems = (docArray) => {
-
     let arrayOfItemIds = [];
 
     docArray.forEach((doc) => {
@@ -1184,18 +1192,18 @@ class App extends React.Component {
       arrayOfItemIds = [...itemArray, ...arrayOfItemIds];
     });
 
-   // console.log("Array of Order Items", arrayOfItemIds);
+    // console.log("Array of Order Items", arrayOfItemIds);
 
     //This makes sure that it is unique.
     let setOfItemIds = [...new Set(arrayOfItemIds)];
 
     arrayOfItemIds = [...setOfItemIds];
 
-  //   arrayOfItemIds = arrayOfItemIds.map((item) =>{ //UNNECESSARY NOW ->REMOVE
-  //     return Identifier.from(item, 'base64').toJSON()
-  // });
+    //   arrayOfItemIds = arrayOfItemIds.map((item) =>{ //UNNECESSARY NOW ->REMOVE
+    //     return Identifier.from(item, 'base64').toJSON()
+    // });
 
- // console.log("Array of item ids", arrayOfItemIds);
+    // console.log("Array of item ids", arrayOfItemIds);
 
     const clientOpts = {
       network: this.state.whichNetwork,
@@ -1212,8 +1220,7 @@ class App extends React.Component {
 
       return client.platform.documents.get("DGPContract.dgpitem", {
         where: [["$id", "in", arrayOfItemIds]],
-        orderBy: [["$id", 'asc']],
-        
+        orderBy: [["$id", "asc"]],
       });
     };
 
@@ -1226,25 +1233,112 @@ class App extends React.Component {
           docArray = [...docArray, n.toJSON()];
         }
 
-          this.setState({
-                initialRecentOrdersItems: docArray,
-                initial4: true,
-              },()=>this.checkInitialRecentOrdersRace());
-        
+        this.setState(
+          {
+            initialRecentOrdersItems: docArray,
+            initial4: true,
+          },
+          () => this.checkInitialRecentOrdersRace()
+        );
       })
       .catch((e) => {
         console.error("Something went wrong:\n", e);
         this.setState({
-          initialRecentOrderItemsError: true, //PROBABLY NEED TO ADD THIS TO THE STATE -> 
-    
+          initialRecentOrderItemsError: true, //PROBABLY NEED TO ADD THIS TO THE STATE ->
         });
       })
       .finally(() => client.disconnect());
   };
 
-  getInitialRecentOrdersMsgs = (docArray) => { //THERE IS AN ERROR WHERE IF I DONT RETURN ANYTHING IT THROWS AN INVALID QUERY MISSING ORDERBY BUT ITS JUST THAT IT DOESN'T HAVE ANYTHING TO RETURN!! -> REPORT AFTER V0.25 IF STILL THERE -> Well it doesn't like timeStamp -> see below.
+  getInitialRecentOrdersMsgs = (docArray) => {
+    //THERE IS AN ERROR WHERE IF I DONT RETURN ANYTHING IT THROWS AN INVALID QUERY MISSING ORDERBY BUT ITS JUST THAT IT DOESN'T HAVE ANYTHING TO RETURN!! -> REPORT AFTER V0.25 IF STILL THERE -> Well it doesn't like timeStamp -> see below.
 
-  //TEST -> Change to createdAT and see what happens -> 
+    //TEST -> Change to createdAT and see what happens ->
+
+    const clientOpts = {
+      network: this.state.whichNetwork,
+      apps: {
+        DGPContract: {
+          contractId: this.state.DataContractDGP,
+        },
+      },
+    };
+    const client = new Dash.Client(clientOpts);
+
+    // This Below is to get unique set of order doc ids
+    let arrayOfOrderIds = docArray.map((doc) => {
+      return doc.$id;
+    });
+
+    //console.log("Array of order ids", arrayOfOrderIds);
+
+    let setOfOrderIds = [...new Set(arrayOfOrderIds)];
+
+    arrayOfOrderIds = [...setOfOrderIds];
+
+    //console.log("Array of order ids", arrayOfOrderIds);
+
+    const getDocuments = async () => {
+      console.log("Called Get Initial Orders Msgs");
+
+      return client.platform.documents.get("DGPContract.dgpmsg", {
+        where: [["orderId", "in", arrayOfOrderIds]],
+        orderBy: [["orderId", "asc"]],
+      });
+    };
+
+    getDocuments()
+      .then((d) => {
+        let docArray = [];
+
+        for (const n of d) {
+          let returnedDoc = n.toJSON();
+          //console.log("Msg:\n", returnedDoc);
+          returnedDoc.orderId = Identifier.from(
+            returnedDoc.orderId,
+            "base64"
+          ).toJSON();
+
+          //console.log("newMsg:\n", returnedDoc);
+          docArray = [...docArray, returnedDoc];
+        }
+
+        this.setState(
+          {
+            initialRecentOrdersMessages: docArray,
+            initial5: true,
+          },
+          () => this.checkInitialRecentOrdersRace()
+        );
+      })
+      .catch((e) => {
+        console.error(
+          "Something went wrong in getInitialRecentOrdersMsgs:\n",
+          e
+        );
+        this.setState({
+          initialRecentOrdersMessagesError: true,
+        });
+      })
+      .finally(() => client.disconnect());
+  };
+
+  //$$  $$   $$$  $$  $  $$  $$$  $$$  $$  $$
+
+  //######################
+  /**
+  * isLoadingRecentOrders: false,
+      recentOrders: [],  
+      recentOrdersStores: [],
+      recentOrdersNames:[], 
+      recentOrdersDGMAddresses:[],
+  */
+
+  getRecentOrders = (theIdentity) => {
+    if (this.state.isLoggedInAs === "buyer") {
+      this.setState({
+        isLoadingRecentOrders: true,
+      });
 
       const clientOpts = {
         network: this.state.whichNetwork,
@@ -1256,168 +1350,83 @@ class App extends React.Component {
       };
       const client = new Dash.Client(clientOpts);
 
-  // This Below is to get unique set of order doc ids
-      let arrayOfOrderIds = docArray.map((doc) => {
-        return doc.$id;
-      });
-
-      //console.log("Array of order ids", arrayOfOrderIds);
-
-      let setOfOrderIds = [...new Set(arrayOfOrderIds)];
-  
-      arrayOfOrderIds = [...setOfOrderIds];
-
-       //console.log("Array of order ids", arrayOfOrderIds);
-  
       const getDocuments = async () => {
-        console.log("Called Get Initial Orders Msgs");
-  
-        return client.platform.documents.get("DGPContract.dgpmsg", {
-          where: [["orderId", "in", arrayOfOrderIds]],
-          orderBy: [["orderId", 'asc']], 
+        console.log("Called Get DGP Recent Orders");
+
+        return client.platform.documents.get("DGPContract.dgporder", {
+          where: [["$ownerId", "==", theIdentity]],
+          orderBy: [["$createdAt", "desc"]],
         });
       };
-  
+
       getDocuments()
         .then((d) => {
           let docArray = [];
-          
-for(const n of d) {
 
-  let returnedDoc = n.toJSON()
-   //console.log("Msg:\n", returnedDoc);
-   returnedDoc.orderId = Identifier.from(returnedDoc.orderId, 'base64').toJSON();
-   
-   //console.log("newMsg:\n", returnedDoc);
-  docArray = [...docArray, returnedDoc];
-}
+          if (d.length === 0) {
+            this.setState(
+              {
+                //recentOrders: "No Orders",
+                recentOrders: [],
+                isLoadingRecentOrders: false,
+              }
+              //,() => this.getNamesForDGTOrders()
+            );
+          } else {
+            for (const n of d) {
+              let returnedDoc = n.toJSON();
+              //console.log("Order:\n", returnedDoc);
+              returnedDoc.toId = Identifier.from(
+                returnedDoc.toId,
+                "base64"
+              ).toJSON();
+              //  returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+              returnedDoc.cart = JSON.parse(returnedDoc.cart);
+              //console.log("newOrder:\n", returnedDoc);
+              docArray = [...docArray, returnedDoc];
+            }
 
-            this.setState({
-              initialRecentOrdersMessages: docArray,
-              initial5: true,
-            },()=>this.checkInitialRecentOrdersRace());
-          
+            this.setState(
+              {
+                recentOrders: docArray,
+              },
+              () => this.helperRecentOrders(docArray)
+            );
+          } //Ends the else
         })
         .catch((e) => {
-          
-          console.error("Something went wrong in getInitialRecentOrdersMsgs:\n", e);
+          console.error("Something went wrong:\n", e);
           this.setState({
-            initialRecentOrdersMessagesError: true,
+            recentOrdersError: true, //I dont think this is in state ->
+            isLoadingRecentOrders: false,
           });
         })
-        .finally(() => client.disconnect()); 
+        .finally(() => client.disconnect());
+    } //This closes 'buyer' if statement
   };
 
- //$$  $$   $$$  $$  $  $$  $$$  $$$  $$  $$
-
- //###################### 
- /**
-  * isLoadingRecentOrders: false,
-      recentOrders: [],  
-      recentOrdersStores: [],
-      recentOrdersNames:[], 
-      recentOrdersDGMAddresses:[],
-  */
-
-  getRecentOrders = (theIdentity) => { 
-
-        if(this.state.isLoggedInAs === 'buyer'){
-
-          this.setState({
-            isLoadingRecentOrders: true,
-          });
-
-          const clientOpts = {
-            network: this.state.whichNetwork,
-            apps: {
-              DGPContract: {
-                contractId: this.state.DataContractDGP,
-              },
-            },
-          };
-          const client = new Dash.Client(clientOpts);
-      
-          const getDocuments = async () => {
-            console.log("Called Get DGP Recent Orders");
-      
-      
-            return client.platform.documents.get("DGPContract.dgporder", {
-              where: [["$ownerId", "==", theIdentity]],
-              orderBy: [['$createdAt', 'desc']],
-            });
-          };
-      
-          getDocuments()
-            .then((d) => {
-
-              let docArray = [];
-
-              if (d.length === 0) {
-                this.setState(
-                  {
-                    //recentOrders: "No Orders", 
-                    recentOrders: [], 
-                   isLoadingRecentOrders: false,
-                  }
-                  //,() => this.getNamesForDGTOrders()
-                );
-              } else {
-
-                for(const n of d) {
-
-                  let returnedDoc = n.toJSON()
-                   //console.log("Order:\n", returnedDoc);
-                   returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
-                  //  returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
-                   returnedDoc.cart = JSON.parse(returnedDoc.cart);
-                   //console.log("newOrder:\n", returnedDoc);
-                  docArray = [...docArray, returnedDoc];
-                }
-
-                this.setState(
-                  {
-                    recentOrders: docArray,
-                  }
-                  ,() => this.helperRecentOrders(docArray)
-                );
-              } //Ends the else
-            })
-            .catch((e) => {
-              console.error("Something went wrong:\n", e);
-              this.setState({
-                recentOrdersError: true, //I dont think this is in state ->
-                isLoadingRecentOrders: false,
-              });
-            })
-            .finally(() => client.disconnect());
-
-          }//This closes 'buyer' if statement
-      
-  }
-
-  helperRecentOrders = (theDocArray) =>{
-    //REFACTOR JUST MOVE THE GETTING THE UNIQUE MERCHANT iDS OUT OF EACH AND JUST SEND AS THE PARAMETER -> getRecentOrdersItems needs the docs to get the cart to get the items -> refactor later -> 
+  helperRecentOrders = (theDocArray) => {
+    //REFACTOR JUST MOVE THE GETTING THE UNIQUE MERCHANT iDS OUT OF EACH AND JUST SEND AS THE PARAMETER -> getRecentOrdersItems needs the docs to get the cart to get the items -> refactor later ->
     this.getRecentOrdersNames(theDocArray);
     this.getRecentOrdersStores(theDocArray);
     this.getRecentOrdersDGMAddresses(theDocArray);
     this.getRecentOrdersItems(theDocArray);
     this.getRecentOrdersMsgs(theDocArray);
-  }
-
+  };
 
   checkRecentOrdersRace = () => {
-    
-    if(this.state.recent1 &&
+    if (
+      this.state.recent1 &&
       this.state.recent2 &&
-       this.state.recent3 && 
-         this.state.recent4 &&
-          this.state.recent5){
+      this.state.recent3 &&
+      this.state.recent4 &&
+      this.state.recent5
+    ) {
       this.setState({
         isLoadingRecentOrders: false,
-      })
+      });
     }
-  }
-
+  };
 
   getRecentOrdersNames = (docArray) => {
     const clientOpts = {
@@ -1442,43 +1451,44 @@ for(const n of d) {
       Buffer.from(Identifier.from(item))
     );
 
-     console.log("Called Get Recent Order Names");
+    console.log("Called Get Recent Order Names");
 
-      const getNameDocuments = async () => {
-        return client.platform.documents.get("DataContractDPNS.domain", {
-          where: [["records.dashUniqueIdentityId", "in", arrayOfToIds]],
-          orderBy: [["records.dashUniqueIdentityId", "asc"]],
-        });
-      };
+    const getNameDocuments = async () => {
+      return client.platform.documents.get("DataContractDPNS.domain", {
+        where: [["records.dashUniqueIdentityId", "in", arrayOfToIds]],
+        orderBy: [["records.dashUniqueIdentityId", "asc"]],
+      });
+    };
 
-      getNameDocuments()
-        .then((d) => {
-          
-          if (d.length === 0) {
-           // console.log("No DPNS domain documents retrieved.");
-          }
+    getNameDocuments()
+      .then((d) => {
+        if (d.length === 0) {
+          // console.log("No DPNS domain documents retrieved.");
+        }
 
-          let nameDocArray = [];
-          for (const n of d) {
-            //console.log("NameDoc:\n", n.toJSON());
+        let nameDocArray = [];
+        for (const n of d) {
+          //console.log("NameDoc:\n", n.toJSON());
 
-            nameDocArray = [n.toJSON(), ...nameDocArray];
-          }
+          nameDocArray = [n.toJSON(), ...nameDocArray];
+        }
 
-          this.setState({
-            recentOrdersNames: nameDocArray, 
+        this.setState(
+          {
+            recentOrdersNames: nameDocArray,
             recent1: true,
-        },()=>this.checkRecentOrdersRace());
-
-        })
-        .catch((e) => {
-          console.error("Something went wrong getting recent order names:\n", e);
-          this.setState({
-            recentOrdersNamesError: true, //<- add to state? -> 
-            isLoadingRecentOrders: false,
-          });
-        })
-        .finally(() => client.disconnect());
+          },
+          () => this.checkRecentOrdersRace()
+        );
+      })
+      .catch((e) => {
+        console.error("Something went wrong getting recent order names:\n", e);
+        this.setState({
+          recentOrdersNamesError: true, //<- add to state? ->
+          isLoadingRecentOrders: false,
+        });
+      })
+      .finally(() => client.disconnect());
   };
 
   getRecentOrdersStores = (docArray) => {
@@ -1491,7 +1501,7 @@ for(const n of d) {
       },
     };
     const client = new Dash.Client(clientOpts);
-// This Below is to get unique set of merchant ids
+    // This Below is to get unique set of merchant ids
     let arrayOfToIds = docArray.map((doc) => {
       return doc.toId;
     });
@@ -1509,7 +1519,7 @@ for(const n of d) {
 
       return client.platform.documents.get("DGPContract.dgpstore", {
         where: [["$ownerId", "in", arrayOfToIds]],
-        orderBy: [["$ownerId", 'asc']],
+        orderBy: [["$ownerId", "asc"]],
       });
     };
 
@@ -1517,16 +1527,18 @@ for(const n of d) {
       .then((d) => {
         let docArray = [];
 
-          for (const n of d) {
-            //console.log("Store:\n", n.toJSON());
-            docArray = [...docArray, n.toJSON()];
-          }
+        for (const n of d) {
+          //console.log("Store:\n", n.toJSON());
+          docArray = [...docArray, n.toJSON()];
+        }
 
-          this.setState({
-          recentOrdersStores: docArray,
-          recent2: true,
-        },()=>this.checkRecentOrdersRace());
-         
+        this.setState(
+          {
+            recentOrdersStores: docArray,
+            recent2: true,
+          },
+          () => this.checkRecentOrdersRace()
+        );
       })
       .catch((e) => {
         console.error("Something went wrong:\n", e);
@@ -1534,8 +1546,8 @@ for(const n of d) {
           recentOrdersStoresError: true,
         });
       })
-      .finally(() => client.disconnect()); 
-  }
+      .finally(() => client.disconnect());
+  };
 
   getRecentOrdersDGMAddresses = (docArray) => {
     const clientOpts = {
@@ -1563,10 +1575,10 @@ for(const n of d) {
 
     const getDocuments = async () => {
       console.log("Querying Merchant's DGM Documents.");
-      
+
       return client.platform.documents.get("DGMContract.dgmaddress", {
         where: [["$ownerId", "in", arrayOfToIds]],
-        orderBy: [["$ownerId", 'asc']],
+        orderBy: [["$ownerId", "asc"]],
       });
     };
 
@@ -1574,30 +1586,31 @@ for(const n of d) {
       .then((d) => {
         let docArray = [];
         for (const n of d) {
-         // console.log("DGM Address:\n", n.toJSON());
+          // console.log("DGM Address:\n", n.toJSON());
           docArray = [...docArray, n.toJSON()];
         }
 
-        this.setState({
-        recentOrdersDGMAddresses: docArray,
-        recent3: true,
-      },()=>this.checkRecentOrdersRace());
-
-        
-        
+        this.setState(
+          {
+            recentOrdersDGMAddresses: docArray,
+            recent3: true,
+          },
+          () => this.checkRecentOrdersRace()
+        );
       })
       .catch((e) => {
-        console.error("Something went wrong getting Recent Orders Addresses:\n", e);
+        console.error(
+          "Something went wrong getting Recent Orders Addresses:\n",
+          e
+        );
         this.setState({
           recentOrdersDGMAddressesError: true, // ADD alert to handle ->
-         
         });
       })
       .finally(() => client.disconnect());
-  }
+  };
 
   getRecentOrdersItems = (docArray) => {
-
     let arrayOfItemIds = [];
 
     docArray.forEach((doc) => {
@@ -1610,17 +1623,17 @@ for(const n of d) {
       arrayOfItemIds = [...itemArray, ...arrayOfItemIds];
     });
 
-   // console.log("Array of Order Items", arrayOfItemIds);
+    // console.log("Array of Order Items", arrayOfItemIds);
 
     //This makes sure that it is unique.
     let setOfItemIds = [...new Set(arrayOfItemIds)];
 
     arrayOfItemIds = [...setOfItemIds];
 
-  //   arrayOfItemIds = arrayOfItemIds.map((item) =>{ //UNNECESSARY => REMOVE
-  //     return Identifier.from(item, 'base64').toJSON()
-  // });
- // console.log("Array of item ids", arrayOfItemIds);
+    //   arrayOfItemIds = arrayOfItemIds.map((item) =>{ //UNNECESSARY => REMOVE
+    //     return Identifier.from(item, 'base64').toJSON()
+    // });
+    // console.log("Array of item ids", arrayOfItemIds);
 
     const clientOpts = {
       network: this.state.whichNetwork,
@@ -1637,8 +1650,7 @@ for(const n of d) {
 
       return client.platform.documents.get("DGPContract.dgpitem", {
         where: [["$id", "in", arrayOfItemIds]],
-        orderBy: [["$id", 'asc']],
-        
+        orderBy: [["$id", "asc"]],
       });
     };
 
@@ -1651,11 +1663,13 @@ for(const n of d) {
           docArray = [...docArray, n.toJSON()];
         }
 
-          this.setState({
-                recentOrdersItems: docArray,
-                recent4: true,
-              },()=>this.checkRecentOrdersRace());
-        
+        this.setState(
+          {
+            recentOrdersItems: docArray,
+            recent4: true,
+          },
+          () => this.checkRecentOrdersRace()
+        );
       })
       .catch((e) => {
         console.error("Something went wrong:\n", e);
@@ -1667,74 +1681,78 @@ for(const n of d) {
       .finally(() => client.disconnect());
   };
 
-  getRecentOrdersMsgs = (docArray) => { //THERE IS AN ERROR WHERE IF I DONT RETURN ANYTHING IT THROWS AN INVALID QUERY MISSING ORDERBY BUT ITS JUST THAT IT DOESN'T HAVE ANYTHING TO RETURN!! -> REPORT AFTER V0.25 IF STILL THERE -> Well it doesn't like timeStamp -> see below.
+  getRecentOrdersMsgs = (docArray) => {
+    //THERE IS AN ERROR WHERE IF I DONT RETURN ANYTHING IT THROWS AN INVALID QUERY MISSING ORDERBY BUT ITS JUST THAT IT DOESN'T HAVE ANYTHING TO RETURN!! -> REPORT AFTER V0.25 IF STILL THERE -> Well it doesn't like timeStamp -> see below.
 
-    //TEST -> Change to createdAT and see what happens -> 
+    //TEST -> Change to createdAT and see what happens ->
 
-      const clientOpts = {
-        network: this.state.whichNetwork,
-        apps: {
-          DGPContract: {
-            contractId: this.state.DataContractDGP,
-          },
+    const clientOpts = {
+      network: this.state.whichNetwork,
+      apps: {
+        DGPContract: {
+          contractId: this.state.DataContractDGP,
         },
-      };
-      const client = new Dash.Client(clientOpts);
+      },
+    };
+    const client = new Dash.Client(clientOpts);
 
-  // This Below is to get unique set of order doc ids
-      let arrayOfOrderIds = docArray.map((doc) => {
-        return doc.$id;
+    // This Below is to get unique set of order doc ids
+    let arrayOfOrderIds = docArray.map((doc) => {
+      return doc.$id;
+    });
+
+    //console.log("Array of order ids", arrayOfOrderIds);
+
+    let setOfOrderIds = [...new Set(arrayOfOrderIds)];
+
+    arrayOfOrderIds = [...setOfOrderIds];
+
+    //console.log("Array of order ids", arrayOfOrderIds);
+
+    const getDocuments = async () => {
+      console.log("Called Get Recent Orders Msgs");
+
+      return client.platform.documents.get("DGPContract.dgpmsg", {
+        where: [["orderId", "in", arrayOfOrderIds]],
+        orderBy: [["orderId", "asc"]],
+        //TEST ^^^ Why is the orderId and not createdAt? Bc its to get msgs not orders oh
       });
+    };
 
-      //console.log("Array of order ids", arrayOfOrderIds);
+    getDocuments()
+      .then((d) => {
+        let docArray = [];
+        for (const n of d) {
+          let returnedDoc = n.toJSON();
+          //console.log("Msg:\n", returnedDoc);
+          returnedDoc.orderId = Identifier.from(
+            returnedDoc.orderId,
+            "base64"
+          ).toJSON();
 
-      let setOfOrderIds = [...new Set(arrayOfOrderIds)];
-  
-      arrayOfOrderIds = [...setOfOrderIds];
+          //console.log("newMsg:\n", returnedDoc);
+          docArray = [...docArray, returnedDoc];
+        }
 
-       //console.log("Array of order ids", arrayOfOrderIds);
-  
-      const getDocuments = async () => {
-        console.log("Called Get Recent Orders Msgs");
-  
-        return client.platform.documents.get("DGPContract.dgpmsg", {
-          where: [["orderId", "in", arrayOfOrderIds]],
-          orderBy: [["orderId", 'asc']], 
-          //TEST ^^^ Why is the orderId and not createdAt? Bc its to get msgs not orders oh
+        this.setState(
+          {
+            recentOrdersMessages: docArray,
+            recent5: true,
+          },
+          () => this.checkRecentOrdersRace()
+        );
+      })
+      .catch((e) => {
+        console.error("Something went wrong:\n", e);
+        this.setState({
+          recentOrdersMessagesError: true,
         });
-      };
-  
-      getDocuments()
-        .then((d) => {
-          let docArray = [];
-          for(const n of d) {
-
-            let returnedDoc = n.toJSON()
-             //console.log("Msg:\n", returnedDoc);
-             returnedDoc.orderId = Identifier.from(returnedDoc.orderId, 'base64').toJSON();
-             
-             //console.log("newMsg:\n", returnedDoc);
-            docArray = [...docArray, returnedDoc];
-          }
-
-            this.setState({
-              recentOrdersMessages: docArray,
-              recent5: true,
-            },()=>this.checkRecentOrdersRace());
-          
-        })
-        .catch((e) => {
-          
-          console.error("Something went wrong:\n", e);
-          this.setState({
-            recentOrdersMessagesError: true,
-          });
-        })
-        .finally(() => client.disconnect()); 
+      })
+      .finally(() => client.disconnect());
   };
 
- //$$  $$   $$$  $$  $  $$  $$$  $$$  $$  $$
- /**
+  //$$  $$   $$$  $$  $  $$  $$$  $$$  $$  $$
+  /**
   * isLoadingActive: false,
       activeOrders: [], 
       activeOrdersStores: [],
@@ -1745,14 +1763,12 @@ for(const n of d) {
   */
 
   checkActiveOrdersRace = () => {
-        if(this.state.active1 &&
-          this.state.active2 &&
-           this.state.active3){
-          this.setState({
-            isLoadingActive: false,
-          })
-        }
-      }
+    if (this.state.active1 && this.state.active2 && this.state.active3) {
+      this.setState({
+        isLoadingActive: false,
+      });
+    }
+  };
 
   getActiveOrders = () => {
     /**This is Active QUERY
@@ -1761,78 +1777,78 @@ for(const n of d) {
                 unique: false,
               }
              */
-              this.setState({
-                isLoadingActive: true,
-              });
-    
-              const clientOpts = {
-                network: this.state.whichNetwork,
-                apps: {
-                  DGPContract: {
-                    contractId: this.state.DataContractDGP,
-                  },
-                },
-              };
-              const client = new Dash.Client(clientOpts);
-          
-              const getDocuments = async () => {
-                console.log("Called Get Active Orders");
-          
-          
-                return client.platform.documents.get("DGPContract.dgporder", {
-                  where: [["$createdAt", "<=", Date.now()]],
-                  orderBy: [["$createdAt", 'desc']],
-                });
-              };
-          
-              getDocuments()
-                .then((d) => {
-                  let docArray = [];
-                  if (d.length === 0) {
-                    this.setState(
-                      {
-                       // activeOrders: "No Orders", 
-                       isLoadingActive: false,
-                      }
-                      //,() => this.getNamesForDGTOrders()
-                    );
-                  } else {
+    this.setState({
+      isLoadingActive: true,
+    });
 
-                    for(const n of d) {
+    const clientOpts = {
+      network: this.state.whichNetwork,
+      apps: {
+        DGPContract: {
+          contractId: this.state.DataContractDGP,
+        },
+      },
+    };
+    const client = new Dash.Client(clientOpts);
 
-                  let returnedDoc = n.toJSON()
-                   //console.log("Order:\n", returnedDoc);
-                   returnedDoc.toId = Identifier.from(returnedDoc.toId, 'base64').toJSON();
-                  //  returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
-                   returnedDoc.cart = JSON.parse(returnedDoc.cart);
-                  // console.log("newOrder:\n", returnedDoc);
-                  docArray = [...docArray, returnedDoc];
-                }
+    const getDocuments = async () => {
+      console.log("Called Get Active Orders");
 
-                    this.setState(
-                      {
-                        activeOrders: docArray,
-                      }
-                      ,() => this.helperActive(docArray)
-                    );
-                  } //Ends the else
-                })
-                .catch((e) => {
-                  console.error("Something went wrong:\n", e);
-                  this.setState({
-                    activeOrdersError: true, //I dont think this is in state ->
-                    isLoadingActive: false,
-                  });
-                })
-                .finally(() => client.disconnect()); 
-  }
+      return client.platform.documents.get("DGPContract.dgporder", {
+        where: [["$createdAt", "<=", Date.now()]],
+        orderBy: [["$createdAt", "desc"]],
+      });
+    };
 
-  helperActive = (theDocArray) =>{
-    //REFACTOR JUST MOVE THE GETTING THE UNIQUE MERCHANT iDS OUT OF EACH AND JUST SEND AS THE PARAMETER -> 
+    getDocuments()
+      .then((d) => {
+        let docArray = [];
+        if (d.length === 0) {
+          this.setState(
+            {
+              // activeOrders: "No Orders",
+              isLoadingActive: false,
+            }
+            //,() => this.getNamesForDGTOrders()
+          );
+        } else {
+          for (const n of d) {
+            let returnedDoc = n.toJSON();
+            //console.log("Order:\n", returnedDoc);
+            returnedDoc.toId = Identifier.from(
+              returnedDoc.toId,
+              "base64"
+            ).toJSON();
+            //  returnedDoc.cart[0] = Identifier.from(returnedDoc.cart[0], 'base64').toJSON();
+            returnedDoc.cart = JSON.parse(returnedDoc.cart);
+            // console.log("newOrder:\n", returnedDoc);
+            docArray = [...docArray, returnedDoc];
+          }
+
+          this.setState(
+            {
+              activeOrders: docArray,
+            },
+            () => this.helperActive(docArray)
+          );
+        } //Ends the else
+      })
+      .catch((e) => {
+        console.error("Something went wrong:\n", e);
+        this.setState({
+          activeOrdersError: true, //I dont think this is in state ->
+          isLoadingActive: false,
+        });
+      })
+      .finally(() => client.disconnect());
+  };
+
+  helperActive = (theDocArray) => {
+    //REFACTOR JUST MOVE THE GETTING THE UNIQUE MERCHANT iDS OUT OF EACH AND JUST SEND AS THE PARAMETER ->
     this.getActiveNames(theDocArray);
     this.getActiveStores(theDocArray);
     this.getActiveAddresses(theDocArray);
-  }
+  };
 
   getActiveNames = (docArray) => {
     const clientOpts = {
@@ -1859,41 +1875,42 @@ for(const n of d) {
 
     //  console.log("Called Get Names for DGP Merchants");
 
-      const getNameDocuments = async () => {
-        return client.platform.documents.get("DataContractDPNS.domain", {
-          where: [["records.dashUniqueIdentityId", "in", arrayOfToIds]],
-          orderBy: [["records.dashUniqueIdentityId", "asc"]],
-        });
-      };
+    const getNameDocuments = async () => {
+      return client.platform.documents.get("DataContractDPNS.domain", {
+        where: [["records.dashUniqueIdentityId", "in", arrayOfToIds]],
+        orderBy: [["records.dashUniqueIdentityId", "asc"]],
+      });
+    };
 
-      getNameDocuments()
-        .then((d) => {
-          
-          if (d.length === 0) {
-           // console.log("No DPNS domain documents retrieved.");
-          }
+    getNameDocuments()
+      .then((d) => {
+        if (d.length === 0) {
+          // console.log("No DPNS domain documents retrieved.");
+        }
 
-          let nameDocArray = [];
-          for (const n of d) {
-            //console.log("NameDoc:\n", n.toJSON());
+        let nameDocArray = [];
+        for (const n of d) {
+          //console.log("NameDoc:\n", n.toJSON());
 
-            nameDocArray = [n.toJSON(), ...nameDocArray];
-          }
+          nameDocArray = [n.toJSON(), ...nameDocArray];
+        }
 
+        this.setState(
+          {
+            activeOrdersNames: nameDocArray,
+            active1: true,
+          },
+          () => this.checkActiveOrdersRace()
+        );
+      })
+      .catch((e) => {
+        console.error("Something went wrong getting recent order names:\n", e);
         this.setState({
-          activeOrdersNames: nameDocArray, 
-          active1: true,
-        },()=>this.checkActiveOrdersRace());
-
-        })
-        .catch((e) => {
-          console.error("Something went wrong getting recent order names:\n", e);
-          this.setState({
-            activeNamesError: true, //<- add to state? -> 
-            isLoadingActive: false,
-          });
-        })
-        .finally(() => client.disconnect());
+          activeNamesError: true, //<- add to state? ->
+          isLoadingActive: false,
+        });
+      })
+      .finally(() => client.disconnect());
   };
 
   getActiveStores = (docArray) => {
@@ -1906,7 +1923,7 @@ for(const n of d) {
       },
     };
     const client = new Dash.Client(clientOpts);
-// This Below is to get unique set of merchant ids
+    // This Below is to get unique set of merchant ids
     let arrayOfToIds = docArray.map((doc) => {
       return doc.toId;
     });
@@ -1924,7 +1941,7 @@ for(const n of d) {
 
       return client.platform.documents.get("DGPContract.dgpstore", {
         where: [["$ownerId", "in", arrayOfToIds]],
-        orderBy: [["$ownerId", 'asc']],
+        orderBy: [["$ownerId", "asc"]],
       });
     };
 
@@ -1932,16 +1949,18 @@ for(const n of d) {
       .then((d) => {
         let docArray = [];
 
-          for (const n of d) {
-            //console.log("Store:\n", n.toJSON());
-            docArray = [...docArray, n.toJSON()];
-          }
+        for (const n of d) {
+          //console.log("Store:\n", n.toJSON());
+          docArray = [...docArray, n.toJSON()];
+        }
 
-          this.setState({
-            activeOrdersStores: docArray, 
+        this.setState(
+          {
+            activeOrdersStores: docArray,
             active2: true,
-          },()=>this.checkActiveOrdersRace());
-         
+          },
+          () => this.checkActiveOrdersRace()
+        );
       })
       .catch((e) => {
         console.error("Something went wrong:\n", e);
@@ -1950,8 +1969,8 @@ for(const n of d) {
           isLoadingActive: false,
         });
       })
-      .finally(() => client.disconnect()); 
-  }
+      .finally(() => client.disconnect());
+  };
 
   getActiveAddresses = (docArray) => {
     const clientOpts = {
@@ -1979,10 +1998,10 @@ for(const n of d) {
 
     const getDocuments = async () => {
       console.log("Querying Active DGM Documents.");
-      
+
       return client.platform.documents.get("DGMContract.dgmaddress", {
         where: [["$ownerId", "in", arrayOfToIds]],
-        orderBy: [["$ownerId", 'asc']],
+        orderBy: [["$ownerId", "asc"]],
       });
     };
 
@@ -1990,78 +2009,81 @@ for(const n of d) {
       .then((d) => {
         let docArray = [];
         for (const n of d) {
-         // console.log("DGM Address:\n", n.toJSON());
+          // console.log("DGM Address:\n", n.toJSON());
           docArray = [...docArray, n.toJSON()];
         }
 
-        this.setState({
-          activeOrdersAddresses: docArray, 
-          active3: true,
-        },()=>this.checkActiveOrdersRace());
-        
+        this.setState(
+          {
+            activeOrdersAddresses: docArray,
+            active3: true,
+          },
+          () => this.checkActiveOrdersRace()
+        );
       })
       .catch((e) => {
-        console.error("Something went wrong getting Recent Orders DGM Addresses:\n", e);
+        console.error(
+          "Something went wrong getting Recent Orders DGM Addresses:\n",
+          e
+        );
         this.setState({
           activeOrdersAddressesError: true, // ADD alert to handle ->
           isLoadingActive: false,
         });
       })
       .finally(() => client.disconnect());
-  }
- 
- //$$  $$   $$$  $$  $  $$  $$$  $$$  $$  $$
+  };
 
- doTopUpIdentity = (numOfCredits) => {
-  this.setState({
-    isLoadingWallet: true,
-  });
-  const clientOpts = {
-    network: this.state.whichNetwork,
-    wallet: {
-      mnemonic: this.state.mnemonic, 
-      adapter: LocalForage.createInstance,
-      unsafeOptions: {
-        skipSynchronizationBeforeHeight:
-          this.state.skipSynchronizationBeforeHeight,
+  //$$  $$   $$$  $$  $  $$  $$$  $$$  $$  $$
+
+  doTopUpIdentity = (numOfCredits) => {
+    this.setState({
+      isLoadingWallet: true,
+    });
+    const clientOpts = {
+      network: this.state.whichNetwork,
+      wallet: {
+        mnemonic: this.state.mnemonic,
+        adapter: LocalForage.createInstance,
+        unsafeOptions: {
+          skipSynchronizationBeforeHeight:
+            this.state.skipSynchronizationBeforeHeight,
+        },
       },
-    },
+    };
+    const client = new Dash.Client(clientOpts);
+
+    const topupIdentity = async () => {
+      const identityId = this.state.identity; // Your identity ID
+      const topUpAmount = numOfCredits; // Number of duffs ie 1000
+
+      await client.platform.identities.topUp(identityId, topUpAmount);
+      return client.platform.identities.get(identityId);
+    };
+
+    topupIdentity()
+      .then((d) => {
+        console.log("Identity credit balance: ", d.balance);
+        this.setState({
+          identityInfo: d.toJSON(),
+          identityRaw: d,
+          isLoadingWallet: false,
+          accountBalance: this.state.accountBalance - 1000000,
+        });
+      })
+      .catch((e) => {
+        console.error("Something went wrong:\n", e);
+        this.setState({
+          isLoadingWallet: false,
+          topUpError: true, //Add to State and handle ->
+        });
+      })
+      .finally(() => client.disconnect());
   };
-  const client = new Dash.Client(clientOpts);
-
-  const topupIdentity = async () => {
-    const identityId = this.state.identity; // Your identity ID
-    const topUpAmount = numOfCredits; // Number of duffs ie 1000
-
-    await client.platform.identities.topUp(identityId, topUpAmount);
-    return client.platform.identities.get(identityId);
-  };
-
-  topupIdentity()
-    .then((d) => {
-      console.log("Identity credit balance: ", d.balance);
-      this.setState({
-        identityInfo: d.toJSON(),
-        identityRaw: d,
-        isLoadingWallet: false,
-        accountBalance: this.state.accountBalance - 1000000,
-      });
-    })
-    .catch((e) => {
-      console.error("Something went wrong:\n", e);
-      this.setState({
-        isLoadingWallet: false,
-        topUpError: true, //Add to State and handle ->
-      });
-    })
-    .finally(() => client.disconnect());
-};
-
 
   //#######################################################################
 
   render() {
-
     this.state.mode === "primary"
       ? (document.body.style.backgroundColor = "rgb(280,280,280)")
       : (document.body.style.backgroundColor = "rgb(20,20,20)");
@@ -2084,113 +2106,107 @@ for(const n of d) {
         <Image fluid="true" id="dash-bkgd" src={DashBkgd} alt="Dash Logo" />
 
         <Container className="g-0">
-  <Row className="justify-content-md-center">
-    <Col md={11} lg={10} xl={9} xxl={9}>
+          <Row className="justify-content-md-center">
+            <Col md={11} lg={10} xl={9} xxl={9}>
+              {!this.state.isLoggedIn ? (
+                <>
+                  <LandingPage
+                    mode={this.state.mode}
+                    showModal={this.showModal}
+                  />
+                  <Footer />
+                </>
+              ) : (
+                <>
+                  {this.state.isLoading ? (
+                    <>
+                      <p></p>
+                      <div id="spinner">
+                        <Spinner animation="border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
+                  {!this.state.isLoading &&
+                  this.state.isLoggedInAs === "buyer" ? (
+                    <BuyerPages
+                      isLoading={this.state.isLoading}
+                      isLoadingWallet={this.state.isLoadingWallet}
+                      isLoadingRecentOrders={this.state.isLoadingRecentOrders}
+                      isLoadingActive={this.state.isLoadingActive}
+                      handleAddingNewOrder={this.handleAddingNewOrder}
+                      mnemonic={this.state.mnemonic}
+                      identity={this.state.identity}
+                      identityInfo={this.state.identityInfo}
+                      identityRaw={this.state.identityRaw}
+                      uniqueName={this.state.uniqueName}
+                      recentOrders={this.state.recentOrders}
+                      recentOrdersStores={this.state.recentOrdersStores}
+                      recentOrdersNames={this.state.recentOrdersNames}
+                      recentOrdersDGMAddresses={
+                        this.state.recentOrdersDGMAddresses
+                      }
+                      recentOrdersItems={this.state.recentOrdersItems}
+                      recentOrdersMessages={this.state.recentOrdersMessages}
+                      handleOrderMessageModalShow={
+                        this.handleOrderMessageModalShow
+                      }
+                      activeOrders={this.state.activeOrders}
+                      activeOrdersStores={this.state.activeOrdersStores}
+                      activeOrdersNames={this.state.activeOrdersNames}
+                      activeOrdersAddresses={this.state.activeOrdersAddresses}
+                      accountBalance={this.state.accountBalance}
+                      accountHistory={this.state.accountHistory}
+                      getWalletForNewOrder={this.getWalletForNewOrder}
+                      DataContractDGP={this.state.DataContractDGP}
+                      DataContractDGM={this.state.DataContractDGM}
+                      DataContractDPNS={this.state.DataContractDPNS}
+                      mostRecentBlockHeight={this.state.mostRecentBlockHeight}
+                      skipSynchronizationBeforeHeight={
+                        this.state.skipSynchronizationBeforeHeight
+                      }
+                      showModal={this.showModal}
+                      mode={this.state.mode}
+                      whichNetwork={this.state.whichNetwork}
+                    />
+                  ) : (
+                    <></>
+                  )}
 
-        {!this.state.isLoggedIn ? (
-          <>
-            <LandingPage mode={this.state.mode} showModal={this.showModal}/>
-            <Footer />
-          </>
-        ) : (
-          <>
-          {this.state.isLoading ? (
-          <>
-            <p></p>
-            <div id="spinner">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
+                  {!this.state.isLoading &&
+                  this.state.isLoggedInAs === "merchant" ? (
+                    <MerchantPages
+                      isLoading={this.state.isLoading}
+                      isLoadingWallet={this.state.isLoadingWallet}
+                      mnemonic={this.state.mnemonic}
+                      identity={this.state.identity}
+                      identityInfo={this.state.identityInfo}
+                      identityRaw={this.state.identityRaw}
+                      uniqueName={this.state.uniqueName}
+                      accountBalance={this.state.accountBalance}
+                      accountAddress={this.state.accountAddress}
+                      accountHistory={this.state.accountHistory}
+                      DataContractDGP={this.state.DataContractDGP}
+                      DataContractDGM={this.state.DataContractDGM}
+                      DataContractDPNS={this.state.DataContractDPNS}
+                      mostRecentBlockHeight={this.state.mostRecentBlockHeight}
+                      skipSynchronizationBeforeHeight={
+                        this.state.skipSynchronizationBeforeHeight
+                      }
+                      getWalletForNewOrder={this.getWalletForNewOrder}
+                      showModal={this.showModal}
+                      mode={this.state.mode}
+                      whichNetwork={this.state.whichNetwork}
+                    />
+                  ) : (
+                    <></>
+                  )}
 
-          {!this.state.isLoading && this.state.isLoggedInAs === 'buyer'?
-          
-            <BuyerPages
-              isLoading={this.state.isLoading}
-              isLoadingWallet={this.state.isLoadingWallet}
-              isLoadingRecentOrders={this.state.isLoadingRecentOrders}
-              isLoadingActive={this.state.isLoadingActive}
-
-              handleAddingNewOrder={this.handleAddingNewOrder}
-
-              mnemonic={this.state.mnemonic}
-              identity={this.state.identity}
-              identityInfo={this.state.identityInfo}
-              identityRaw={this.state.identityRaw}
-              uniqueName={this.state.uniqueName}
-
-              recentOrders={this.state.recentOrders} 
-      recentOrdersStores={this.state.recentOrdersStores}
-      recentOrdersNames={this.state.recentOrdersNames}
-      recentOrdersDGMAddresses={this.state.recentOrdersDGMAddresses}
-      recentOrdersItems={this.state.recentOrdersItems}
-      recentOrdersMessages={this.state.recentOrdersMessages}
-      handleOrderMessageModalShow={this.handleOrderMessageModalShow}
-
-      activeOrders={this.state.activeOrders} 
-      activeOrdersStores={this.state.activeOrdersStores}
-      activeOrdersNames={this.state.activeOrdersNames}
-      activeOrdersAddresses={this.state.activeOrdersAddresses}
-
-              accountBalance={this.state.accountBalance}
-              accountHistory={this.state.accountHistory}
-
-              getWalletForNewOrder={this.getWalletForNewOrder}
-
-              DataContractDGP={this.state.DataContractDGP}
-              DataContractDGM={this.state.DataContractDGM}
-              DataContractDPNS={this.state.DataContractDPNS}
-
-              mostRecentBlockHeight={this.state.mostRecentBlockHeight}
-              skipSynchronizationBeforeHeight={this.state.skipSynchronizationBeforeHeight}
-              showModal={this.showModal}
-              mode={this.state.mode}
-              whichNetwork={this.state.whichNetwork}
-            />
-            
-            :
-            <></>
-            }
-
-{!this.state.isLoading && this.state.isLoggedInAs === 'merchant'?
-            <MerchantPages
-              isLoading={this.state.isLoading}
-              isLoadingWallet={this.state.isLoadingWallet}
-
-              mnemonic={this.state.mnemonic}
-              identity={this.state.identity}
-              identityInfo={this.state.identityInfo}
-              identityRaw={this.state.identityRaw}
-              uniqueName={this.state.uniqueName}
-
-              accountBalance={this.state.accountBalance}
-              accountAddress={this.state.accountAddress}
-              accountHistory={this.state.accountHistory}
-
-              DataContractDGP={this.state.DataContractDGP}
-              DataContractDGM={this.state.DataContractDGM}
-              DataContractDPNS={this.state.DataContractDPNS}
-
-              mostRecentBlockHeight={this.state.mostRecentBlockHeight}
-              skipSynchronizationBeforeHeight={this.state.skipSynchronizationBeforeHeight}
-
-              getWalletForNewOrder={this.getWalletForNewOrder}
-
-              showModal={this.showModal}
-
-              mode={this.state.mode}
-              whichNetwork={this.state.whichNetwork}
-            />
-            :
-            <></>
-            }
-
-            {/* {!this.state.isLoading &&
+                  {/* {!this.state.isLoading &&
             this.state.identity !== "No Identity" &&
             this.state.uniqueName !== "Er" ? (
               <BottomNav
@@ -2204,14 +2220,13 @@ for(const n of d) {
             ) : (
               <></>
             )} */}
-          </>
-        )}
-
-</Col>
-        </Row>
+                </>
+              )}
+            </Col>
+          </Row>
         </Container>
 
-{this.state.isModalShowing &&
+        {this.state.isModalShowing &&
         this.state.presentModal === "ConnectWalletModal" ? (
           <ConnectWalletModal
             LocalForageKeys={this.state.LocalForageKeys}
@@ -2239,7 +2254,7 @@ for(const n of d) {
           <></>
         )}
 
-{this.state.isModalShowing &&
+        {this.state.isModalShowing &&
         this.state.presentModal === "OrderMessageModal" ? (
           <OrderMessageModal
             isModalShowing={this.state.isModalShowing}
@@ -2253,13 +2268,11 @@ for(const n of d) {
           <></>
         )}
 
-{this.state.isModalShowing &&
+        {this.state.isModalShowing &&
         this.state.presentModal === "TopUpIdentityModal" ? (
           <TopUpIdentityModal
-          accountBalance={this.state.accountBalance}
-
-          isLoadingWallet={this.state.isLoadingWallet}
-
+            accountBalance={this.state.accountBalance}
+            isLoadingWallet={this.state.isLoadingWallet}
             isModalShowing={this.state.isModalShowing}
             hideModal={this.hideModal}
             mode={this.state.mode}
@@ -2269,8 +2282,6 @@ for(const n of d) {
         ) : (
           <></>
         )}
-
-
       </>
     );
   }
